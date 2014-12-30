@@ -11,8 +11,5 @@
 |
 */
 
-Route::get('/', function()
-{
-    echo App::environment();
-	return View::make('hello');
-});
+Route::get('/', "HomeController@dashboard");
+Route::get('/preview/{template}', "HomeController@preview");

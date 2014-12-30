@@ -6,7 +6,6 @@ URL: http://themepixels.com/
 label {
    font-weight: normal;
    margin-bottom: 5px !important;
-   color: #4a535e;
 }
 
 code {
@@ -608,10 +607,16 @@ h4, .h4 {
 
 .panel-success .panel-heading {
    background-color: #1CAF9A;
+   color: #fff;
 }
+
+   .panel-success .panel-heading .table td p, .panel-success .panel-heading .table td {
+      color: #000000;
+   }
 
 .panel-warning .panel-heading {
    background-color: #F0AD4E;
+   color: #fff;
 }
 
 .panel-danger .panel-heading {
@@ -624,7 +629,12 @@ h4, .h4 {
 
 .panel-dark .panel-heading {
    background-color: #1d2939;
+   color: #fff;
 }
+
+   .panel-dark .panel-heading .table td p, .panel-dark .panel-heading .table td {
+      color: #000000;
+   }
 
 .panel-btns a {
    margin-left: 8px;
@@ -1286,4 +1296,8 @@ small.media-desc {
 	background-color: #f5f5f5;
 }
 
+.table td p {
+   margin-top: 0;
+   margin-bottom: 0;
+}
 

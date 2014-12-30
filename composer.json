@@ -23,6 +23,9 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		],
+	  	"files": [
+		  	"app/helpers.php"
+		],
 	  	"psr-4": {
 			"SICV\\": "app/SICV"
 	 	 }
