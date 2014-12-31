@@ -123,7 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
 		'Laracasts\Commander\CommanderServiceProvider',
-		'SICV\Notifications\FlashNotificationServiceProvider'
+		'SICV\Notifications\FlashNotificationServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider'
 	),
 
 	/*
