@@ -1,6 +1,9 @@
 <?php 
 $I = new FunctionalTester($scenario);
 
+// Por defecto las pruebas funcionales deshabilitan los filtros?!
+\Route::enableFilters();
+
 $I->am('An active SICV User');
 $I->wantTo('Sign in and Sign Out into the application');
 

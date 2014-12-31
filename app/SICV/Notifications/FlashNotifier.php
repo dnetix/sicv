@@ -45,9 +45,16 @@ class FlashNotifier {
     }
 
     protected function flashIt($message, $title = null){
-        $this->notification['message'] = $message;
+        $this->notification['message'] = $this->normalizeMessage($message);
         $this->notification['title'] = $title;
         $this->session->flash('flash_notification', $this->notification);
+    }
+
+    protected function normalizeMessage($message){
+        if(is_array($message)){
+            $message = '<ul><li>'.implode('</li><li>', $message).'</li>';
+        }
+        return $message;
     }
 
 }

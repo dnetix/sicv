@@ -48,6 +48,12 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('role', function($minimunRole){
+	if(Auth::user()->role < $minimunRole){
+		Flash::error("No tiene permisos para realizar esta acci&oacute;n");
+		return Redirect::back();
+	}
+});
 
 Route::filter('auth.basic', function()
 {
