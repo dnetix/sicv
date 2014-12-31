@@ -8,6 +8,7 @@
     <title>{{ isset($title) ? $title : 'SICV' }}</title>
 
     <link href="{{ public_assets('bracket/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ public_assets('bracket/css/jquery.gritter.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -35,6 +36,7 @@
     <script src="{{ public_assets('bracket/js/toggles.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/retina.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/jquery.cookies.js') }}"></script>
+    <script src="{{ public_assets('bracket/js/jquery.gritter.min.js') }}"></script>
 
     <script src="{{ public_assets('bracket/js/custom.js') }}"></script>
     @yield('js')

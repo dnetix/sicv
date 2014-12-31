@@ -1,11 +1,21 @@
+function addGritterNotification(gritterObject){
+   jQuery.gritter.add({
+      title: gritterObject.title || null,
+      text: gritterObject.text,
+      class_name: gritterObject.class_name || 'growl-info',
+      image: gritterObject.image || null,
+      sticky: gritterObject.sticky || false,
+      time: gritterObject.time || '5000'
+   });
+}
 
 jQuery(window).load(function() {
-   
    // Page Preloader
    jQuery('#status').fadeOut();
    jQuery('#preloader').delay(350).fadeOut(function(){
       jQuery('body').delay(350).css({'overflow':'visible'});
    });
+   jQuery('.gritter_message').trigger('fullyLoaded');
 });
 
 jQuery(document).ready(function() {
@@ -51,8 +61,7 @@ jQuery(document).ready(function() {
       if(docHeight > jQuery('.mainpanel').height())
          jQuery('.mainpanel').height(docHeight);
    }
-   
-   
+
    // Tooltip
    jQuery('.tooltips').tooltip({ container: 'body'});
    
@@ -67,40 +76,6 @@ jQuery(document).ready(function() {
    
    // Form Toggles
    jQuery('.toggle').toggles({on: true});
-   
-   jQuery('.toggle-chat1').toggles({on: false});
-   
-   // Sparkline
-   jQuery('#sidebar-chart').sparkline([4,3,3,1,4,3,2,2,3,10,9,6], {
-	  type: 'bar', 
-	  height:'30px',
-      barColor: '#428BCA'
-   });
-   
-   jQuery('#sidebar-chart2').sparkline([1,3,4,5,4,10,8,5,7,6,9,3], {
-	  type: 'bar', 
-	  height:'30px',
-      barColor: '#D9534F'
-   });
-   
-   jQuery('#sidebar-chart3').sparkline([5,9,3,8,4,10,8,5,7,6,9,3], {
-	  type: 'bar', 
-	  height:'30px',
-      barColor: '#1CAF9A'
-   });
-   
-   jQuery('#sidebar-chart4').sparkline([4,3,3,1,4,3,2,2,3,10,9,6], {
-	  type: 'bar', 
-	  height:'30px',
-      barColor: '#428BCA'
-   });
-   
-   jQuery('#sidebar-chart5').sparkline([1,3,4,5,4,10,8,5,7,6,9,3], {
-	  type: 'bar', 
-	  height:'30px',
-      barColor: '#F0AD4E'
-   });
-   
    
    // Minimize Button in Panels
    jQuery('.minimize').click(function(){
@@ -132,24 +107,26 @@ jQuery(document).ready(function() {
       
       var body = jQuery('body');
       var bodypos = body.css('position');
-      
+
       if(bodypos != 'relative') {
-         
+
          if(!body.hasClass('leftpanel-collapsed')) {
             body.addClass('leftpanel-collapsed');
             jQuery('.nav-bracket ul').attr('style','');
-            
+
             jQuery(this).addClass('menu-collapsed');
-            
+
          } else {
-            body.removeClass('leftpanel-collapsed chat-view');
+            body.removeClass('leftpanel-collapsed');
             jQuery('.nav-bracket li.active ul').css({display: 'block'});
-            
+
             jQuery(this).removeClass('menu-collapsed');
-            
+
          }
       } else {
-         
+
+         body.removeClass('leftpanel-collapsed');
+
          if(body.hasClass('leftpanel-show'))
             body.removeClass('leftpanel-show');
          else
@@ -160,61 +137,7 @@ jQuery(document).ready(function() {
 
    });
    
-   // Chat View
-   jQuery('#chatview').click(function(){
-      
-      var body = jQuery('body');
-      var bodypos = body.css('position');
-      
-      if(bodypos != 'relative') {
-         
-         if(!body.hasClass('chat-view')) {
-            body.addClass('leftpanel-collapsed chat-view');
-            jQuery('.nav-bracket ul').attr('style','');
-            
-         } else {
-            
-            body.removeClass('chat-view');
-            
-            if(!jQuery('.menutoggle').hasClass('menu-collapsed')) {
-               jQuery('body').removeClass('leftpanel-collapsed');
-               jQuery('.nav-bracket li.active ul').css({display: 'block'});
-            } else {
-               
-            }
-         }
-         
-      } else {
-         
-         if(!body.hasClass('chat-relative-view')) {
-            
-            body.addClass('chat-relative-view');
-            body.css({left: ''});
-         
-         } else {
-            body.removeClass('chat-relative-view');   
-         }
-      }
-      
-   });
-   
    reposition_searchform();
-   
-   jQuery(window).resize(function(){
-      
-      if(jQuery('body').css('position') == 'relative') {
-
-         jQuery('body').removeClass('leftpanel-collapsed chat-view');
-         
-      } else {
-         
-         jQuery('body').removeClass('chat-relative-view');         
-         jQuery('body').css({left: '', marginRight: ''});
-      }
-      
-      reposition_searchform();
-      
-   });
    
    function reposition_searchform() {
       if(jQuery('.searchform').css('position') == 'relative') {
@@ -224,28 +147,22 @@ jQuery(document).ready(function() {
       }
    }
    
-   
-   // Sticky Header
-   if(jQuery.cookie('sticky-header'))
-      jQuery('body').addClass('stickyheader');
-      
-   // Sticky Left Panel
-   if(jQuery.cookie('sticky-leftpanel')) {
-      jQuery('body').addClass('stickyheader');
-      jQuery('.leftpanel').addClass('sticky-leftpanel');
-   }
-   
    // Left Panel Collapsed
    if(jQuery.cookie('leftpanel-collapsed')) {
       jQuery('body').addClass('leftpanel-collapsed');
       jQuery('.menutoggle').addClass('menu-collapsed');
    }
-   
-   // Changing Skin
-   var c = jQuery.cookie('change-skin');
-   if(c) {
-      jQuery('head').append('<link id="skinswitch" rel="stylesheet" href="css/style.'+c+'.css" />');
-   }
-   
+
+   jQuery('.gritter_message').on('fullyLoaded', function(e){
+      gritter_tag = $(this);
+      addGritterNotification({
+         title: gritter_tag.data('title') || null,
+         text: gritter_tag.html(),
+         class_name: gritter_tag.data('class') || null,
+         image: gritter_tag.data('image') || null,
+         sticky: gritter_tag.data('sticky') || false,
+         time: gritter_tag.data('time') || '5000'
+      });
+   });
 
 });

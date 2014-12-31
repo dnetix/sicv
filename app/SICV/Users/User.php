@@ -1,5 +1,6 @@
-<?php
+<?php namespace SICV\Users;
 
+use Eloquent;
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
@@ -22,5 +23,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
+
+	/**
+	 * When it try to set the password automatically hashit
+	 * @param $value
+	 */
+	public function setPasswordAttribute($value){
+		$this->attributes['password'] = \Hash::make($value);
+	}
 
 }

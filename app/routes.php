@@ -11,5 +11,24 @@
 |
 */
 
-Route::get('/', "HomeController@dashboard");
+Route::get('/', "HomeController@index");
+Route::get('/login', [
+    'as' => 'user.login',
+    'uses' => 'UserController@login'
+]);
+
+Route::post('/login', [
+    'as' => 'user.login',
+    'uses' => 'UserController@authenticate'
+]);
+
+Route::group(['before' => 'auth'], function(){
+
+    Route::get('/dashboard', ['as' => 'user.dashboard', 'uses' => 'HomeController@dashboard']);
+    Route::get('/logout', [
+        'as' => 'user.logout',
+        'uses' => 'UserController@logout'
+    ]);
+});
+
 Route::get('/preview/{template}', "HomeController@preview");

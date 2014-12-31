@@ -1,7 +1,7 @@
 {
-	"name": "dnetix/ciudad7",
-	"description": "Portal Web para Ciudad7",
-	"keywords": ["Ciudad7", "portal"],
+	"name": "dnetix/SICV",
+	"description": "Programa de administracion de compraventas",
+	"keywords": ["compraventa"],
 	"license": "MIT",
 	"type": "project",
 	"require": {
@@ -11,14 +11,13 @@
 	  	"laracasts/testdummy": "2.0.*"
 	},
 	"require-dev": {
-		"way/generators": "~3.0",
-		"codeception/codeception": "~2.0"
+		"way/generators": "~2.0",
+		"codeception/codeception": "2.0.*@dev"
 	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
 			"app/controllers",
-			"app/models",
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php"

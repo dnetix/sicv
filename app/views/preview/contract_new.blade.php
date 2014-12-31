@@ -1,13 +1,15 @@
 @extends('layouts.default')
 
-@section('content')
-<div class="pageheader">
-    <h2><i class="glyphicon glyphicon-edit"></i> Nuevo Contrato</h2>
-    <div class="breadcrumb-wrapper">
-        <span class="label">{{ date_print_format(date('Y-m-d')) }}</span>
+@section('pageheader')
+    <div class="pageheader">
+        <h2><i class="glyphicon glyphicon-edit"></i> Nuevo Contrato</h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">{{ date_print_format(date('Y-m-d')) }}</span>
+        </div>
     </div>
-</div>
+@endsection
 
+@section('content')
 <div class="contentpanel">
 
     <div class="row">

@@ -1301,3 +1301,14 @@ small.media-desc {
    margin-bottom: 0;
 }
 
+.gritter_message {
+   display: none;
+}
+
+.alert.overlay {
+   position: absolute;
+   bottom: 10px;
+   right: 10px;
+   z-index: 1000;
+   min-width: 245px;
+}

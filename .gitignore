@@ -9,3 +9,6 @@ Thumbs.db
 
 _ide_helper.php
 .idea
+/.project
+
+tests/_output/*

@@ -8,6 +8,7 @@
     <title>{{ isset($title) ? $title : 'SICV' }}</title>
 
     <link href="{{ public_assets('bracket/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ public_assets('bracket/css/jquery.gritter.css') }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -18,15 +19,12 @@
 </head>
 
 <body class="leftpanel-collapsed">
-    <!-- Preloader -->
-    <div id="preloader">
-        <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
-    </div>
-
     <section>
     @include('layouts.partials._leftpanel')
         <div class="mainpanel">
             @include('layouts.partials._topbar')
+            @yield('pageheader')
+            @include('layouts.partials._flash_notification')
             @yield('content')
         </div>
     </section>
@@ -39,6 +37,7 @@
     <script src="{{ public_assets('bracket/js/toggles.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/retina.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/jquery.cookies.js') }}"></script>
+    <script src="{{ public_assets('bracket/js/jquery.gritter.min.js') }}"></script>
 
     <script src="{{ public_assets('bracket/js/custom.js') }}"></script>
     @yield('js')
