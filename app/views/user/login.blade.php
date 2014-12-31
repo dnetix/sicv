@@ -12,6 +12,7 @@
                         <img src="{{ public_assets('images/template/logo_sicv_big.png') }}" alt="" />
                     </div>
                     @include('layouts.partials._flash_notification')
+                    @include('layouts.partials._errors')
                 </div>
 
             </div>
@@ -23,11 +24,11 @@
                     <p class="mt5 mb20">Logueate para entrar a tu cuenta.</p>
 
                     <div class="form-group">
-                        {{ Form::text('username', null, ['class' => 'form-control uname', 'placeholder' => 'Usuario', 'required' => 'required']) }}
+                        {{ Form::text('username', null, ['class' => 'form-control uname', 'placeholder' => 'Usuario']) }}
                     </div>
 
                     <div class="form-group">
-                        {{ Form::password('password', ['class' => 'form-control pword', 'placeholder' => 'Contrase&ntilde;a', 'required' => 'required']) }}
+                        {{ Form::password('password', ['class' => 'form-control pword', 'placeholder' => 'Contrase&ntilde;a']) }}
                     </div>
 
                     <div class="form-group text-center">

@@ -13,14 +13,14 @@ return array(
 	|
 	*/
 
-	"accepted"             => "The :attribute must be accepted.",
-	"active_url"           => "The :attribute is not a valid URL.",
+	"accepted"             => "El campo :attribute debe ser aceptado.",
+	"active_url"           => "El campo :attribute no es una URL v&aacute;lida.",
 	"after"                => "The :attribute must be a date after :date.",
 	"alpha"                => "The :attribute may only contain letters.",
 	"alpha_dash"           => "The :attribute may only contain letters, numbers, and dashes.",
-	"alpha_num"            => "The :attribute may only contain letters and numbers.",
-	"array"                => "The :attribute must be an array.",
-	"before"               => "The :attribute must be a date before :date.",
+	"alpha_num"            => "El campo :attribute solo puede contener letras y numeros.",
+	"array"                => ":attribute debe ser un array.",
+	"before"               => "El campo :attribute debe ser una fecha antes de :date.",
 	"between"              => array(
 		"numeric" => "The :attribute must be between :min and :max.",
 		"file"    => "The :attribute must be between :min and :max kilobytes.",
@@ -53,7 +53,7 @@ return array(
 		"string"  => "The :attribute must be at least :min characters.",
 		"array"   => "The :attribute must have at least :min items.",
 	),
-	"not_in"               => "The selected :attribute is invalid.",
+	"not_in"               => "El campo seleccionado :attribute es inv&aacute;lido.",
 	"numeric"              => "The :attribute must be a number.",
 	"regex"                => "The :attribute format is invalid.",
 	"required"             => "El campo :attribute es requerido.",

@@ -11,6 +11,11 @@ class UserController extends BaseController {
 	}
 
 	public function authenticate(){
+
+		$userLoginFormValidator = App::make(SICV\FormValidations\UserLoginFormValidation::class);
+
+		$userLoginFormValidator->validate(Input::all());
+
 		if(Auth::attempt(Input::only('username', 'password'))){
 			Flash::overlay()->success("Se ha loguedo exitosamente");
 			return Redirect::route('user.dashboard');

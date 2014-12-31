@@ -51,6 +51,15 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+App::error(function(\SICV\Validations\FormValidationException $exception, $code)
+{
+	if(Request::ajax()){
+		return Response::make($exception->getErrors()->first(), Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+	}else{
+		return Redirect::back()->withInput()->withErrors($exception->getErrors());
+	}
+});
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
