@@ -4,14 +4,10 @@ $I = new FunctionalTester($scenario);
 // Por defecto las pruebas funcionales deshabilitan los filtros?!
 \Route::enableFilters();
 
-$I->am('An active SICV User');
+$I->am('An active SICV User non logged');
 $I->wantTo('Sign in and Sign Out into the application');
 
-$I->amOnPage('/');
-
-$I->fillField('username', 'admin');
-$I->fillField('password', 'admin');
-$I->click('Acceder');
+$I->fillLogin();
 
 $I->seeInCurrentUrl('/dashboard');
 $I->see('Panel Principal');

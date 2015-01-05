@@ -1,6 +1,14 @@
 <?php
 
+use SICV\Commander\CommandBus;
+
 class BaseController extends Controller {
+
+	public $commandBus;
+
+	function __construct(CommandBus $commandBus) {
+		$this->commandBus = $commandBus;
+	}
 
 	/**
 	 * Setup the layout used by the controller.
@@ -15,6 +23,10 @@ class BaseController extends Controller {
 		}
 
 		View::share('currentUser', Auth::user());
+	}
+
+	public function execute($command){
+		return $this->commandBus->execute($command);
 	}
 
 }

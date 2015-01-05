@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+
+class CreateClientsTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('clients', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name', 120);
+			$table->string('id_type', 6);
+			$table->string('id_number', 30)->unique();
+			$table->string('id_expedition', 80);
+			$table->string('address')->nullable();
+			$table->string('phonenumber')->nullable();
+			$table->string('cellnumber')->nullable();
+			$table->string('city')->nullable();
+			$table->string('email')->nullable();
+			$table->timestamps();
+		});
+	}
+
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('clients');
+	}
+
+}

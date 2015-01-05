@@ -18,6 +18,15 @@
                     <li><a href="wysiwyg.html"><i class="fa fa-caret-right"></i> WYSIWYG</a></li>
                 </ul>
             </li>
+            <li class="nav-parent"><a href="#"><i class="fa fa-user"></i> <span>Cliente</span></a>
+                <ul class="children">
+                    <li><a href="{{ route('client.new') }}"><i class="fa fa-caret-right"></i> Nuevo Cliente</a></li>
+                    <li><a href="form-layouts.html"><i class="fa fa-caret-right"></i> Form Layouts</a></li>
+                    <li><a href="form-validation.html"><i class="fa fa-caret-right"></i> Form Validation</a></li>
+                    <li><a href="form-wizards.html"><i class="fa fa-caret-right"></i> Form Wizards</a></li>
+                    <li><a href="wysiwyg.html"><i class="fa fa-caret-right"></i> WYSIWYG</a></li>
+                </ul>
+            </li>
 
     </div>
 </div>

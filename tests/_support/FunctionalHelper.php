@@ -7,4 +7,13 @@ namespace Codeception\Module;
 class FunctionalHelper extends \Codeception\Module
 {
 
+    public function fillLogin(){
+        $I = $this->getModule('Laravel4');
+        $I->amOnPage('/');
+
+        $I->fillField('username', 'admin');
+        $I->fillField('password', 'admin');
+        $I->click('Acceder');
+    }
+
 }
