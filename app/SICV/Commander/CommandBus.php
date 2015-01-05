@@ -1,31 +1,7 @@
-<?php  namespace SICV\Commander;
+<?php namespace SICV\Commander;
 
-use Illuminate\Foundation\Application;
+interface CommandBus {
 
-class CommandBus {
-
-    /**
-     * @var Application
-     */
-    private $app;
-    protected $commandTranslator;
-
-    function __construct(Application $app, CommandTranslator $commandTranslator) {
-        $this->app = $app;
-        $this->commandTranslator = $commandTranslator;
-    }
-
-    public function execute($command){
-        $handler = $this->translateToCommandHandler($command);
-        return $this->resolveOutOfTheIOC($handler)->handle($command);
-    }
-
-    protected function resolveOutOfTheIOC($handler){
-        return $this->app->make($handler);
-    }
-
-    protected function translateToCommandHandler($command){
-        return $this->commandTranslator->toCommandHandler($command);
-    }
+    public function execute($command);
 
 }
