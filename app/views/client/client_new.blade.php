@@ -49,16 +49,16 @@
                         </div>
 
                         <div class="form-group">
-                            {{ Form::label('cellnumber', 'Celular:', ['class' => 'control-label col-sm-2']) }}
+                            {{ Form::label('cell_number', 'Celular:', ['class' => 'control-label col-sm-2']) }}
                             <div class="col-sm-5">
-                                {{ Form::text('cellnumber', null, ['class' => 'form-control']) }}
+                                {{ Form::text('cell_number', null, ['class' => 'form-control']) }}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            {{ Form::label('phonenumber', 'Telefono:', ['class' => 'control-label col-sm-2']) }}
+                            {{ Form::label('phone_number', 'Telefono:', ['class' => 'control-label col-sm-2']) }}
                             <div class="col-sm-5">
-                                {{ Form::text('phonenumber', null, ['class' => 'form-control']) }}
+                                {{ Form::text('phone_number', null, ['class' => 'form-control']) }}
                             </div>
                         </div>
 

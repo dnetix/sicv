@@ -20,21 +20,11 @@ Route::group(['before' => 'auth'], function(){
         'uses' => 'UserController@logout'
     ]);
 
-    Route::get('/client/new', [
-        'as' => 'client.new',
-        'uses' => 'ClientController@create'
-    ]);
-    Route::post('/client/new', [
-        'as' => 'client.store',
-        'uses' => 'ClientController@store'
-    ]);
+    Route::get('/client/new', ['as' => 'client.new', 'uses' => 'ClientController@create']);
+    Route::post('/client/new', ['as' => 'client.store', 'uses' => 'ClientController@store']);
 
-    Route::post('/client/new', [
-        'as' => 'client.store',
-        'uses' => 'ClientController@store'
-    ]);
-
-    Route::get('/client/view/{$id}', ['uses' => 'ClientController@view', 'as' => 'client.view']);
+    Route::get('/client/view/{id}', ['uses' => 'ClientController@view', 'as' => 'client.view']);
+    Route::post('/client/edit/{id}', ['uses' => 'ClientController@edit', 'as' => 'client.edit']);
 
 });
 

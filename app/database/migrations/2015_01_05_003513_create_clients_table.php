@@ -20,8 +20,8 @@ class CreateClientsTable extends Migration {
 			$table->string('id_number', 30)->unique();
 			$table->string('id_expedition', 80);
 			$table->string('address')->nullable();
-			$table->string('phonenumber')->nullable();
-			$table->string('cellnumber')->nullable();
+			$table->string('phone_number')->nullable();
+			$table->string('cell_number')->nullable();
 			$table->string('city')->nullable();
 			$table->string('email')->nullable();
 			$table->timestamps();
