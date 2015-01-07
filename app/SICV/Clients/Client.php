@@ -1,6 +1,7 @@
 <?php namespace SICV\Clients;
 
 use Eloquent;
+use SICV\Contracts\Contract;
 
 class Client extends Eloquent {
 
@@ -56,6 +57,10 @@ class Client extends Eloquent {
 
     public function getCity() {
         return $this->city;
+    }
+
+    public function contracts(){
+        return $this->hasMany(Contract::class);
     }
 
 }

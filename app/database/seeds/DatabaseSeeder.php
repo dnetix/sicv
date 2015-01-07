@@ -3,7 +3,7 @@
 class DatabaseSeeder extends Seeder {
 
 	protected $tables = [
-		'users'
+		'users', 'article_types'
 	];
 
 	/**
@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder {
 		$this->cleanDatabase();
 
 		$this->call('UsersTableSeeder');
+		$this->call('ArticleTypesTableSeeder');
 	}
 
 	public function cleanDatabase(){
