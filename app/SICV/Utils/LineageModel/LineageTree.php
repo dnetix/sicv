@@ -119,4 +119,48 @@ class LineageTree {
         $this->stack = [];
     }
 
+    public function printAsHTMLSelect($selectName, $blankOption = null, $selectedId = null){
+        $select[] = "<select name=\"{$selectName}\" class=\"form-control\">";
+        if(!is_null($blankOption)){
+            $select[] = "<option value=\"\">{$blankOption}</option>";
+        }
+        while($node = $this->nextNode()){
+            $selectedTag = ($node->id == $selectedId) ? ' selected="selected"' : '';
+            $optionContent = is_object($node->getData()) ? $node->getData()->getName() : $node->getData();
+            $select[] = "<option value=\"{$node->id}\"{$selectedTag}>{$optionContent}</option>";
+        }
+        $select[] = "</select>";
+        return implode("\n", $select);
+    }
+
+    public function printAsHTMLSelectWithStructure($selectName, $blankOption = null, $selectedId = null, $selectIdTag = null){
+        $select[] = "<select name=\"{$selectName}\" class=\"form-control article_type\" id=\"{$selectIdTag}\">";
+        if(!is_null($blankOption)){
+            $select[] = "<option value=\"\">{$blankOption}</option>";
+        }
+        $opengroup = false;
+        while($node = $this->nextNode()){
+            $nodeLevel = $node->getLevel();
+            $optionContent = is_object($node->getData()) ? $node->getData()->getName() : $node->getData();
+            if($nodeLevel == 0){
+                if($opengroup){
+                    $opengroup = false;
+                    $select[] = "</optgroup>";
+                    $select[] = "<optgroup label=\"{$optionContent}\">";
+                }else{
+                    $opengroup = true;
+                    $select[] = "<optgroup label=\"{$optionContent}\">";
+                }
+            }else{
+                $selectedTag = ($node->id == $selectedId) ? ' selected="selected"' : '';
+                $select[] = "<option value=\"{$node->id}\"{$selectedTag}>{$optionContent}</option>";
+            }
+        }
+        if($opengroup){
+            $select[] = "</optgroup>";
+        }
+        $select[] = "</select>";
+        return implode("\n", $select);
+    }
+
 }

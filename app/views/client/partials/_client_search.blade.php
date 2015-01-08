@@ -3,7 +3,7 @@
         <div class="panel-btns">
             <a href="javascript:void(0)" onclick="jQuery(this).closest('.panel').fadeOut(200)" class="panel-close">×</a>
         </div>
-        <div class="panel-title">Resultados de Busqueda {{$link}}</div>
+        <div class="panel-title">Resultados de Busqueda</div>
     </div>
     <div class="panel-body">
         <div class="table-responsive">

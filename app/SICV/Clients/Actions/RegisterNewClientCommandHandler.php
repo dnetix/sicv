@@ -34,7 +34,7 @@ class RegisterNewClientCommandHandler implements CommandHandler {
         $client = new Client();
 
         try {
-            $this->registerNewUser($client, $command);
+            $this->registerNewClient($client, $command);
 
             $this->raise(new ClientWasRegistered($client));
             $this->eventDispatcher->dispatch($this->releaseEvents());
@@ -47,7 +47,7 @@ class RegisterNewClientCommandHandler implements CommandHandler {
 
     }
 
-    protected function registerNewUser(&$client, $command){
+    protected function registerNewClient(&$client, $command){
         $client->fill((array) $command);
         $client = $this->clientRepository->register($client);
     }

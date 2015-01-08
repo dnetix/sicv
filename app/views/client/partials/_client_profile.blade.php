@@ -9,35 +9,38 @@
 
         <div class="form-group">
             {{ Form::label('name', 'Nombre:', ['class' => 'control-label col-sm-2']) }}
-            <div class="col-sm-10">
+            <div class="col-sm-8">
                 {{ Form::text('name', $client->getName(), ['class' => 'form-control']) }}
+            </div>
+            <div class="col-sm-2">
+                <a target="_blank" tabindex="-1" class="btn btn-warning btn-block" href="{{ route('client.view', $client->getId()) }}">Historial</a>
             </div>
         </div>
 
         <div class="form-group">
             {{ Form::label('id_number', 'Identificaci&oacute;n:', ['class' => 'control-label col-sm-2']) }}
             <div class="col-sm-2">
-                {{ Form::select('id_type', ['CC' => 'CC'], $client->getIdType(), ['class' => 'form-control']) }}
+                {{ Form::select('id_type', ['CC' => 'CC'], $client->getIdType(), ['class' => 'form-control', 'readonly' => 'readonly']) }}
             </div>
             <div class="col-sm-5">
-                {{ Form::text('id_number', $client->getIdNumber(), ['class' => 'form-control', 'placeholder' => 'Nro identificaci&oacute;n']) }}
+                {{ Form::text('id_number', $client->getIdNumber(), ['class' => 'form-control', 'placeholder' => 'Nro identificaci&oacute;n', 'readonly' => 'readonly']) }}
             </div>
             <div class="col-sm-3">
-                {{ Form::text('id_expedition', $client->getIdExpedition(), ['class' => 'form-control', 'placeholder' => 'Lugar Expedici&oacute;n']) }}
+                {{ Form::text('id_expedition', $client->getIdExpedition(), ['class' => 'form-control', 'placeholder' => 'Lugar Expedici&oacute;n', 'readonly' => 'readonly']) }}
             </div>
         </div>
 
         <div class="form-group">
-            {{ Form::label('cellnumber', 'Celular:', ['class' => 'control-label col-sm-2']) }}
+            {{ Form::label('cell_number', 'Celular:', ['class' => 'control-label col-sm-2']) }}
             <div class="col-sm-5">
-                {{ Form::text('cellnumber', $client->getCellNumber(), ['class' => 'form-control']) }}
+                {{ Form::text('cell_number', $client->getCellNumber(), ['class' => 'form-control']) }}
             </div>
         </div>
 
         <div class="form-group">
-            {{ Form::label('phonenumber', 'Telefono:', ['class' => 'control-label col-sm-2']) }}
+            {{ Form::label('phone_number', 'Telefono:', ['class' => 'control-label col-sm-2']) }}
             <div class="col-sm-5">
-                {{ Form::text('phonenumber', $client->getPhoneNumber(), ['class' => 'form-control']) }}
+                {{ Form::text('phone_number', $client->getPhoneNumber(), ['class' => 'form-control']) }}
             </div>
         </div>
 
@@ -48,7 +51,7 @@
             </div>
         </div>
 
-        {{ Form::hidden('client_id', $client->getId()) }}
+        {{ Form::hidden('client_id', $client->getId(), ['id' => 'client_id']) }}
 
     </div>
 </div>

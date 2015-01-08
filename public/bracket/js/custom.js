@@ -15,6 +15,39 @@ function addGritterNotification(gritterObject){
    });
 }
 
+function moneyToNumber(money){
+   return money.replace(/[$.',\s]/g, '');
+}
+
+function numberToMoney(valor){
+   valor = valor.toString();
+   if(isNaN(valor)){
+      valor = valor.replace(/[$.',\s]/g, '');
+      if(isNaN(valor)){
+         return "";
+      }
+   }
+   var decimals = Math.ceil(valor.length / 3) - 1;
+   var money = '';
+   var dots = new Array ("'", ".", "'", ".", "'", ".");
+   i = decimals + 1;
+   if(i > 0 && valor.length > 3){
+      while(i > 0){
+         if(i == 1){
+            money = money.concat(dots[i], valor.slice(i * -3));
+         }else if(i == (decimals + 1)){
+            money = money.concat('$ ' + valor.slice((i*-3), ((i-1)*-3)));
+         }else{
+            money = money.concat(dots[i], valor.slice((i*-3), ((i-1)*-3)));
+         }
+         i--;
+      }
+   }else{
+      money = '$ ' + valor;
+   }
+   return money;
+}
+
 jQuery(window).load(function() {
    // Page Preloader
    jQuery('#status').fadeOut();

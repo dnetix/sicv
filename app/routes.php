@@ -19,7 +19,7 @@ Route::group(['before' => 'auth'], function(){
     Route::get('/client/profile/{id?}', ['uses' => 'ClientController@profile', 'as' => 'client.profile']);
     Route::get('/client/search', ['uses' => 'ClientController@search', 'as' => 'client.search']);
 
-    Route::get('/contract/new', ['uses' => 'ContractController@create', 'as' => 'contract.new']);
+    Route::get('/contract/new/{client_id?}', ['uses' => 'ContractController@create', 'as' => 'contract.new']);
     Route::post('/contract/new', ['uses' => 'ContractController@store', 'as' => 'contract.store']);
 });
 

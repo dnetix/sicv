@@ -5,13 +5,15 @@ use SICV\Clients\Actions\EditClientInformationCommand;
 use SICV\Clients\Actions\RegisterNewClientCommand;
 use SICV\Clients\ClientRepository;
 use SICV\Clients\Exceptions\ClientAlreadyExistsException;
+use SICV\Commander\CommandBus;
 
 class ClientController extends BaseController {
 
 	private $clientRepository;
 
-	function __construct(ClientRepository $clientRepository) {
+	function __construct(ClientRepository $clientRepository, CommandBus $commandBus) {
 		$this->clientRepository = $clientRepository;
+		parent::__construct($commandBus);
 	}
 
 	public function create(){

@@ -32,4 +32,8 @@ class LineageNode {
         return $lineageIds;
     }
 
+    public function isList(){
+        return $this->sw == 1 ? true : false;
+    }
+
 }
