@@ -20,4 +20,15 @@ class ClientRepository {
         return $client;
     }
 
+    public function searchClientByTerms($searchTerms) {
+
+        return Client::where('id_number', 'LIKE', "$searchTerms%")->orWhere(function($query) use ($searchTerms) {
+            $terms = explode(' ', $searchTerms);
+            foreach($terms as $term){
+                $query->where('name', 'LIKE', "%$term%");
+            }
+        })->get();
+
+    }
+
 }

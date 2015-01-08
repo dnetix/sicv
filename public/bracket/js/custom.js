@@ -1,3 +1,9 @@
+var SITE_BASE = "/";
+
+function getAjaxLoader(){
+   return '<div class="text-center mb20"><img src="/public/bracket/images/loaders/loader6.gif" alt=""></div>';
+}
+
 function addGritterNotification(gritterObject){
    jQuery.gritter.add({
       title: gritterObject.title || null,
@@ -136,9 +142,9 @@ jQuery(document).ready(function() {
       }
 
    });
-   
+
    reposition_searchform();
-   
+
    function reposition_searchform() {
       if(jQuery('.searchform').css('position') == 'relative') {
          jQuery('.searchform').insertBefore('.leftpanelinner .userlogged');
@@ -147,13 +153,7 @@ jQuery(document).ready(function() {
       }
    }
    
-   // Left Panel Collapsed
-   if(jQuery.cookie('leftpanel-collapsed')) {
-      jQuery('body').addClass('leftpanel-collapsed');
-      jQuery('.menutoggle').addClass('menu-collapsed');
-   }
-
-   jQuery('.gritter_message').on('fullyLoaded', function(e){
+   jQuery('.gritter_message').on('fullyLoaded', function(){
       gritter_tag = $(this);
       addGritterNotification({
          title: gritter_tag.data('title') || null,

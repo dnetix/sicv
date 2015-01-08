@@ -8,6 +8,12 @@ use SICV\Clients\Exceptions\ClientAlreadyExistsException;
 
 class ClientController extends BaseController {
 
+	private $clientRepository;
+
+	function __construct(ClientRepository $clientRepository) {
+		$this->clientRepository = $clientRepository;
+	}
+
 	public function create(){
 		// Shows the form to create a new Client
 		return View::make('client/client_new');
@@ -16,10 +22,8 @@ class ClientController extends BaseController {
 	public function view($id){
 		$data = [];
 
-		$clientRepository = App::make(ClientRepository::class);
-
 		try {
-			$data['client'] = $clientRepository->getClientById($id);
+			$data['client'] = $this->clientRepository->getClientById($id);
 		} catch (ModelNotFoundException $e) {
 			// No existe el cliente
 			Flash::overlay()->error("No existe el cliente que ingres&oacute;");
@@ -27,6 +31,14 @@ class ClientController extends BaseController {
 		}
 
 		return View::make('client/client_view', $data);
+	}
+
+	public function profile($id = null){
+		if(is_null($id)){
+			$id = Input::get('id');
+		}
+		$client = $this->clientRepository->getClientById($id);
+		return View::make('client.partials._client_profile')->with('client', $client);
 	}
 
 	public function store(){
@@ -52,6 +64,16 @@ class ClientController extends BaseController {
 		}
 
 		return Redirect::route('client.view', $client->getId());
+	}
+
+	public function search(){
+		$searchTerms = Input::get('terms');
+		$link = Input::get('link');
+
+		$clients = $this->clientRepository->searchClientByTerms($searchTerms);
+
+		return View::make('client.partials._client_search')->with(['clients' => $clients, 'link' => $link]);
+
 	}
 
 }

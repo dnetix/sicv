@@ -16,10 +16,9 @@
         <div class="col-md-9 col-sm-8 col-xs-12">
 
             {{ Form::open(['class' => 'form-horizontal', 'route' => ['client.edit', $client->getId()]]) }}
-                <div class="panel panel-default">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <div class="panel-btns">
-                            <a href="#" class="panel-close">×</a>
                             <a href="#" class="minimize">−</a>
                         </div>
                         <h4 class="panel-title">Datos de Cliente</h4>

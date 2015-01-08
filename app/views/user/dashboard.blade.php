@@ -29,7 +29,7 @@
                         <div class="col-xs-12">
                             {{ Form::open() }}
                                 <div class="form-group">
-                                    {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Buscar cliente']) }}
+                                    {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Buscar cliente', 'id' => 'client_search']) }}
                                 </div>
                             {{ Form::close() }}
                         </div>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="panel panel-dark panel-stat">
-                <a href="#">
+                <a href="{{ route('contract.new') }}">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-4">
@@ -72,57 +72,55 @@
 
         <div class="col-md-9 col-sm-8 col-xs-12">
 
-            <div class="panel panel-default">
+            <div id="client_search_results"></div>
+
+            <div class="panel panel-dark">
+                <div class="panel-heading">
+                    <div class="panel-title">Contratos Hoy</div>
+                </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5 class="subtitle mb5">Contratos Hoy</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Contrato</th>
-                                        <th>Cliente / Articulo</th>
-                                        <th>Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="#">23345</a></td>
-                                        <td>
-                                            <p><a href="#">Diego Arturo Calle Mora</a></p>
-                                            <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
-                                        </td>
-                                        <td>$ 1'800.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">23345</a></td>
-                                        <td>
-                                            <p><a href="#">Diego Arturo Calle Mora</a></p>
-                                            <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
-                                        </td>
-                                        <td>$ 1'800.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">23345</a></td>
-                                        <td>
-                                            <p><a href="#">Diego Arturo Calle Mora</a></p>
-                                            <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
-                                        </td>
-                                        <td>$ 1'800.000</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="2">Total</th>
-                                        <th>$ 5'400.000</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Contrato</th>
+                                    <th>Cliente / Articulo</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#">23345</a></td>
+                                    <td>
+                                        <p><a href="#">Diego Arturo Calle Mora</a></p>
+                                        <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
+                                    </td>
+                                    <td>$ 1'800.000</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">23345</a></td>
+                                    <td>
+                                        <p><a href="#">Diego Arturo Calle Mora</a></p>
+                                        <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
+                                    </td>
+                                    <td>$ 1'800.000</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">23345</a></td>
+                                    <td>
+                                        <p><a href="#">Diego Arturo Calle Mora</a></p>
+                                        <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
+                                    </td>
+                                    <td>$ 1'800.000</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2">Total</th>
+                                    <th>$ 5'400.000</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -134,4 +132,8 @@
 </div>
 
 <!-- contentpanel -->
+@endsection
+
+@section('js')
+    <script src="{{ public_assets('js/client_search.js') }}"></script>
 @endsection
