@@ -6,9 +6,14 @@ use SICV\Clients\Actions\EditClientInformationCommand;
 use SICV\Clients\ClientRepository;
 use SICV\Commander\CommandBus;
 use SICV\Contracts\Actions\CreateNewContractCommand;
+use SICV\Contracts\ContractRepository;
 
 class ContractController extends BaseController {
 
+    /**
+     * @var ContractRepository
+     */
+    private $contractRepository;
     /**
      * @var ClientRepository
      */
@@ -18,7 +23,8 @@ class ContractController extends BaseController {
      */
     private $articleRepository;
 
-    function __construct(ClientRepository $clientRepository, ArticleRepository $articleRepository, CommandBus $commandBus) {
+    function __construct(ContractRepository $contractRepository, ClientRepository $clientRepository, ArticleRepository $articleRepository, CommandBus $commandBus) {
+        $this->contractRepository = $contractRepository;
         $this->articleRepository = $articleRepository;
         $this->clientRepository = $clientRepository;
         parent::__construct($commandBus);
@@ -73,6 +79,16 @@ class ContractController extends BaseController {
         $createNewContractCommand->mapInputData(Input::all(), $client->getId(), Auth::id(), $articles_id);
         $this->execute($createNewContractCommand);
 
+    }
+
+    /**
+     * Returns a panel HTML with the contracts of the day sended
+     */
+    public function contractsofday(){
+        $day = Input::has('day') ? Input::get('day') : null;
+        $data['contracts'] = $this->contractRepository->getContractsOfDay($day);
+        $data['day'] = $day;
+        return View::make('contract.partials._contracts_day_panel', $data);
     }
 
 }

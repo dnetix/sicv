@@ -2,33 +2,35 @@ var searchTimer;
 
 $(document).ready(function(){
 
-    $("#client_search").on('keyup', function(){
-        var searchInput = $(this);
-        var terms = searchInput.val();
-        var link = searchInput.data('link') || 'link';
-        clearTimeout(searchTimer);
-        if(terms.length > 3) {
-            $("#client_search_results").html(getAjaxLoader());
-            searchTimer = setTimeout(function () {
-                $.ajax({
-                    url: SITE_BASE + "client/search",
-                    type: "get",
-                    data: {
-                        terms: terms,
-                        link: link
-                    },
-                    dataType: "html",
-                    success: function (data) {
-                        $("#client_search_results").html(data);
-                    }
-                });
-            }, 400);
-        }else{
-            $("#client_search_results").html("");
-        }
-    });
+    $("#client_search").on('keyup', searchClient);
 
 });
+
+function searchClient(){
+    var searchInput = $(this);
+    var terms = searchInput.val();
+    var link = searchInput.data('link') || 'link';
+    clearTimeout(searchTimer);
+    if(terms.length > 3) {
+        $("#client_search_results").html(getAjaxLoader());
+        searchTimer = setTimeout(function () {
+            $.ajax({
+                url: SITE_BASE + "client/search",
+                type: "get",
+                data: {
+                    terms: terms,
+                    link: link
+                },
+                dataType: "html",
+                success: function (data) {
+                    $("#client_search_results").html(data);
+                }
+            });
+        }, 400);
+    }else{
+        $("#client_search_results").html("");
+    }
+}
 
 function clientSelected(id){
     $("#client_search_results").html(getAjaxLoader());

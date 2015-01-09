@@ -23,6 +23,13 @@ function money_to_number($money){
 
     }
 
+    function subs_days_from_date($numberOfDays, $date = null){
+        if(is_null($date)){
+            $date = date('Y-m-d');
+        }
+        return date('Y-m-d', strtotime($numberOfDays.' day', strtotime($date)));
+    }
+
     function month_diff($fi, $ff = ''){
 
         $dif = fecha_diff($fi, $ff);

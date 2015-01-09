@@ -6,6 +6,7 @@ use SICV\Contracts\Contract;
 class Article extends Eloquent  {
 
 	protected $table = 'articles';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'description',
@@ -13,14 +14,16 @@ class Article extends Eloquent  {
 		'article_type_id'
 	];
 
-	public $timestamps = false;
-
 	public function getId(){
 		return $this->id;
 	}
 
 	public function getDescription(){
 		return $this->description;
+	}
+
+	public function getWeight(){
+		return $this->weight;
 	}
 
 	public function articleType(){

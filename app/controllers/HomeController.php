@@ -1,5 +1,7 @@
 <?php
 
+use SICV\Contracts\ContractRepository;
+
 class HomeController extends BaseController {
 
 	public function index(){
@@ -11,7 +13,9 @@ class HomeController extends BaseController {
 	}
 
 	public function dashboard(){
-		return View::make('user.dashboard');
+		$contractRepository = App::make(ContractRepository::class);
+		$data['contracts'] = $contractRepository->getContractsOfDay();
+		return View::make('user.dashboard', $data);
 	}
 
 	public function preview($template){

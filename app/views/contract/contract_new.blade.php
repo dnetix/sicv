@@ -24,7 +24,7 @@
                             {{ Form::label('client_search', 'Buscar Cliente', ['class' => 'control-label']) }}
                         </div>
                         <div class="col-md-6">
-                            {{ Form::text('client_search', null, ['class' => 'form-control input-sm', 'id' => 'client_search', 'data-link' => 'function']) }}
+                            {{ Form::text('client_search', null, ['class' => 'form-control input-sm', 'id' => 'client_search', 'data-link' => 'function', 'placeholder' => 'Busqueda por nombre o cedula']) }}
                         </div>
                     </div>
                 </div>

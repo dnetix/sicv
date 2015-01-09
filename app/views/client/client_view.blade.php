@@ -76,6 +76,28 @@
                 </div>
             {{ Form::close() }}
 
+            @include('contract.partials._contracts_client_panel')
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="panel panel-dark panel-stat">
+                <a href="{{ route('contract.new', $client->getId()) }}">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img src="{{ public_assets('images/template/is-document.png') }}" alt="" />
+                            </div>
+                            <div class="col-xs-8">
+                                <small class="stat-label">Nuevo</small>
+                                <h1>Contrato</h1>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
         </div>
 
     </div>

@@ -7,8 +7,18 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser
+        - WebDriver
         - AcceptanceHelper
+        - Laravel4
+        - Asserts
+        - FunctionalHelper
     config:
         PhpBrowser:
             url: 'http://sicv.dev'
+        WebDriver:
+            url: 'http://sicv.dev'
+            browser: firefox
+            window_size: 1024x768
+            wait: 10
+            capabilities:
+                unexpectedAlertBehaviour: 'accept'

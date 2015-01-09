@@ -5,13 +5,12 @@ use Eloquent;
 class ArticleType extends Eloquent  {
 
 	protected $table = 'article_types';
+	public $timestamps = false;
 
 	protected $fillable = [
 		'article_type',
 		'article_type_id'
 	];
-
-	public $timestamps = false;
 
 	public function getName(){
 		return $this->article_type;

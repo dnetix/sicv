@@ -74,55 +74,8 @@
 
             <div id="client_search_results"></div>
 
-            <div class="panel panel-dark">
-                <div class="panel-heading">
-                    <div class="panel-title">Contratos Hoy</div>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Contrato</th>
-                                    <th>Cliente / Articulo</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><a href="#">23345</a></td>
-                                    <td>
-                                        <p><a href="#">Diego Arturo Calle Mora</a></p>
-                                        <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
-                                    </td>
-                                    <td>$ 1'800.000</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">23345</a></td>
-                                    <td>
-                                        <p><a href="#">Diego Arturo Calle Mora</a></p>
-                                        <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
-                                    </td>
-                                    <td>$ 1'800.000</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">23345</a></td>
-                                    <td>
-                                        <p><a href="#">Diego Arturo Calle Mora</a></p>
-                                        <p>Computador HP Folio 13 Intel Core i5 4GB RAM</p>
-                                    </td>
-                                    <td>$ 1'800.000</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="2">Total</th>
-                                    <th>$ 5'400.000</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
+            <div id="contracts_day_panel">
+                @include('contract.partials._contracts_day_panel')
             </div>
 
         </div>
@@ -136,4 +89,5 @@
 
 @section('js')
     <script src="{{ public_assets('js/client_search.js') }}"></script>
+    <script src="{{ public_assets('js/contractsofday.js') }}"></script>
 @endsection

@@ -2,7 +2,7 @@
     <div class="form-group">
         {{ Form::label('article_description', 'Articulo:', ['class' => 'control-label col-sm-2']) }}
         <div class="col-sm-10">
-            {{ Form::text('article[]', null, ['class' => 'form-control', 'id' => 'article_description']) }}
+            {{ Form::text('article[]', null, ['class' => 'form-control', 'id' => 'article_description', 'placeholder' => 'Descripcion del art&iacute;culo']) }}
         </div>
     </div>
     <div class="form-group">
@@ -13,7 +13,7 @@
 
         {{ Form::label('weight[]', 'Peso:', ['class' => 'control-label col-sm-2']) }}
         <div class="col-sm-2">
-            {{ Form::text('weight[]', null, ['class' => 'form-control', 'id' => 'weight']) }}
+            {{ Form::text('weight[]', null, ['class' => 'form-control', 'id' => 'weight', 'placeholder' => 'gramos']) }}
         </div>
         <div class="col-sm-2 text-right">
             <input type="button" tabindex="-1" class="btn btn-danger" onclick="removeArticleFieldsContract(this)" value="x">

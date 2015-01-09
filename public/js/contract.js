@@ -49,10 +49,11 @@ function validateContract(){
         });
         return false;
     }
-    if($("#amount").val().length < 4){
+    var amount = moneyToNumber($("#amount").val());
+    if(!amount || isNaN(amount) || parseInt(amount) < 5000){
         addGritterNotification({
             title: "Error",
-            text: "Por favor asignele un valor al contrato",
+            text: "Por favor asignele un valor válido al contrato",
             class_name: "growl-danger"
         });
         return false;

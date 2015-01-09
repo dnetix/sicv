@@ -9,7 +9,7 @@ class CreateNewContractValidator extends FormValidator {
         'client_id' => 'required|exists:clients,id',
         'months' => 'required|numeric',
         'percentage' => 'required|numeric',
-        'amount' => 'required|numeric'
+        'amount' => 'required|numeric|min:5000'
     ];
 
 }

@@ -6,13 +6,19 @@ use SICV\Clients\Actions\RegisterNewClientCommand;
 use SICV\Clients\ClientRepository;
 use SICV\Clients\Exceptions\ClientAlreadyExistsException;
 use SICV\Commander\CommandBus;
+use SICV\Contracts\ContractRepository;
 
 class ClientController extends BaseController {
 
 	private $clientRepository;
+	/**
+	 * @var ContractRepository
+	 */
+	private $contractRepository;
 
-	function __construct(ClientRepository $clientRepository, CommandBus $commandBus) {
+	function __construct(ClientRepository $clientRepository, ContractRepository $contractRepository, CommandBus $commandBus) {
 		$this->clientRepository = $clientRepository;
+		$this->contractRepository = $contractRepository;
 		parent::__construct($commandBus);
 	}
 
@@ -25,12 +31,15 @@ class ClientController extends BaseController {
 		$data = [];
 
 		try {
-			$data['client'] = $this->clientRepository->getClientById($id);
+			$client = $this->clientRepository->getClientById($id);
 		} catch (ModelNotFoundException $e) {
 			// No existe el cliente
 			Flash::overlay()->error("No existe el cliente que ingres&oacute;");
 			return Redirect::route('user.dashboard');
 		}
+
+		$data['client'] = &$client;
+		$data['contracts'] = $this->contractRepository->getContractsOfClient($client);
 
 		return View::make('client/client_view', $data);
 	}
