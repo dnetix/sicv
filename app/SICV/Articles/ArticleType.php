@@ -12,7 +12,7 @@ class ArticleType extends Eloquent  {
 		'article_type_id'
 	];
 
-	public function getName(){
+	public function name(){
 		return $this->article_type;
 	}
 
@@ -22,6 +22,10 @@ class ArticleType extends Eloquent  {
 
 	public function parent(){
 		return $this->belongsTo(ArticleType::class, 'article_type_id');
+	}
+
+	public function toString(){
+		return $this->name();
 	}
 
 }

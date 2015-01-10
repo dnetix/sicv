@@ -4,8 +4,8 @@ use SICV\Utils\Presenters\Presenter;
 
 class ArticlePresenter extends Presenter {
 
-    public function getArticleType(){
-        return $this->entity->articleType->article_type;
+    public function articleType(){
+        return $this->entity->articleType->name();
     }
 
 }

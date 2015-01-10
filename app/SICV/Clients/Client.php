@@ -19,43 +19,43 @@ class Client extends Eloquent {
         'city'
     ];
 
-    public function getId() {
+    public function id() {
         return $this->id;
     }
 
-    public function getName() {
+    public function name() {
         return $this->name;
     }
 
-    public function getIdNumber() {
+    public function idNumber() {
         return $this->id_number;
     }
 
-    public function getIdType() {
+    public function idType() {
         return $this->id_type;
     }
 
-    public function getIdExpedition() {
+    public function idExpedition() {
         return $this->id_expedition;
     }
 
-    public function getAddress() {
+    public function address() {
         return $this->address;
     }
 
-    public function getCellNumber() {
+    public function cellNumber() {
         return $this->cell_number;
     }
 
-    public function getPhoneNumber() {
+    public function phoneNumber() {
         return $this->phone_number;
     }
 
-    public function getEmail() {
+    public function email() {
         return $this->email;
     }
 
-    public function getCity() {
+    public function city() {
         return $this->city;
     }
 

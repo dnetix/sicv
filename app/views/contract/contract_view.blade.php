@@ -2,7 +2,7 @@
 
 @section('pageheader')
     <div class="pageheader">
-        <h2><i class="fa fa-edit"></i> Contrato {{ $contract->getId() }}</h2>
+        <h2><i class="fa fa-edit"></i> Contrato {{ $contract->id() }}</h2>
         <div class="breadcrumb-wrapper">
             <span class="label">{{ Date::toHumanDate() }}</span>
         </div>
@@ -32,18 +32,18 @@
                             <div class="form-group">
                                 {{ Form::label('article_description', 'Articulo:', ['class' => 'control-label col-sm-2']) }}
                                 <div class="col-sm-10">
-                                    {{ Form::text('article[]', $article->getDescription(), ['class' => 'form-control', 'id' => 'article_description']) }}
+                                    {{ Form::text('article[]', $article->description(), ['class' => 'form-control', 'id' => 'article_description']) }}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('article_type_id[]', 'Tipo Articulo:', ['class' => 'control-label col-sm-2']) }}
                                 <div class="col-sm-4">
-                                    {{ Form::text('article_type_id[]', $article->present()->getArticleType(), ['class' => 'form-control', 'id' => 'article_description']) }}
+                                    {{ Form::text('article_type_id[]', $article->present()->articleType(), ['class' => 'form-control', 'id' => 'article_description']) }}
                                 </div>
 
                                 {{ Form::label('weight[]', 'Peso:', ['class' => 'control-label col-sm-2']) }}
                                 <div class="col-sm-2">
-                                    {{ Form::text('weight[]', $article->getWeight(), ['class' => 'form-control', 'id' => 'weight', 'placeholder' => 'gramos']) }}
+                                    {{ Form::text('weight[]', $article->weight(), ['class' => 'form-control', 'id' => 'weight', 'placeholder' => 'gramos']) }}
                                 </div>
                                 <div class="col-sm-2 text-right">
                                     <input type="button" tabindex="-1" class="btn btn-primary" onclick="addArticleFieldsContract()" value="+">
@@ -57,24 +57,24 @@
                     <div class="form-group">
                         {{ Form::label('monthsTranscurred', 'Nro Meses', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-4">
-                            {{ Form::text('monthsTranscurred', $contract->present()->getElapsedMonths(), ['class' => 'form-control']) }}
+                            {{ Form::text('monthsTranscurred', $contract->present()->elapsedMonths(), ['class' => 'form-control']) }}
                         </div>
 
                         {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('payment', $contract->present()->getPayment(), ['class' => 'form-control', 'disabled' => 'disabled']) }}
+                            {{ Form::text('payment', $contract->present()->payment(), ['class' => 'form-control', 'disabled' => 'disabled']) }}
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{ Form::label('amount', 'Valor Contrato:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-4">
-                            {{ Form::text('amount', $contract->present()->getAmount(), ['class' => 'form-control']) }}
+                            {{ Form::text('amount', $contract->present()->amount(), ['class' => 'form-control']) }}
                         </div>
 
                         {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('payment', $contract->present()->getPayment(), ['class' => 'form-control', 'disabled' => 'disabled']) }}
+                            {{ Form::text('payment', $contract->present()->payment(), ['class' => 'form-control', 'disabled' => 'disabled']) }}
                         </div>
                     </div>
                 </div>

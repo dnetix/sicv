@@ -24,7 +24,7 @@ class CreateOrRetrieveArticleCommandHandler implements CommandHandler {
         if(!is_null($command->possible_id)){
             try{
                 $article = $this->getArticleById($command);
-                if($article->getDescription() == $command->description){
+                if($article->description() == $command->description){
                     return $article;
                 }
             }catch (\Exception $e){

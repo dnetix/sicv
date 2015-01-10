@@ -62,7 +62,7 @@ class ClientController extends BaseController {
 			return Redirect::back()->withInput();
 		}
 
-		return Redirect::route('client.view', $client->getId());
+		return Redirect::route('client.view', $client->id());
 	}
 
 	public function edit($id){
@@ -74,7 +74,7 @@ class ClientController extends BaseController {
 			return Redirect::back()->withInput();
 		}
 
-		return Redirect::route('client.view', $client->getId());
+		return Redirect::route('client.view', $client->id());
 	}
 
 	public function search(){

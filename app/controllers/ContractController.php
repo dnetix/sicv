@@ -86,7 +86,7 @@ class ContractController extends BaseController {
         }
 
         $createNewContractCommand = new CreateNewContractCommand();
-        $createNewContractCommand->mapInputData(Input::all(), $client->getId(), Auth::id(), $articles_id);
+        $createNewContractCommand->mapInputData(Input::all(), $client->id(), Auth::id(), $articles_id);
         $this->execute($createNewContractCommand);
 
         Flash::info('Se ha guardado el contrato');

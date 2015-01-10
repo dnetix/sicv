@@ -24,23 +24,23 @@ class Contract extends Eloquent  {
 		'state'
 	];
 
-	public function getId(){
+	public function id(){
 		return $this->id;
 	}
 
-	public function getAmount(){
+	public function amount(){
 		return $this->amount;
 	}
 
-	public function getPayment(){
-		return ceil($this->getAmount() * ($this->percentage / 100));
+	public function payment(){
+		return ceil($this->amount() * ($this->percentage / 100));
 	}
 
-	public function getUserId(){
+	public function userId(){
 		return $this->user_id;
 	}
 
-	public function getClientId(){
+	public function clientId(){
 		return $this->client_id;
 	}
 
@@ -48,19 +48,19 @@ class Contract extends Eloquent  {
 		return $this->created_at;
 	}
 
-	public function getState(){
+	public function state(){
 		return $this->state;
 	}
 
-	public function getEndDate(){
+	public function endDate(){
 		return $this->end_date;
 	}
 
-	public function getElapsedMonths(){
-		return $this->getElapsedDifference()->months();
+	public function ellapsedMonths(){
+		return $this->elapsedDifference()->months();
 	}
 
-	public function getElapsedDifference(){
+	public function elapsedDifference(){
 		if($this->isActive()){
 			return DateHelper::getDifference($this->getCreatedAt());
 		}else{
@@ -68,9 +68,9 @@ class Contract extends Eloquent  {
 		}
 	}
 
-	public function getAmountToTerminate(){
+	public function amountToTerminate(){
 		if($this->isActive()){
-			$months = $this->getElapsedMonths();
+			$months = $this->elapsedMonths();
 			if($months == 0){
 				$months++;
 			}
@@ -79,7 +79,7 @@ class Contract extends Eloquent  {
 	}
 
 	public function isActive(){
-		return $this->getState() == ContractStates::ACTIVE;
+		return $this->state() == ContractStates::ACTIVE;
 	}
 
 	public function client(){

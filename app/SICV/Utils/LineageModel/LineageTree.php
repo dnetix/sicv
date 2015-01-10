@@ -141,7 +141,7 @@ class LineageTree {
         $opengroup = false;
         while($node = $this->nextNode()){
             $nodeLevel = $node->getLevel();
-            $optionContent = is_object($node->getData()) ? $node->getData()->getName() : $node->getData();
+            $optionContent = is_object($node->getData()) ? $node->getData()->toString() : $node->getData();
             if($nodeLevel == 0){
                 if($opengroup){
                     $opengroup = false;

@@ -10,15 +10,15 @@ class Extension extends Eloquent {
         'created_at'
     ];
 
-    public function getAmount(){
+    public function amount(){
         return $this->amount;
     }
 
-    public function getContractId(){
+    public function contractId(){
         return $this->contract_id;
     }
 
-    public function getCreatedAt(){
+    public function createdAt(){
         return $this->created_at;
     }
 

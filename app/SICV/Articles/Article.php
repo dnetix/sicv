@@ -19,15 +19,15 @@ class Article extends Eloquent  {
 		'article_type_id'
 	];
 
-	public function getId(){
+	public function id(){
 		return $this->id;
 	}
 
-	public function getDescription(){
+	public function description(){
 		return $this->description;
 	}
 
-	public function getWeight(){
+	public function weight(){
 		return $this->weight;
 	}
 
