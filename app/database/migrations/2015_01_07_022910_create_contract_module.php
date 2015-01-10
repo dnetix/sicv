@@ -48,9 +48,11 @@ class CreateContractModule extends Migration {
 			$table->increments('id');
 			$table->integer('amount');
 			$table->integer('contract_id')->unsigned();
+			$table->integer('user_id')->unsigned();
 			$table->dateTime('created_at');
 
 			$table->foreign('contract_id')->references('id')->on('contracts');
+			$table->foreign('user_id')->references('id')->on('users');
 		});
 
 		Schema::create('article_contract', function(Blueprint $table){

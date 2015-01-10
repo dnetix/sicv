@@ -27,7 +27,7 @@ class CreateNewContractCommandHandler implements CommandHandler {
 
     private function fillContractFields(Contract &$contract, $command) {
         $contract->fill((array) $command);
-        $contract->state = ContractStates::CREATED;
+        $contract->state = ContractStates::ACTIVE;
     }
 
     private function createNewContract(&$contract) {

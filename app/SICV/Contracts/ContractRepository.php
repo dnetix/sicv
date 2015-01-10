@@ -23,11 +23,15 @@ class ContractRepository {
         if(is_null($day)){
             $day = date('Y-m-d');
         }
-        return Contract::whereBetween('created_at', [$day.' 00:00:00', $day.' 23:59:59'])->with(['client', 'articles'])->get();
+        return Contract::whereBetween('created_at', [$day.' 00:00:00', $day.' 23:59:59'])->with(['client', 'articles'])->orderBy('id', 'desc')->get();
     }
 
     public function getContractsOfClient(Client $client) {
         return $client->contracts;
+    }
+
+    public function getContractById($id) {
+        return Contract::findOrFail($id);
     }
 
 }

@@ -191,7 +191,8 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-		'Flash'				=> 'SICV\Notifications\Flash'
+		'Flash'				=> 'SICV\Notifications\Flash',
+		'Date'				=> 'SICV\Utils\Dates\DateHelper'
 	),
 
 );

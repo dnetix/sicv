@@ -2,8 +2,13 @@
 
 use Eloquent;
 use SICV\Contracts\Contract;
+use SICV\Presenters\ArticlePresenter;
+use SICV\Utils\Presenters\PresentableTrait;
 
 class Article extends Eloquent  {
+
+	protected $presenter = ArticlePresenter::class;
+	use PresentableTrait;
 
 	protected $table = 'articles';
 	public $timestamps = false;

@@ -1,8 +1,10 @@
 <div class="panel panel-success">
     <div class="panel-heading">
+        @if(!isset($noChange))
         <div class="panel-btns">
             <a href="javascript:void(0)" onclick="openClientSearchPanel()"><i class="fa fa-arrow-circle-left"></i> Cambiar</a>
         </div>
+        @endif
         <h4 class="panel-title">Datos de Cliente</h4>
     </div>
     <div class="panel-body">

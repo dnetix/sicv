@@ -8,8 +8,21 @@ class ContractPresenter extends Presenter {
         return '$ '.number_format($this->entity->getAmount());
     }
 
+    public function getPayment(){
+        return '$ '.number_format($this->entity->getPayment());
+    }
+
     public function getClientName(){
         return $this->entity->client->getName();
+    }
+
+    public function getElapsedMonths(){
+        $difference = $this->entity->getElapsedDifference();
+        if($difference->months() != 0){
+            return $difference->months() . (($difference->months() > 1) ? ' meses' : ' mes');
+        }else{
+            return $difference->forHumans();
+        }
     }
 
     public function getArticlesNames(){

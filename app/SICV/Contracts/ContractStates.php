@@ -2,6 +2,6 @@
 
 class ContractStates {
 
-    const CREATED = 'created';
+    const ACTIVE = 'active';
 
 }

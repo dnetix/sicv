@@ -30,6 +30,16 @@ class ContractController extends BaseController {
         parent::__construct($commandBus);
     }
 
+    public function view($id){
+        $contract = $this->contractRepository->getContractById($id);
+
+        $data['contract'] =& $contract;
+        $data['client'] = $contract->client;
+        $data['articles'] = $contract->articles;
+
+        return View::make('contract.contract_view', $data);
+    }
+
     public function create($client_id = null){
         if(!is_null($client_id)){
             try {
@@ -78,6 +88,9 @@ class ContractController extends BaseController {
         $createNewContractCommand = new CreateNewContractCommand();
         $createNewContractCommand->mapInputData(Input::all(), $client->getId(), Auth::id(), $articles_id);
         $this->execute($createNewContractCommand);
+
+        Flash::info('Se ha guardado el contrato');
+        return Redirect::route('user.dashboard');
 
     }
 

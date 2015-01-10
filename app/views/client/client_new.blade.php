@@ -4,7 +4,7 @@
     <div class="pageheader">
         <h2><i class="fa fa-user"></i> Nuevo cliente</h2>
         <div class="breadcrumb-wrapper">
-            <span class="label">{{ date_print_format(date('Y-m-d')) }}</span>
+            <span class="label">{{ Date::toHumanDate() }}</span>
         </div>
     </div>
 @endsection
