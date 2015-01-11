@@ -18,6 +18,26 @@ function setAmountExtension(amount){
     updateValues($(".extensions #amount"));
 }
 
+function updateArticleLocation(element){
+    var location = $(element);
+    $.ajax({
+        url: SITE_BASE + "article/location",
+        type: "post",
+        data: {
+            id: location.data('article'),
+            location: location.val()
+        },
+        dataType: "json",
+        success: function (data) {
+            if(data.isOk){
+                location.addClass('btn-success');
+            }else{
+                location.addClass('btn-danger');
+            }
+        }
+    });
+}
+
 function validateContract(){
     if(!$("#client_id").val()){
         addGritterNotification({

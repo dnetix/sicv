@@ -5,7 +5,7 @@
             <div class="text-muted">{{ $article->present()->articleType() }}</div>
         </div>
         <div class="col-md-1">
-            {{ Form::text('location'.$article->id(), $article->present()->location(), ['class' => 'form-control location']) }}
+            {{ Form::text('location'.$article->id(), $article->present()->location(), ['class' => 'form-control location', 'data-article' => $article->id(), 'onchange' => 'updateArticleLocation(this)']) }}
         </div>
     </div>
     <hr />

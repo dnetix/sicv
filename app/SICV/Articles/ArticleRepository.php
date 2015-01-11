@@ -23,7 +23,11 @@ class ArticleRepository {
     }
 
     public function create(Article &$article) {
-        $article->save();
+        return $article->save();
+    }
+
+    public function update(Article $article) {
+        return $article->save();
     }
 
 }

@@ -2,7 +2,6 @@
 
 use SICV\Articles\Actions\CreateOrRetrieveArticleCommand;
 use SICV\Articles\ArticleRepository;
-use SICV\Clients\Actions\EditClientInformationCommand;
 use SICV\Clients\ClientRepository;
 use SICV\Core\Commander\CommandBus;
 use SICV\Contracts\Actions\CreateNewContractCommand;

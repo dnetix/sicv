@@ -24,6 +24,9 @@ Route::group(['before' => 'auth'], function(){
     Route::post('/contract/new', ['uses' => 'ContractController@store', 'as' => 'contract.store']);
     Route::get('/contract/day', ['uses' => 'ContractController@contractsofday', 'as' => 'contract.day']);
     Route::post('/contract/extension', ['uses' => 'ContractController@extension', 'as' => 'contract.extension']);
+
+    Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
+
 });
 
 Route::get('/preview/{template}', "HomeController@preview");
