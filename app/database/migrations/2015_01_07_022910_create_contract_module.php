@@ -39,6 +39,7 @@ class CreateContractModule extends Migration {
 			$table->increments('id');
 			$table->string('description', 255);
 			$table->float('weight')->nullable();
+			$table->string('location', 45)->nullable();
 			$table->integer('article_type_id')->unsigned();
 
 			$table->foreign('article_type_id')->references('id')->on('article_types');
@@ -49,7 +50,8 @@ class CreateContractModule extends Migration {
 			$table->integer('amount');
 			$table->integer('contract_id')->unsigned();
 			$table->integer('user_id')->unsigned();
-			$table->dateTime('created_at');
+			$table->dateTime('created_at')->index();
+			$table->dateTime('updated_at');
 
 			$table->foreign('contract_id')->references('id')->on('contracts');
 			$table->foreign('user_id')->references('id')->on('users');
@@ -72,6 +74,7 @@ class CreateContractModule extends Migration {
 			$table->integer('client_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->integer('contract_id')->nullable()->unsigned();
+			$table->integer('importance')->nullable();
 
 			$table->foreign('client_id')->references('id')->on('clients');
 			$table->foreign('user_id')->references('id')->on('users');

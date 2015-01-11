@@ -1,6 +1,6 @@
 <?php  namespace SICV\Articles\Actions;
 
-use SICV\Commander\Command;
+use SICV\Core\Commander\Command;
 
 class CreateOrRetrieveArticleCommand extends Command {
 

@@ -1,4 +1,4 @@
-<?php namespace SICV\Validations;
+<?php namespace SICV\Core\Validations;
 
 abstract class FormValidator {
     /**

@@ -1,6 +1,6 @@
 <?php namespace SICV\FormValidations;
 
-use SICV\Validations\FormValidator;
+use SICV\Core\Validations\FormValidator;
 
 class UserLoginFormValidation extends FormValidator {
 

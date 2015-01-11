@@ -1,5 +1,5 @@
 <?php 
-namespace SICV\Notifications; 
+namespace SICV\Utils\Notifications;
 
 use Illuminate\Session\Store;
 

@@ -1,6 +1,4 @@
-<?php 
-namespace SICV\Notifications; 
-
+<?php namespace SICV\Utils\Notifications;
 
 use Illuminate\Support\Facades\Facade;
 

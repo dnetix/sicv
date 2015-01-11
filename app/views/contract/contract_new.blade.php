@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div id="client_search_results">
+            <div id="client_results">
                 @if(isset($client))
                     @include('client.partials._client_profile')
                 @endif
@@ -38,20 +38,18 @@
 
             <div class="panel panel-dark">
                 <div class="panel-heading">
-                    <div class="panel-title">
-                        <h4>Datos del Contrato</h4>
-                    </div>
+                    <div class="panel-title">Datos del Contrato</div>
                 </div>
                 <div class="panel-body">
 
                     <div id="contract_articles">
-                        @include('contract.partials._article_contract', ['default_article' => true])
+                        @include('contract.partials._article_contract_new', ['default_article' => true])
                     </div>
 
                     <div class="form-group">
                         {{ Form::label('amount', 'Valor Contrato:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-4">
-                            {{ Form::text('amount', null, ['class' => 'form-control']) }}
+                            {{ Form::text('amount', null, ['class' => 'form-control money', 'data-also' => 'payment', 'data-percent' => 'percentage', 'autocomplete' => 'off']) }}
                         </div>
 
                         {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}
@@ -62,7 +60,7 @@
                 </div>
                 <div class="panel-footer">
                     <div class="form-group text-center">
-                        {{ Form::submit('Guardar Contrato', ['class' => 'btn btn-primary']) }}
+                        {{ Form::submit('Guardar Contrato', ['class' => 'btn btn-primary btn-block btn-lg']) }}
                     </div>
                 </div>
             </div>
@@ -72,9 +70,7 @@
         <div class="col-md-3">
             <div class="panel panel-dark">
                 <div class="panel-heading">
-                    <div class="panel-title">
-                        <h4>T&eacute;rminos del contrato</h4>
-                    </div>
+                    <div class="panel-title">T&eacute;rminos del contrato</div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
@@ -87,7 +83,7 @@
                     <div class="form-group">
                         {{ Form::label('percentage', 'Porcentaje:', ['class' => 'control-label col-sm-6']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('percentage', 10, ['class' => 'form-control']) }}
+                            {{ Form::text('percentage', 10, ['class' => 'form-control percent', 'autocomplete' => 'off']) }}
                         </div>
                     </div>
                 </div>
@@ -102,5 +98,5 @@
 
 @section('js')
     <script src="{{ public_assets('js/contract.js') }}"></script>
-    <script src="{{ public_assets('js/client_search.js') }}"></script>
+    <script src="{{ public_assets('js/clients.js') }}"></script>
 @endsection

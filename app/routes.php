@@ -1,6 +1,6 @@
 <?php
 
-App::bind('SICV\Commander\CommandBus', 'SICV\Commander\ValidationCommandBus');
+App::bind('SICV\Core\Commander\CommandBus', 'SICV\Core\Commander\ValidationCommandBus');
 
 Route::get('/', "HomeController@index");
 
@@ -15,7 +15,7 @@ Route::group(['before' => 'auth'], function(){
     Route::post('client/new', ['uses' => 'ClientController@store', 'as' => 'client.store']);
 
     Route::get('/client/view/{id}', ['uses' => 'ClientController@view', 'as' => 'client.view']);
-    Route::post('/client/edit/{id}', ['uses' => 'ClientController@edit', 'as' => 'client.edit']);
+    Route::post('/client/edit/{id?}', ['uses' => 'ClientController@edit', 'as' => 'client.edit']);
     Route::get('/client/profile/{id?}', ['uses' => 'ClientController@profile', 'as' => 'client.profile']);
     Route::get('/client/search', ['uses' => 'ClientController@search', 'as' => 'client.search']);
 
@@ -23,6 +23,7 @@ Route::group(['before' => 'auth'], function(){
     Route::get('/contract/new/{client_id?}', ['uses' => 'ContractController@create', 'as' => 'contract.new']);
     Route::post('/contract/new', ['uses' => 'ContractController@store', 'as' => 'contract.store']);
     Route::get('/contract/day', ['uses' => 'ContractController@contractsofday', 'as' => 'contract.day']);
+    Route::post('/contract/extension', ['uses' => 'ContractController@extension', 'as' => 'contract.extension']);
 });
 
 Route::get('/preview/{template}', "HomeController@preview");

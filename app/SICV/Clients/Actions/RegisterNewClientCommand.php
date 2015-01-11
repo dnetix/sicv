@@ -1,6 +1,6 @@
 <?php namespace SICV\Clients\Actions;
 
-use SICV\Commander\Command;
+use SICV\Core\Commander\Command;
 
 class RegisterNewClientCommand extends Command {
 

@@ -56,7 +56,7 @@ class Contract extends Eloquent  {
 		return $this->end_date;
 	}
 
-	public function ellapsedMonths(){
+	public function elapsedMonths(){
 		return $this->elapsedDifference()->months();
 	}
 
@@ -70,12 +70,24 @@ class Contract extends Eloquent  {
 
 	public function amountToTerminate(){
 		if($this->isActive()){
+			return $this->amount() + $this->duedExtensions();
+		}
+		return 0;
+	}
+
+	public function duedExtensions(){
+		if($this->isActive()){
 			$months = $this->elapsedMonths();
 			if($months == 0){
 				$months++;
 			}
-			//return $this->getPayment() * $months;
+			return (($months * $this->payment()) - $this->totalExtensions());
 		}
+		return 0;
+	}
+
+	public function totalExtensions(){
+		return $this->extensions->sum('amount');
 	}
 
 	public function isActive(){

@@ -72,7 +72,7 @@
 
         <div class="col-md-9 col-sm-8 col-xs-12">
 
-            <div id="client_search_results"></div>
+            <div id="client_results"></div>
 
             <div id="contracts_day_panel">
                 @include('contract.partials._contracts_day_panel')
@@ -88,6 +88,6 @@
 @endsection
 
 @section('js')
-    <script src="{{ public_assets('js/client_search.js') }}"></script>
+    <script src="{{ public_assets('js/clients.js') }}"></script>
     <script src="{{ public_assets('js/contractsofday.js') }}"></script>
 @endsection

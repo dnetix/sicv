@@ -12,6 +12,14 @@ class ContractPresenter extends Presenter {
         return '$ '.number_format($this->entity->payment());
     }
 
+    public function amountToTerminate(){
+        return '$ '.number_format($this->entity->amountToTerminate());
+    }
+
+    public function totalExtensions(){
+        return '$ '.number_format($this->entity->totalExtensions());
+    }
+
     public function clientName(){
         return $this->entity->client->name();
     }

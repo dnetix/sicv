@@ -8,7 +8,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => 'sicv.dev',
 			'database'  => 'sicv',
 			'username'  => 'root',
 			'password'  => 'root',

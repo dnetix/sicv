@@ -1,4 +1,4 @@
-<?php  namespace SICV\Commander;
+<?php  namespace SICV\Core\Commander;
 
 use Illuminate\Foundation\Application;
 

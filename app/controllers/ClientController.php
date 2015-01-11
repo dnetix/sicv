@@ -5,7 +5,7 @@ use SICV\Clients\Actions\EditClientInformationCommand;
 use SICV\Clients\Actions\RegisterNewClientCommand;
 use SICV\Clients\ClientRepository;
 use SICV\Clients\Exceptions\ClientAlreadyExistsException;
-use SICV\Commander\CommandBus;
+use SICV\Core\Commander\CommandBus;
 use SICV\Contracts\ContractRepository;
 
 class ClientController extends BaseController {
@@ -49,7 +49,11 @@ class ClientController extends BaseController {
 			$id = Input::get('id');
 		}
 		$client = $this->clientRepository->getClientById($id);
-		return View::make('client.partials._client_profile')->with('client', $client);
+		if(Input::has('edit')){
+			return View::make('client.partials._client_profile_edit')->with('client', $client);
+		}else{
+			return View::make('client.partials._client_profile')->with('client', $client);
+		}
 	}
 
 	public function store(){
@@ -65,7 +69,10 @@ class ClientController extends BaseController {
 		return Redirect::route('client.view', $client->id());
 	}
 
-	public function edit($id){
+	public function edit($id = null){
+		if(is_null($id)){
+			$id = Input::get('id');
+		}
 		$command = new EditClientInformationCommand($id, Input::all());
 		try {
 			$client = $this->execute($command);
@@ -74,7 +81,12 @@ class ClientController extends BaseController {
 			return Redirect::back()->withInput();
 		}
 
-		return Redirect::route('client.view', $client->id());
+		if(Request::ajax()){
+			return View::make('client.partials._client_profile')->with('client', $client);
+		}else{
+			return Redirect::route('client.view', $client->id());
+		}
+
 	}
 
 	public function search(){

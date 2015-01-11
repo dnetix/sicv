@@ -18,6 +18,7 @@ class ClientsTableSeeder extends Seeder {
 				'id_expedition' => $faker->city,
 				'address' => $faker->address,
 				'phone_number' => $faker->phoneNumber,
+				'cell_number' => $faker->phoneNumber,
 				'email' => $faker->email
 			]);
 		}

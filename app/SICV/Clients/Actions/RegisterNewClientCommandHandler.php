@@ -5,9 +5,9 @@ use SICV\Clients\Client;
 use SICV\Clients\ClientRepository;
 use SICV\Clients\Events\ClientWasRegistered;
 use SICV\Clients\Exceptions\ClientAlreadyExistsException;
-use SICV\Commander\CommandHandler;
-use SICV\Commander\Eventing\EventDispatcher;
-use SICV\Commander\Eventing\EventGenerator;
+use SICV\Core\Commander\CommandHandler;
+use SICV\Core\Commander\Eventing\EventDispatcher;
+use SICV\Core\Commander\Eventing\EventGenerator;
 
 class RegisterNewClientCommandHandler implements CommandHandler {
 

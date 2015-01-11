@@ -1,4 +1,4 @@
-<?php  namespace SICV\Commander\Eventing;
+<?php  namespace SICV\Core\Commander\Eventing;
 
 use Illuminate\Log\Writer;
 

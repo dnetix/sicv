@@ -2,8 +2,8 @@
 
 use SICV\Articles\Article;
 use SICV\Articles\ArticleRepository;
-use SICV\Commander\CommandHandler;
-use SICV\Commander\Eventing\EventGenerator;
+use SICV\Core\Commander\CommandHandler;
+use SICV\Core\Commander\Eventing\EventGenerator;
 
 class CreateOrRetrieveArticleCommandHandler implements CommandHandler {
 

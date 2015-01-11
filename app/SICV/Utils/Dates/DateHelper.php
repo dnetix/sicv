@@ -86,6 +86,10 @@ class DateHelper extends DateTime {
         return self::create($date)->translateToHumanDate();
     }
 
+    public static function toYearMonth($date = 'now'){
+        return self::create($date)->translateToYearMonth();
+    }
+
     public static function getDifference($fromDate, $toDate = 'now'){
         return new DateDifference(self::create($fromDate)->diff(new static($toDate)));
     }
@@ -96,6 +100,10 @@ class DateHelper extends DateTime {
 
     public function translateToLegalDate(){
         return $this->day.' días, del mes de '.self::$MONTHS[$this->month - 1].' del año '.$this->year;
+    }
+
+    public function translateToYearMonth(){
+        return self::$MONTHS[$this->month - 1].'/'.$this->year;
     }
 
     public function toSQLDate(){

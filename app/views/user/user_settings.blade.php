@@ -22,7 +22,7 @@
                             <a href="#" class="panel-close">×</a>
                             <a href="#" class="minimize">−</a>
                         </div>
-                        <h4 class="panel-title">Datos de Usuario</h4>
+                        <div class="panel-title">Datos de Usuario</div>
                     </div>
                     <div class="panel-body">
 
@@ -133,7 +133,7 @@
                         <a href="#" class="panel-close">×</a>
                         <a href="#" class="minimize">−</a>
                     </div>
-                    <h4 class="panel-title">Nombre de Usuario</h4>
+                    <div class="panel-title">Nombre de Usuario</div>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">

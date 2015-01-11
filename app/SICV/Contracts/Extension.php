@@ -1,11 +1,18 @@
 <?php namespace SICV\Contracts;
 
 use Eloquent;
+use SICV\Presenters\ExtensionPresenter;
+use SICV\Utils\Presenters\PresentableTrait;
 
 class Extension extends Eloquent {
 
+    protected $presenter = ExtensionPresenter::class;
+    use PresentableTrait;
+
     protected $table = 'extensions';
     protected $fillable = [
+        'user_id',
+        'contract_id',
         'amount',
         'created_at'
     ];

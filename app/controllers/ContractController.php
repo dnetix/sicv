@@ -4,9 +4,11 @@ use SICV\Articles\Actions\CreateOrRetrieveArticleCommand;
 use SICV\Articles\ArticleRepository;
 use SICV\Clients\Actions\EditClientInformationCommand;
 use SICV\Clients\ClientRepository;
-use SICV\Commander\CommandBus;
+use SICV\Core\Commander\CommandBus;
 use SICV\Contracts\Actions\CreateNewContractCommand;
+use SICV\Contracts\Actions\SaveNewExtensionCommand;
 use SICV\Contracts\ContractRepository;
+use SICV\Core\Validations\FormValidationException;
 
 class ContractController extends BaseController {
 
@@ -34,10 +36,30 @@ class ContractController extends BaseController {
         $contract = $this->contractRepository->getContractById($id);
 
         $data['contract'] =& $contract;
-        $data['client'] = $contract->client;
         $data['articles'] = $contract->articles;
+        $data['client'] = $contract->client;
+        $data['extensions'] = $contract->extensions;
 
         return View::make('contract.contract_view', $data);
+    }
+
+    public function extension(){
+        $command = new SaveNewExtensionCommand();
+        $command->mapInputData(
+            Auth::id(),
+            Input::get('contract_id'),
+            Input::get('amount')
+        );
+
+        try {
+            $extension = $this->execute($command);
+        } catch (FormValidationException $e) {
+            Flash::overlay()->error($e->getErrors()->all());
+            return Redirect::back()->withInput();
+        }
+
+        Flash::info('Se ha guardado el nuevo abono');
+        return Redirect::route('contract.view', $extension->contractId());
     }
 
     public function create($client_id = null){
@@ -55,10 +77,6 @@ class ContractController extends BaseController {
 
     public function store(){
         //TODO Refactor and a LOT!
-
-        $id = Input::get('client_id');
-        $command = new EditClientInformationCommand($id, Input::all());
-        $client = $this->execute($command);
 
         // Obtiene los articulos y los crea en caso de que no existan ya?
         $articlesInformation = Input::only(['article', 'weight', 'article_type_id', 'article_id']);
@@ -86,7 +104,7 @@ class ContractController extends BaseController {
         }
 
         $createNewContractCommand = new CreateNewContractCommand();
-        $createNewContractCommand->mapInputData(Input::all(), $client->id(), Auth::id(), $articles_id);
+        $createNewContractCommand->mapInputData(Input::all(), Input::get('client_id'), Auth::id(), $articles_id);
         $this->execute($createNewContractCommand);
 
         Flash::info('Se ha guardado el contrato');

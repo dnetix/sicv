@@ -15,6 +15,7 @@ class Article extends Eloquent  {
 
 	protected $fillable = [
 		'description',
+		'location',
 		'weight',
 		'article_type_id'
 	];
@@ -25,6 +26,10 @@ class Article extends Eloquent  {
 
 	public function description(){
 		return $this->description;
+	}
+
+	public function location(){
+		return $this->location;
 	}
 
 	public function weight(){

@@ -21,7 +21,7 @@
                         <div class="panel-btns">
                             <a href="#" class="minimize">−</a>
                         </div>
-                        <h4 class="panel-title">Datos de Cliente</h4>
+                        <div class="panel-title">Datos de Cliente</div>
                     </div>
                     <div class="panel-body">
 

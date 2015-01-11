@@ -22,7 +22,7 @@
                             <a href="#" class="panel-close">×</a>
                             <a href="#" class="minimize">−</a>
                         </div>
-                        <h4 class="panel-title">Nuevo Cliente</h4>
+                        <div class="panel-title">Nuevo Cliente</div>
                     </div>
                     <div class="panel-body">
 

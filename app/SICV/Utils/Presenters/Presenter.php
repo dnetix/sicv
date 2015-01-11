@@ -4,8 +4,8 @@ abstract class Presenter {
 
     protected $entity;
 
-    function __construct($entity) {
-        $this->entity = &$entity;
+    function __construct(&$entity) {
+        $this->entity =& $entity;
     }
     
     function __get($property){

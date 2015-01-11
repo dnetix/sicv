@@ -1,6 +1,6 @@
 <?php  namespace SICV\Contracts\Actions;
 
-use SICV\Commander\CommandHandler;
+use SICV\Core\Commander\CommandHandler;
 use SICV\Contracts\Contract;
 use SICV\Contracts\ContractRepository;
 use SICV\Contracts\ContractStates;

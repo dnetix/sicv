@@ -12,6 +12,8 @@ modules:
         - Laravel4
         - Asserts
         - FunctionalHelper
+        - Cli
+        - Filesystem
     config:
         PhpBrowser:
             url: 'http://sicv.dev'

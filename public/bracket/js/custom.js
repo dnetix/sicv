@@ -48,6 +48,35 @@ function numberToMoney(valor){
    return money;
 }
 
+function moneyKeyUpListener(event){
+   $(this).on("keyup", function(event){
+      // Checks for 8:Backspace and 46:Supress
+      if(!isNaN(String.fromCharCode(event.which)) || event.which == 8 || event.which == 46){
+         updateValues($(this));
+      }
+   });
+}
+
+function updateValues(element){
+   var amount = parseInt(moneyToNumber(element.val()));
+   element.val(numberToMoney(amount));
+   if(amount < 0){
+      element.closest('.form-group').addClass('has-warning');
+   }else{
+      element.closest('.form-group').removeClass('has-warning');
+   }
+   var also = element.data('also');
+   if(also){
+      var percent = element.data('percent');
+      if(percent){
+         $("#"+also).val(numberToMoney(Math.ceil(amount * (parseFloat($("#"+percent).val()) / 100))));
+      }else{
+         $("#"+also).val(numberToMoney(amount));
+      }
+   }
+
+}
+
 jQuery(window).load(function() {
    // Page Preloader
    jQuery('#status').fadeOut();
@@ -57,7 +86,23 @@ jQuery(window).load(function() {
    jQuery('.gritter_message').trigger('fullyLoaded');
 });
 
+var moneyElement;
 jQuery(document).ready(function() {
+
+   jQuery(".money").each(function (){
+      moneyElement = jQuery(this);
+      moneyElement.on('keyup', moneyKeyUpListener);
+      var percent = jQuery(this).data('percent');
+      if(percent){
+         jQuery("#"+percent).on('keyup', function(event){
+            if(!isNaN(String.fromCharCode(event.which)) || event.which == 8 || event.which == 46) {
+               updateValues(moneyElement);
+            }
+         });
+      }
+   });
+
+
    // Toggle Left Menu
    jQuery('.nav-parent > a').click(function() {
       

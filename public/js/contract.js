@@ -13,6 +13,11 @@ function removeArticleFieldsContract(element){
     }
 }
 
+function setAmountExtension(amount){
+    $(".extensions #amount").val(amount);
+    updateValues($(".extensions #amount"));
+}
+
 function validateContract(){
     if(!$("#client_id").val()){
         addGritterNotification({
@@ -61,22 +66,3 @@ function validateContract(){
 
     return true;
 }
-
-function updateValues(){
-    var input = $("#amount");
-    var amount = parseInt(moneyToNumber(input.val()));
-    input.val(numberToMoney(amount));
-    $("#payment").val(numberToMoney(Math.ceil(amount * (parseFloat($("#percentage").val()) / 100))));
-}
-
-$(document).ready(function(){
-    $("#amount").on("keyup", function(event){
-        // Checks for 8:Backspace and 46:Supress
-        if(!isNaN(String.fromCharCode(event.which)) || event.which == 8 || event.which == 46){
-            updateValues();
-        }
-    });
-    $("#percentage").on("keyup", function(){
-        updateValues();
-    });
-});

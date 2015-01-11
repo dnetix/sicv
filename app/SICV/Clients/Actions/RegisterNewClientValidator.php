@@ -1,6 +1,6 @@
 <?php namespace SICV\Clients\Actions;
 
-use SICV\Validations\FormValidator;
+use SICV\Core\Validations\FormValidator;
 
 class RegisterNewClientValidator extends FormValidator {
 

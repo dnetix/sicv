@@ -5,9 +5,9 @@ use SICV\Clients\Client;
 use SICV\Clients\ClientRepository;
 use SICV\Clients\Events\ClientWasRegistered;
 use SICV\Clients\Exceptions\ClientAlreadyExistsException;
-use SICV\Commander\CommandHandler;
-use SICV\Commander\Eventing\EventDispatcher;
-use SICV\Commander\Eventing\EventGenerator;
+use SICV\Core\Commander\CommandHandler;
+use SICV\Core\Commander\Eventing\EventDispatcher;
+use SICV\Core\Commander\Eventing\EventGenerator;
 
 class EditClientInformationCommandHandler implements CommandHandler {
 
@@ -44,7 +44,9 @@ class EditClientInformationCommandHandler implements CommandHandler {
     }
 
     private function fillClientInformation(&$client, $command) {
-        $client->fill((array) $command);
+        foreach($command->fieldsToEdit as $field){
+            $client->{$field} = $command->{$field};
+        }
     }
 
     /**

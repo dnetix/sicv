@@ -1,6 +1,6 @@
 <?php  namespace SICV\Contracts\Actions;
 
-use SICV\Validations\FormValidator;
+use SICV\Core\Validations\FormValidator;
 
 class CreateNewContractValidator extends FormValidator {
 

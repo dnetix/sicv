@@ -1,6 +1,6 @@
 <?php namespace SICV\Articles\Actions;
 
-use SICV\Validations\FormValidator;
+use SICV\Core\Validations\FormValidator;
 
 class CreateOrRetrieveArticleValidator extends FormValidator {
 

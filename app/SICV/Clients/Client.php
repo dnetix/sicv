@@ -2,8 +2,13 @@
 
 use Eloquent;
 use SICV\Contracts\Contract;
+use SICV\Presenters\ClientPresenter;
+use SICV\Utils\Presenters\PresentableTrait;
 
 class Client extends Eloquent {
+
+    protected $presenter = ClientPresenter::class;
+    use PresentableTrait;
 
     protected $table = 'clients';
 

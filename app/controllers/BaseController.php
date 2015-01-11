@@ -1,6 +1,6 @@
 <?php
 
-use SICV\Commander\CommandBus;
+use SICV\Core\Commander\CommandBus;
 
 class BaseController extends Controller {
 

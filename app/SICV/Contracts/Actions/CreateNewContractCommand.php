@@ -1,6 +1,6 @@
 <?php  namespace SICV\Contracts\Actions;
 
-use SICV\Commander\Command;
+use SICV\Core\Commander\Command;
 
 class CreateNewContractCommand extends Command {
 
@@ -32,14 +32,10 @@ class CreateNewContractCommand extends Command {
                 }
             }
         }
-        $this->normalizeAmount();
+        $this->amount = $this->normalizeAmount($this->amount);
         $this->client_id = $client_id;
         $this->user_id = $user_id;
         $this->articles_id = $articles_id;
-    }
-
-    private function normalizeAmount() {
-        $this->amount = preg_replace('/[\s\$\'\.\,]/', '', $this->amount);
     }
 
 }

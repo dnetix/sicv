@@ -12,6 +12,7 @@ URL: http://themepixels.com/
 @import url('toggles.css');
 @import url('chosen.css');
 @import url('lato.css');
+@import url('custom.css');
 
 body {
    background: #1d2939;

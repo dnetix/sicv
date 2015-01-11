@@ -123,7 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
 		'Laracasts\Commander\CommanderServiceProvider',
-		'SICV\Notifications\FlashNotificationServiceProvider',
+		'SICV\Utils\Notifications\FlashNotificationServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider'
 	),
 
@@ -191,7 +191,7 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-		'Flash'				=> 'SICV\Notifications\Flash',
+		'Flash'				=> 'SICV\Utils\Notifications\Flash',
 		'Date'				=> 'SICV\Utils\Dates\DateHelper'
 	),
 
