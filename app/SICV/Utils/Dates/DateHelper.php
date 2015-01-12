@@ -74,10 +74,6 @@ class DateHelper extends DateTime {
         return new static($date, $timeZone);
     }
 
-    public static function changeDays($numberOfDaysWithSign, $date = 'now'){
-        return self::create($date)->modify($numberOfDaysWithSign.' days');
-    }
-
     public static function toLegalDate($date = 'now'){
         return self::create($date)->translateToLegalDate();
     }
@@ -91,7 +87,11 @@ class DateHelper extends DateTime {
     }
 
     public static function getDifference($fromDate, $toDate = 'now'){
-        return new DateDifference(self::create($fromDate)->diff(new static($toDate)));
+        return self::create($fromDate)->toDifferenceWith($toDate);
+    }
+
+    public function toDifferenceWith($toDate = 'now'){
+        return new DateDifference($this->diff(new static($toDate)));
     }
 
     public function translateToHumanDate(){
@@ -106,8 +106,25 @@ class DateHelper extends DateTime {
         return self::$MONTHS[$this->month - 1].'/'.$this->year;
     }
 
+    public function translateToTime(){
+        return $this->format('H:i');
+    }
+
     public function toSQLDate(){
         return $this->format('Y-m-d');
+    }
+
+    public function toSQLTimestamp(){
+        return $this->format('Y-m-d H:i:s');
+    }
+
+    public function changeDays($numberOfDaysWithSign){
+        return $this->modify($numberOfDaysWithSign.' days');
+    }
+
+    public function changeMonths($numberOfMonthsWithSign){
+        $this->modify($numberOfMonthsWithSign.' months');
+        return $this;
     }
 
     public function __get($name){

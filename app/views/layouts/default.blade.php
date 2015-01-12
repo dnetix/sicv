@@ -30,6 +30,7 @@
     </section>
 
     <script src="{{ public_assets('bracket/js/jquery-1.10.2.min.js') }}"></script>
+    <script src="{{ public_assets('bracket/js/jquery.form.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/bootstrap.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/modernizr.min.js') }}"></script>
     <script src="{{ public_assets('bracket/js/toggles.min.js') }}"></script>

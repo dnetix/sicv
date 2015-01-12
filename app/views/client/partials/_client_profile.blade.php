@@ -1,4 +1,4 @@
-<div class="panel panel-success">
+<div class="panel panel-{{ $client->isFlagged() ? 'danger' : 'sucess' }}">
     <div class="panel-heading">
 
         <div class="panel-btns">

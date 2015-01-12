@@ -4,6 +4,10 @@ use SICV\Utils\Presenters\Presenter;
 
 class ClientPresenter extends Presenter {
 
+    public function name(){
+        return $this->entity->name().($this->entity->isFlagged() ? ' <span class="label label-danger">MARCADO</span>' : '');
+    }
+
     public function address(){
         return '<i class="fa fa-map-marker"></i> '.$this->entity->address();
     }

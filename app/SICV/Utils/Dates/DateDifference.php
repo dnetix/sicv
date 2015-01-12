@@ -4,8 +4,16 @@ use DateInterval;
 
 class DateDifference {
 
+    const MONTH = 1;
+    const DAY = 2;
+    const WEEK = 6;
+    const DAYSPERWEEK = 7;
+    const MONTHSPERYEAR = 12;
+
     public $dateInterval;
     public $intervals = ['y', 'm', 'd', 'h', 'i', 's'];
+
+    public $nextInterval = true;
 
     public $translations = [
         'año',
@@ -13,15 +21,16 @@ class DateDifference {
         'día',
         'hora',
         'minuto',
-        'segundo'
+        'segundo',
+        'semana'
     ];
 
     function __construct(DateInterval $dateInterval) {
         $this->dateInterval = $dateInterval;
     }
 
-    public function months(){
-        return $this->dateInterval->m;
+    public function inMonths(){
+        return ($this->dateInterval->y * self::MONTHSPERYEAR) + $this->dateInterval->m;
     }
 
     public function isFuture(){
@@ -67,9 +76,17 @@ class DateDifference {
             $text[] = 'hace';
         }
 
-        $text[] = $this->getValueFromUnit($biggerUnit).' '.$this->pluralize($biggerUnit);
+        // Special case WEEKS
+        if($biggerUnit == self::DAY && $this->getValueFromUnit($biggerUnit) > self::DAYSPERWEEK){
+            $text[] = $this->getValueFromUnit(self::WEEK).' '.$this->pluralize(self::WEEK);
+            // Instead of changing unit just remove the number of days told
+            $this->{$this->intervals[self::DAY]} -= $this->getValueFromUnit(self::WEEK) * self::DAYSPERWEEK;
+        }else{
+            $text[] = $this->getValueFromUnit($biggerUnit).' '.$this->pluralize($biggerUnit);
+            $biggerUnit = $this->nextUnit($biggerUnit);
+        }
 
-        if($biggerUnit = $this->nextUnit($biggerUnit)){
+        if($biggerUnit && $this->unitHasValue($biggerUnit)){
             $text[] = 'y '.$this->getValueFromUnit($biggerUnit).' '.$this->pluralize($biggerUnit);
         }
 
@@ -78,13 +95,19 @@ class DateDifference {
     }
 
     public function getValueFromUnit($unit){
-        return $this->{$this->intervals[$unit]};
+        if(array_key_exists($unit, $this->intervals)){
+            return $this->{$this->intervals[$unit]};
+        }else{
+            // If key doesn't exists we're talking about weeks
+            return floor($this->{$this->intervals[self::DAY]} / self::DAYSPERWEEK);
+        }
+
     }
 
     public function pluralize($unit){
         if($this->getValueFromUnit($unit) > 1){
-            // Unico caso especial
-            if($unit == 1){
+            // Special case
+            if($unit == self::MONTH){
                 return "meses";
             }
             return $this->translations[$unit].'s';
@@ -95,10 +118,14 @@ class DateDifference {
     }
 
     public function nextUnit($unit){
-        if(isset($this->intervals[$unit + 1]) && $this->getValueFromUnit($unit + 1)){
+        if(isset($this->intervals[$unit + 1])){
             return $unit + 1;
         }
         return false;
+    }
+
+    public function unitHasValue($unit){
+        return ($this->getValueFromUnit($unit) > 0) ? true : false;
     }
 
     function __get($name){

@@ -98,10 +98,35 @@
                 </a>
             </div>
 
+            @include('client.partials._client_notes')
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <div class="panel-title">Marcar cliente</div>
+                </div>
+                <div class="panel-body">
+                    <p>Puede marcar un cliente para que sea notado cada vez que se busca o que se realiza un contrato y as&iacute; forzar a leer informacion relevante.</p>
+                    {{ Form::open(['route' => 'client.toggleflag', 'class' => 'form']) }}
+                    <div class="form-group">
+                        {{ Form::hidden('client_id', $client->id()) }}
+                        @if($client->isFlagged())
+                            {{ Form::submit('Desmarcar Cliente', ['class' => 'btn btn-primary btn-block']) }}
+                        @else
+                            {{ Form::submit('Marcar Cliente', ['class' => 'btn btn-danger btn-block']) }}
+                        @endif
+                    </div>
+                    {{ Form::close() }}
+                </div>
+            </div>
+
         </div>
 
     </div>
 
 </div>
 <!-- contentpanel -->
+@endsection
+
+@section('js')
+    <script src="{{ public_assets('js/clients.js') }}"></script>
 @endsection

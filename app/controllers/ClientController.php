@@ -3,6 +3,8 @@
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use SICV\Clients\Actions\EditClientInformationCommand;
 use SICV\Clients\Actions\RegisterNewClientCommand;
+use SICV\Clients\Actions\SaveNewClientNoteCommand;
+use SICV\Clients\Actions\ToggleClientFlagCommand;
 use SICV\Clients\ClientRepository;
 use SICV\Clients\Exceptions\ClientAlreadyExistsException;
 use SICV\Core\Commander\CommandBus;
@@ -40,6 +42,7 @@ class ClientController extends BaseController {
 
 		$data['client'] = &$client;
 		$data['contracts'] = $this->contractRepository->getContractsOfClient($client);
+		$data['clientNotes'] = $this->clientRepository->getClientNotes($client);
 
 		return View::make('client/client_view', $data);
 	}
@@ -66,6 +69,12 @@ class ClientController extends BaseController {
 			return Redirect::back()->withInput();
 		}
 
+		return Redirect::route('client.view', $client->id());
+	}
+
+	public function toggleFlag(){
+		$command = new ToggleClientFlagCommand(Input::get('client_id'), Auth::id());
+		$client = $this->execute($command);
 		return Redirect::route('client.view', $client->id());
 	}
 
@@ -96,7 +105,29 @@ class ClientController extends BaseController {
 		$clients = $this->clientRepository->searchClientByTerms($searchTerms);
 
 		return View::make('client.partials._client_search')->with(['clients' => $clients, 'link' => $link]);
+	}
 
+	public function note(){
+		$command = new SaveNewClientNoteCommand(
+			Input::get('client_id'),
+			Auth::id(),
+			Input::get('note'),
+			(Input::has('contract_id') ? Input::get('contract_id') : null),
+			Input::get('importance')
+		);
+		$clientNote = $this->execute($command);
+		return View::make('client.partials._client_notes_item')->with('clientNote', $clientNote);
+	}
+
+	public function notes(){
+		$client = $this->clientRepository->getClientById(Input::get('client_id'));
+		$clientNotes = $this->clientRepository->getClientNotes($client);
+
+		$data['client'] =& $client;
+		$data['clientNotes'] =& $clientNotes;
+		$data['viewOnly'] = true;
+
+		return View::make('client.partials._client_notes', $data);
 	}
 
 }

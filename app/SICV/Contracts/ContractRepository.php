@@ -40,4 +40,8 @@ class ContractRepository {
         return $extension->save();
     }
 
+    public function update($contract) {
+        return $contract->save();
+    }
+
 }

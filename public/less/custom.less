@@ -1,3 +1,31 @@
+td.amount {
+  min-width: 100px;
+}
+
+.panel-contract-options {
+
+}
+.panel-contract-options .stat {
+  margin-bottom: 10px;
+}
+.panel-contract-options .stat h2, .panel-contract-options .stat h3, .panel-contract-options .stat h5 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.panel-contract-options .well h3 {
+  margin-top: 0;
+}
+
+table tr.contract td {
+  vertical-align: middle;
+}
+.contract-id {
+  text-align: center;
+}
+  .contract-id a {
+    font-size: larger;
+  }
+
 .panel-success .panel-btns a {
   opacity: 0.6;
 }
@@ -9,3 +37,65 @@
 .overflow {
   overflow: auto;
 }
+
+.contract-label {
+  font-size: 11px;
+  font-weight: normal;
+  padding: 4px;
+  box-sizing: border-box;
+  width: 90px;
+  display: inline-block;
+  line-height: 1;
+  text-align: center;
+  vertical-align: baseline;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+.panel.contract-active .panel-heading, .label-active {
+  background-color: #009926;
+}
+  .panel.contract-active .panel-heading .panel-title, .label-active {
+    color: #ffffff;
+  }
+.panel.contract-terminated .panel-heading, .label-terminated {
+  background-color: #f0ad4e;
+}
+
+table tr.flagged {
+  background-color: #d9534f;
+}
+  table tr.flagged td, table tr.flagged h4, table tr.flagged small, table tr.flagged .text-muted, table tr.flagged p, table tr.flagged a {
+    color: #ffffff;
+  }
+
+
+.client-notes-list .client-note .note-header h5 {
+  color: #0390fd;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.client-notes-list .client-note .note-header {
+  margin-bottom: 10px;
+}
+
+.client-notes-list .client-note {
+  border-bottom: solid 1px #aaaaaa;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.client-notes-list .client-note .body {
+  padding: 8px;
+}
+
+  .client-notes-list .client-note.danger .body {
+    background-color: #d9534f;
+    color: #ffffff;
+  }
+
+  .client-notes-list .client-note.warning .body {
+    background-color: #f0ad4e;
+    color: #ffffff;
+  }

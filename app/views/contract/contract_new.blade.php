@@ -88,6 +88,8 @@
                     </div>
                 </div>
             </div>
+
+            <div id="client-notes-wrapper"></div>
         </div>
 
     </div>

@@ -18,12 +18,16 @@ Route::group(['before' => 'auth'], function(){
     Route::post('/client/edit/{id?}', ['uses' => 'ClientController@edit', 'as' => 'client.edit']);
     Route::get('/client/profile/{id?}', ['uses' => 'ClientController@profile', 'as' => 'client.profile']);
     Route::get('/client/search', ['uses' => 'ClientController@search', 'as' => 'client.search']);
+    Route::post('/client/flag', ['uses' => 'ClientController@toggleFlag', 'as' => 'client.toggleflag']);
+    Route::post('/client/note', ['uses' => 'ClientController@note', 'as' => 'client.note']);
+    Route::get('/client/notes', ['uses' => 'ClientController@notes', 'as' => 'client.notes']);
 
     Route::get('/contract/view/{id}', ['uses' => 'ContractController@view', 'as' => 'contract.view']);
     Route::get('/contract/new/{client_id?}', ['uses' => 'ContractController@create', 'as' => 'contract.new']);
     Route::post('/contract/new', ['uses' => 'ContractController@store', 'as' => 'contract.store']);
     Route::get('/contract/day', ['uses' => 'ContractController@contractsofday', 'as' => 'contract.day']);
     Route::post('/contract/extension', ['uses' => 'ContractController@extension', 'as' => 'contract.extension']);
+    Route::post('/contract/terminate', ['uses' => 'ContractController@terminate', 'as' => 'contract.terminate']);
 
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
 

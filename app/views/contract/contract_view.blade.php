@@ -15,47 +15,59 @@
     @include('layouts.partials._errors')
     <div class="row">
         <div class="col-md-9">
-
             <div id="client_results">
-            @include('client.partials._client_profile', ['noChange' => true])
+                @include('client.partials._client_profile', ['noChange' => true])
+            </div>
+
+            <div class="panel panel-contract-options contract-{{ $contract->state() }}">
+                <div class="panel-heading">
+                    <div class="panel-title">Contrato {{ $contract->present()->state() }}</div>
+                </div>
+                <div class="panel-body">
+                    {{-- //TODO views for all states --}}
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="stat">
+                                <small>Fecha creaci&oacute;n</small>
+                                <h3>{{ $contract->present()->createdAt() }}</h3>
+                                <div class="text-muted">{{ $contract->present()->elapsedSinceCreated() }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-sm-offset-1 amount">
+                            <div class="stat">
+                                <small>Valor contrato</small>
+                                <h3>{{ $contract->present()->amount() }}</h3>
+                            </div>
+                            <div class="stat">
+                                <small>Pago mes</small>
+                                <h5>{{ $contract->present()->payment() }} <strong>({{ $contract->present()->percentage() }})</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    {{-- //TODO options for active state --}}
+                    @if($contract->isActive())
+                        @include('contract.partials.displays._active')
+                    @elseif($contract->isTerminated())
+                        @include('contract.partials.displays._terminated')
+                    @endif
+
+                </div>
             </div>
 
             <div class="panel panel-dark">
                 <div class="panel-heading">
-                    <div class="panel-title">Datos del Contrato</div>
+                    <div class="panel-title">Articulo(s)</div>
                 </div>
                 <div class="panel-body">
 
                     <div id="contract_articles">
-                        <h5>Articulo(s)</h5>
                         @foreach($articles as $article)
                             @include('contract.partials._article_contract', ['article' => $article])
                         @endforeach
                     </div>
 
-                    <div class="form-group">
-                        {{ Form::label('monthsTranscurred', 'Nro Meses', ['class' => 'control-label col-sm-2']) }}
-                        <div class="col-sm-4">
-                            {{ Form::text('monthsTranscurred', $contract->present()->elapsedMonths(), ['class' => 'form-control']) }}
-                        </div>
-
-                        {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}
-                        <div class="col-sm-3">
-                            {{ Form::text('payment', $contract->present()->amountToTerminate(), ['class' => 'form-control', 'disabled' => 'disabled']) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {{ Form::label('amount', 'Valor Contrato:', ['class' => 'control-label col-sm-2']) }}
-                        <div class="col-sm-4">
-                            {{ Form::text('amount', $contract->present()->amount(), ['class' => 'form-control']) }}
-                        </div>
-
-                        {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}
-                        <div class="col-sm-3">
-                            {{ Form::text('payment', $contract->present()->payment(), ['class' => 'form-control', 'disabled' => 'disabled']) }}
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -67,7 +79,7 @@
             {{ Form::open(['class' => 'form-horizontal', 'route' => 'contract.extension', 'onsubmit' => 'return validateExtension();']) }}
             <div class="panel panel-warning extensions">
                 <div class="panel-heading">
-                    <div class="panel-title">Abonos [{{ $contract->present()->totalExtensions() }}]</div>
+                    <div class="panel-title">Abonos [{{ $contract->present()->payedExtensions() }}]</div>
                 </div>
                 <div class="panel-body">
                     @forelse($extensions as $extension)
@@ -96,26 +108,7 @@
             {{ Form::close() }}
             @endif
 
-            <div class="panel panel-dark">
-                <div class="panel-heading">
-                    <div class="panel-title">T&eacute;rminos del contrato</div>
-                </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        {{ Form::label('months', 'Nro Meses:', ['class' => 'control-label col-sm-6']) }}
-                        <div class="col-sm-3">
-                            {{ Form::text('months', 4, ['class' => 'form-control']) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {{ Form::label('percentage', 'Porcentaje:', ['class' => 'control-label col-sm-6']) }}
-                        <div class="col-sm-3">
-                            {{ Form::text('percentage', 10, ['class' => 'form-control']) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('client.partials._client_notes')
 
         </div>
 

@@ -1,8 +1,8 @@
 <div class="panel panel-dark">
     <div class="panel-heading">
         <div class="panel-btns">
-            <a href="javascript:void(0)" onclick="getContractsOfDay('{{ Date::changeDays(+1, (isset($day) ? $day : null))->toSQLDate() }}')" class="fa fa-chevron-circle-right">&nbsp;</a>
-            <a href="javascript:void(0)" onclick="getContractsOfDay('{{ Date::changeDays(-1, (isset($day) ? $day : null))->toSQLDate() }}')" class="fa fa-chevron-circle-left">&nbsp;</a>
+            <a href="javascript:void(0)" onclick="getContractsOfDay('{{ Date::create((isset($day) ? $day : null))->changeDays(+1)->toSQLDate() }}')" class="fa fa-chevron-circle-right">&nbsp;</a>
+            <a href="javascript:void(0)" onclick="getContractsOfDay('{{ Date::create((isset($day) ? $day : null))->changeDays(-1)->toSQLDate() }}')" class="fa fa-chevron-circle-left">&nbsp;</a>
         </div>
         <div class="panel-title">Contratos del d&iacute;a{{ (isset($day) && !Date::getDifference($day)->isToday()) ? ' ['.Date::toHumanDate($day).']' : '' }}</div>
     </div>
@@ -15,6 +15,7 @@
                     <th>Contrato</th>
                     <th>Cliente / Articulo</th>
                     <th>Valor</th>
+                    <th>Estado</th>
                 </tr>
                 </thead>
                 @endif

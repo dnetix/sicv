@@ -1,4 +1,4 @@
-<tr>
+<tr{{ $client->isFlagged() ? ' class="flagged"' : '' }}>
     <td>
         @if($link == "link")
         <a style="display: block;" href="{{ route('client.view', ['id' => $client->id()]) }}">
@@ -7,10 +7,10 @@
         @endif
             <div class="media">
                 <div class="media-body">
-                    <span class="media-meta pull-right">{{ $client->idNumber() }}</span>
-                    <h4 class="text-primary">{{ $client->name() }}</h4>
+                    <span class="media-meta pull-right">{{ $client->present()->idNumber() }}</span>
+                    <h4 class="text-primary">{{ $client->present()->name() }}</h4>
                     <small class="text-muted"></small>
-                    <p class="email-summary"><strong>{{ $client->phoneNumber() }}</strong> {{ $client->address() }}</p>
+                    <p class="email-summary"><strong>{{ $client->present()->phoneNumber() }}</strong> {{ $client->present()->address() }}</p>
                 </div>
             </div>
         </a>

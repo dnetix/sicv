@@ -25,6 +25,7 @@ class CreateClientsTable extends Migration {
 			$table->string('city')->nullable();
 			$table->string('email')->nullable();
 			$table->string('profile_image')->nullable();
+			$table->boolean('flagged');
 			$table->timestamps();
 		});
 	}

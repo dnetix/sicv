@@ -21,7 +21,9 @@ class Contract extends Eloquent  {
 		'months',
 		'percentage',
 		'amount',
-		'state'
+		'state',
+		'end_date',
+		'end_amount'
 	];
 
 	public function id(){
@@ -44,7 +46,15 @@ class Contract extends Eloquent  {
 		return $this->client_id;
 	}
 
-	public function getCreatedAt(){
+	public function months(){
+		return $this->months;
+	}
+
+	public function percentage(){
+		return $this->percentage;
+	}
+
+	public function createdAt(){
 		return $this->created_at;
 	}
 
@@ -52,22 +62,46 @@ class Contract extends Eloquent  {
 		return $this->state;
 	}
 
+	public function endAmount(){
+		return $this->end_amount;
+	}
+
 	public function endDate(){
 		return $this->end_date;
 	}
 
+	/**
+	 * Returns the number of months elapsed, because it's upfront always it's plus one
+	 * @return int
+	 */
 	public function elapsedMonths(){
-		return $this->elapsedDifference()->months();
+		return $this->elapsedDifference()->inMonths() + 1;
 	}
 
+	/**
+	 * Return the number of months of the contract and contains the extended months too
+	 * @return int|mixed
+	 */
+	public function contractMonths(){
+		return $this->months() + $this->monthsExtended();
+	}
+
+	/**
+	 * Difference between the created_at and end_date (If this last one still not happen, so NOW)
+	 * @return \SICV\Utils\Dates\DateDifference
+	 */
 	public function elapsedDifference(){
 		if($this->isActive()){
-			return DateHelper::getDifference($this->getCreatedAt());
+			return DateHelper::getDifference($this->createdAt());
 		}else{
-			return DateHelper::getDifference($this->getCreatedAt(), $this->getEndDate());
+			return DateHelper::getDifference($this->createdAt(), $this->endDate());
 		}
 	}
 
+	/**
+	 * Basically the duedExtensions + the amount of the contract
+	 * @return int
+	 */
 	public function amountToTerminate(){
 		if($this->isActive()){
 			return $this->amount() + $this->duedExtensions();
@@ -75,23 +109,43 @@ class Contract extends Eloquent  {
 		return 0;
 	}
 
+	/**
+	 * Returns the amount that the client ows in extensions.
+	 * @return int
+	 */
 	public function duedExtensions(){
 		if($this->isActive()){
-			$months = $this->elapsedMonths();
-			if($months == 0){
-				$months++;
-			}
-			return (($months * $this->payment()) - $this->totalExtensions());
+			return (($this->elapsedMonths() * $this->payment()) - $this->payedExtensions());
 		}
 		return 0;
 	}
 
-	public function totalExtensions(){
+	public function profit(){
+		return ($this->payedExtensions() + $this->endAmount()) - $this->amount();
+	}
+
+	public function profitPercent(){
+		return ($this->profit() / $this->amount()) * 100;
+	}
+
+	/**
+	 * Total of extensions payed to the contract
+	 * @return int
+	 */
+	public function payedExtensions(){
 		return $this->extensions->sum('amount');
+	}
+
+	public function monthsExtended(){
+		return floor($this->payedExtensions() / $this->payment());
 	}
 
 	public function isActive(){
 		return $this->state() == ContractStates::ACTIVE;
+	}
+
+	public function isTerminated(){
+		return $this->state() == ContractStates::TERMINATED;
 	}
 
 	public function client(){

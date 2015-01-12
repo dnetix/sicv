@@ -24,12 +24,14 @@ class CreateContractModule extends Migration {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->integer('client_id')->unsigned();
-			$table->dateTime('end_date')->nullable();
 			$table->integer('months');
 			$table->float('percentage');
 			$table->integer('amount');
-			$table->string('state', 10);
-			$table->timestamps();
+			$table->string('state', 10)->index();
+			$table->timestamp('created_at');
+			$table->timestamp('updated_at')->nullable();
+			$table->timestamp('end_date')->nullable();
+			$table->integer('end_amount')->nullable();
 
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('client_id')->references('id')->on('clients');
@@ -50,8 +52,8 @@ class CreateContractModule extends Migration {
 			$table->integer('amount');
 			$table->integer('contract_id')->unsigned();
 			$table->integer('user_id')->unsigned();
-			$table->dateTime('created_at')->index();
-			$table->dateTime('updated_at');
+			$table->timestamp('created_at')->index();
+			$table->timestamp('updated_at');
 
 			$table->foreign('contract_id')->references('id')->on('contracts');
 			$table->foreign('user_id')->references('id')->on('users');
@@ -69,12 +71,11 @@ class CreateContractModule extends Migration {
 		Schema::create('client_notes', function(Blueprint $table){
 			$table->increments('id');
 			$table->text('note');
-			$table->dateTime('created_at')->nullable();
-			$table->dateTime('updated_at')->nullable();
+			$table->timestamps();
 			$table->integer('client_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->integer('contract_id')->nullable()->unsigned();
-			$table->integer('importance')->nullable();
+			$table->string('importance', 10);
 
 			$table->foreign('client_id')->references('id')->on('clients');
 			$table->foreign('user_id')->references('id')->on('users');

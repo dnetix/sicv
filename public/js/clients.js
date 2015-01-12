@@ -1,9 +1,18 @@
 var searchTimer;
 
 $(document).ready(function(){
-
     $("#client_search").on('keyup', searchClient);
-
+    $("#client-notes form").ajaxForm({
+        beforeSubmit: function(){
+            $("#client-notes form .form-group").fadeOut("fast");
+        },
+        clearForm: true,
+        success: function(data){
+            $("#client-notes-list").prepend(data);
+            $("#client-notes form .form-group").fadeIn("fast");
+        }
+    });
+    $("#client-notes form .submit-ajax").removeClass('disabled');
 });
 
 function searchClient(){
@@ -44,6 +53,20 @@ function clientSelected(id){
         success: function (data) {
             $("#client_search_panel").slideUp("fast");
             $("#client_results").html(data);
+            if($("#client-notes-wrapper").length){
+                $("#client-notes-wrapper").html(getAjaxLoader());
+                $.ajax({
+                    url: SITE_BASE + "client/notes",
+                    type: "get",
+                    data: {
+                        client_id: id
+                    },
+                    dataType: "html",
+                    success: function (data) {
+                        $("#client-notes-wrapper").html(data);
+                    }
+                });
+            }
         }
     });
 }
@@ -91,3 +114,4 @@ function updateClientInformation(){
         }
     });
 }
+

@@ -21,7 +21,8 @@ class Client extends Eloquent {
         'cell_number',
         'phone_number',
         'email',
-        'city'
+        'city',
+        'flagged'
     ];
 
     public function id() {
@@ -64,8 +65,16 @@ class Client extends Eloquent {
         return $this->city;
     }
 
+    public function isFlagged(){
+        return $this->flagged == 1;
+    }
+
     public function contracts(){
         return $this->hasMany(Contract::class)->with('articles');
+    }
+
+    public function notes(){
+        return $this->hasMany(ClientNote::class);
     }
 
 }

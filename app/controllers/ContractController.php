@@ -3,6 +3,7 @@
 use SICV\Articles\Actions\CreateOrRetrieveArticleCommand;
 use SICV\Articles\ArticleRepository;
 use SICV\Clients\ClientRepository;
+use SICV\Contracts\Actions\TerminateContractCommand;
 use SICV\Core\Commander\CommandBus;
 use SICV\Contracts\Actions\CreateNewContractCommand;
 use SICV\Contracts\Actions\SaveNewExtensionCommand;
@@ -38,6 +39,7 @@ class ContractController extends BaseController {
         $data['articles'] = $contract->articles;
         $data['client'] = $contract->client;
         $data['extensions'] = $contract->extensions;
+        $data['clientNotes'] = $this->clientRepository->getClientNotes($data['client'], $contract->id());
 
         return View::make('contract.contract_view', $data);
     }
@@ -57,7 +59,7 @@ class ContractController extends BaseController {
             return Redirect::back()->withInput();
         }
 
-        Flash::info('Se ha guardado el nuevo abono');
+        Flash::overlay()->info('Se ha guardado el nuevo abono');
         return Redirect::route('contract.view', $extension->contractId());
     }
 
@@ -72,6 +74,15 @@ class ContractController extends BaseController {
         $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
 
         return View::make('contract.contract_new', $data);
+    }
+
+    public function terminate(){
+        $command = new TerminateContractCommand();
+        $command->setCommandValues(Input::get('id'), Input::get('amount'));
+        $this->execute($command);
+
+        Flash::overlay()->info("Se ha cancelado el contrato exitosamente");
+        return Redirect::route('user.dashboard');
     }
 
     public function store(){
