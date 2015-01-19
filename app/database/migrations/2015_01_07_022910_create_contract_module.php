@@ -84,7 +84,6 @@ class CreateContractModule extends Migration {
 
 	}
 
-
 	/**
 	 * Reverse the migrations.
 	 *

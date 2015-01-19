@@ -32,6 +32,67 @@ class ContractController extends BaseController {
         parent::__construct($commandBus);
     }
 
+    public function create($client_id = null){
+        if(!is_null($client_id)){
+            try {
+                $data['client'] = $this->clientRepository->getClientById($client_id);
+            } catch (Exception $e) {
+                // Do nothing
+            }
+        }
+        $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
+
+        return View::make('contract.contract_new', $data);
+    }
+
+    public function copy($contract_id){
+        $contract = $this->contractRepository->getContractById($contract_id);
+        //TODO Refactor within the repositories
+        $data['contract'] =& $contract;
+        $data['client'] =& $contract->client;
+        $data['articles'] =& $contract->articles;
+        $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
+
+        return View::make('contract.contract_new', $data);
+    }
+
+    public function store(){
+        //TODO Refactor and a LOT!
+
+        // Obtiene los articulos y los crea en caso de que no existan ya?
+        $articlesInformation = Input::only(['article', 'weight', 'article_type_id', 'article_id']);
+        $article_count = sizeof(Input::get('article'));
+
+        $articles_id = [];
+
+        for($i = 0; $i < $article_count; $i++){
+            if(!empty($articlesInformation['article'])) {
+                $articles_id[] = $this->execute(
+                    new CreateOrRetrieveArticleCommand([
+                        'description' => $articlesInformation['article'][$i],
+                        'weight' => $articlesInformation['weight'][$i],
+                        'article_type_id' => $articlesInformation['article_type_id'][$i],
+                        'possible_id' => $articlesInformation['article_id'][$i]
+                    ])
+                );
+            }
+        }
+
+        if(sizeof($articles_id) == 0){
+            //TODO remove this
+            Flash::error("WTF are you doing?");
+            return Redirect::to('user.dashboard');
+        }
+
+        $createNewContractCommand = new CreateNewContractCommand();
+        $createNewContractCommand->mapInputData(Input::all(), Input::get('client_id'), Auth::id(), $articles_id);
+        $this->execute($createNewContractCommand);
+
+        Flash::overlay()->info('Se ha guardado el contrato');
+        return Redirect::route('user.dashboard');
+
+    }
+
     public function view($id){
         $contract = $this->contractRepository->getContractById($id);
 
@@ -63,19 +124,6 @@ class ContractController extends BaseController {
         return Redirect::route('contract.view', $extension->contractId());
     }
 
-    public function create($client_id = null){
-        if(!is_null($client_id)){
-            try {
-                $data['client'] = $this->clientRepository->getClientById($client_id);
-            } catch (Exception $e) {
-                // Do nothing
-            }
-        }
-        $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
-
-        return View::make('contract.contract_new', $data);
-    }
-
     public function terminate(){
         $command = new TerminateContractCommand();
         $command->setCommandValues(Input::get('id'), Input::get('amount'));
@@ -83,43 +131,6 @@ class ContractController extends BaseController {
 
         Flash::overlay()->info("Se ha cancelado el contrato exitosamente");
         return Redirect::route('user.dashboard');
-    }
-
-    public function store(){
-        //TODO Refactor and a LOT!
-
-        // Obtiene los articulos y los crea en caso de que no existan ya?
-        $articlesInformation = Input::only(['article', 'weight', 'article_type_id', 'article_id']);
-        $article_count = sizeof(Input::get('article'));
-
-        $articles_id = [];
-
-        for($i = 0; $i < $article_count; $i++){
-            if(!empty($articlesInformation['article'])) {
-                $articles_id[] = $this->execute(
-                    new CreateOrRetrieveArticleCommand([
-                            'description' => $articlesInformation['article'][$i],
-                            'weight' => $articlesInformation['weight'][$i],
-                            'article_type_id' => $articlesInformation['article_type_id'][$i],
-                            'possible_id' => $articlesInformation['article_id'][$i]
-                    ])
-                );
-            }
-        }
-
-        if(sizeof($articles_id) == 0){
-            //TODO remove this
-            Flash::error("WTF are you doing?");
-            return Redirect::to('user.dashboard');
-        }
-
-        $createNewContractCommand = new CreateNewContractCommand();
-        $createNewContractCommand->mapInputData(Input::all(), Input::get('client_id'), Auth::id(), $articles_id);
-        $this->execute($createNewContractCommand);
-
-        Flash::info('Se ha guardado el contrato');
-        return Redirect::route('user.dashboard');
-
     }
 
     /**

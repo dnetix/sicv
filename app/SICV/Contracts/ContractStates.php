@@ -3,12 +3,20 @@
 class ContractStates {
 
     const ACTIVE = 'active';
+    /**
+     * When a client pays and ends the contract
+     */
     const TERMINATED = 'terminated';
+    /**
+     * When the client doesn't pay for it and it runs out of time
+     */
+    const ENDED = 'ended';
     const ANNULLED = 'annulled';
 
     public static $FORHUMAN = [
         self::ACTIVE => 'Activo',
         self::TERMINATED => 'Cancelado',
+        self::ENDED => 'Terminado',
         self::ANNULLED => 'Anulado'
     ];
 

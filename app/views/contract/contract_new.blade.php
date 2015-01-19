@@ -43,18 +43,24 @@
                 <div class="panel-body">
 
                     <div id="contract_articles">
-                        @include('contract.partials._article_contract_new', ['default_article' => true])
+                        @if(isset($articles))
+                            @foreach($articles as $article)
+                                @include('contract.partials._article_contract_new')
+                            @endforeach
+                        @else
+                            @include('contract.partials._article_contract_new', ['default_article' => true])
+                        @endif
                     </div>
 
                     <div class="form-group">
                         {{ Form::label('amount', 'Valor Contrato:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-4">
-                            {{ Form::text('amount', null, ['class' => 'form-control money', 'data-also' => 'payment', 'data-percent' => 'percentage', 'autocomplete' => 'off']) }}
+                            {{ Form::text('amount', (isset($contract) ? $contract->present()->amount() : null), ['class' => 'form-control money', 'data-also' => 'payment', 'data-percent' => 'percentage', 'autocomplete' => 'off']) }}
                         </div>
 
                         {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('payment', null, ['class' => 'form-control', 'disabled' => 'disabled']) }}
+                            {{ Form::text('payment', (isset($contract) ? $contract->present()->payment() : null), ['class' => 'form-control', 'disabled' => 'disabled']) }}
                         </div>
                     </div>
                 </div>
@@ -76,14 +82,14 @@
                     <div class="form-group">
                         {{ Form::label('months', 'Nro Meses:', ['class' => 'control-label col-sm-6']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('months', 4, ['class' => 'form-control']) }}
+                            {{ Form::text('months', (isset($contract) ? $contract->months() : 4), ['class' => 'form-control']) }}
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{ Form::label('percentage', 'Porcentaje:', ['class' => 'control-label col-sm-6']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('percentage', 10, ['class' => 'form-control percent', 'autocomplete' => 'off']) }}
+                            {{ Form::text('percentage', (isset($contract) ? $contract->percentage() + 0 : 10), ['class' => 'form-control percent', 'autocomplete' => 'off']) }}
                         </div>
                     </div>
                 </div>

@@ -92,7 +92,7 @@ class ContractPresenter extends Presenter {
     public function monthStatistics(){
         //TODO Refactor and find right place
         $monthsElapsed = $this->entity->elapsedMonths();
-        $monthsExtended = $this->entity->monthsExtended();
+        $monthsExtended = $this->entity->extendedMonths();
         $months = $this->entity->months();
 
         // First shows the transcurred months

@@ -15,7 +15,7 @@
                 {{ Form::text('name', $client->name(), ['class' => 'form-control']) }}
             </div>
             <div class="col-sm-2">
-                <a target="_blank" tabindex="-1" class="btn btn-warning btn-block" href="{{ route('client.view', $client->id()) }}">Historial</a>
+                <a tabindex="-1" class="btn btn-warning btn-block" href="{{ route('client.view', $client->id()) }}">Historial</a>
             </div>
         </div>
 

@@ -1,6 +1,7 @@
 <?php  namespace SICV\Contracts;
 
 use SICV\Clients\Client;
+use SICV\Utils\Dates\DateHelper;
 
 class ContractRepository {
 
@@ -29,9 +30,13 @@ class ContractRepository {
 
 
     public function getContractsOfClient(Client $client) {
-        return $client->contracts;
+        return $client->contracts()->orderBy('id', 'desc')->get();
     }
 
+    /**
+     * @param $id
+     * @return \SICV\Contracts\Contract
+     */
     public function getContractById($id) {
         return Contract::with('articles', 'articles.articleType', 'extensions')->findOrFail($id);
     }
@@ -42,6 +47,20 @@ class ContractRepository {
 
     public function update($contract) {
         return $contract->save();
+    }
+
+    public function getExpiredContracts($monthDifference = 0) {
+
+//        $contracts = Contract::whereIn('state', [ContractStates::ACTIVE])->with(['extensions'])->get();
+//        foreach($contracts as $key => $contract){
+//            if($contract->calculatedMonths() > $monthDifference){
+//                $contracts->forget($key);
+//            }
+//            echo $contract->id();
+//        }
+//        return $contracts;
+        return Contract::whereIn('state', [ContractStates::ACTIVE])->where('id', '<', 1000)->with(['extensions', 'articles', 'client'])->get();
+
     }
 
 }

@@ -36,6 +36,10 @@ class Article extends Eloquent  {
 		return $this->weight;
 	}
 
+	public function articleTypeId(){
+		return $this->article_type_id;
+	}
+
 	public function articleType(){
 		return $this->belongsTo(ArticleType::class);
 	}

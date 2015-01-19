@@ -14,24 +14,17 @@
                     <th>Contrato</th>
                     <th>Articulo</th>
                     <th>Valor</th>
+                    <th>Estado</th>
                 </tr>
                 </thead>
                 @endif
                 <tbody>
                 @forelse($contracts as $contract)
-                    @include('contract.partials._contract_list_item', ['isClient' => true])
+                    @include('contract.partials._contracts_client_item')
                 @empty
                     <tr><th colspan="3">El cliente no tiene contratos</th> </tr>
                 @endforelse
                 </tbody>
-                @if($contracts->count() > 0)
-                    <tfoot>
-                        <tr>
-                            <th colspan="2">Total</th>
-                            <th colspan="2">{{ '$ '.number_format($contracts->sum('amount')) }}</th>
-                        </tr>
-                    </tfoot>
-                @endif
             </table>
         </div>
     </div>

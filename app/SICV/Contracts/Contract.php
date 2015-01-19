@@ -1,6 +1,7 @@
 <?php namespace SICV\Contracts;
 
 use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use SICV\Articles\Article;
 use SICV\Clients\Client;
 use SICV\Presenters\ContractPresenter;
@@ -83,7 +84,7 @@ class Contract extends Eloquent  {
 	 * @return int|mixed
 	 */
 	public function contractMonths(){
-		return $this->months() + $this->monthsExtended();
+		return $this->months() + $this->extendedMonths();
 	}
 
 	/**
@@ -120,6 +121,10 @@ class Contract extends Eloquent  {
 		return 0;
 	}
 
+	public function calculatedMonths(){
+		return ($this->months() + $this->extendedMonths()) - $this->elapsedMonths();
+	}
+
 	public function profit(){
 		return ($this->payedExtensions() + $this->endAmount()) - $this->amount();
 	}
@@ -136,7 +141,7 @@ class Contract extends Eloquent  {
 		return $this->extensions->sum('amount');
 	}
 
-	public function monthsExtended(){
+	public function extendedMonths(){
 		return floor($this->payedExtensions() / $this->payment());
 	}
 
@@ -163,5 +168,7 @@ class Contract extends Eloquent  {
 	public function extensions(){
 		return $this->hasMany(Extension::class);
 	}
+
+	/** SCOPES (Testing) */
 
 }

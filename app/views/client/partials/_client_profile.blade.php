@@ -13,7 +13,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-7">
-                <h4 class="person-name"><a target="_blank" href="{{ route('client.view', $client->id()) }}">{{ $client->present()->name() }}</a></h4>
+                <h4 class="person-name"><a href="{{ route('client.view', $client->id()) }}">{{ $client->present()->name() }}</a></h4>
                 <div class="text-muted">{{ $client->present()->phones() }}</div>
                 <div class="text-muted">{{ $client->present()->address() }}</div>
             </div>

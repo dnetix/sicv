@@ -1,8 +1,20 @@
 <?php
 
 use SICV\Contracts\ContractRepository;
+use SICV\Core\Commander\CommandBus;
 
 class HomeController extends BaseController {
+
+
+	/**
+	 * @var ContractRepository
+	 */
+	private $contractRepository;
+
+	function __construct(ContractRepository $contractRepository, CommandBus $commandBus) {
+		$this->contractRepository = $contractRepository;
+		parent::__construct($commandBus);
+	}
 
 	public function index(){
 		if(Auth::check()){
@@ -13,9 +25,21 @@ class HomeController extends BaseController {
 	}
 
 	public function dashboard(){
-		$contractRepository = App::make(ContractRepository::class);
-		$data['contracts'] = $contractRepository->getContractsOfDay();
+		$data['contracts'] = $this->contractRepository->getContractsOfDay();
 		return View::make('user.dashboard', $data);
+	}
+
+	public function search(){
+		$searchTerms = Input::get('searchTerms');
+		try {
+			$contract = $this->contractRepository->getContractById($searchTerms);
+			return Redirect::route('contract.view', $contract->id());
+		} catch (Exception $e) {
+
+			// Its not a contract ...
+			return Redirect::route('user.dashboard');
+
+		}
 	}
 
 	public function preview($template){

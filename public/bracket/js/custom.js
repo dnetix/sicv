@@ -1,4 +1,5 @@
 var SITE_BASE = "/";
+var TIMER;
 
 function getAjaxLoader(){
    return '<div class="text-center mb20"><img src="/public/bracket/images/loaders/loader6.gif" alt=""></div>';
@@ -89,6 +90,15 @@ jQuery(window).load(function() {
 var moneyElement;
 jQuery(document).ready(function() {
 
+   jQuery(document).mousemove(function(){
+      //when the mouse is moved
+      clearTimeout(TIMER);
+      TIMER = setTimeout(function(){
+         //If the mouse is not moved
+         $('#quicksearch').focus();
+      }, 30000);
+   });
+
    jQuery(".money").each(function (){
       moneyElement = jQuery(this);
       moneyElement.on('keyup', moneyKeyUpListener);
@@ -108,7 +118,7 @@ jQuery(document).ready(function() {
       
       var parent = jQuery(this).parent();
       var sub = parent.find('> ul');
-      
+
       // Dropdown works only when leftpanel is not collapsed
       if(!jQuery('body').hasClass('leftpanel-collapsed')) {
          if(sub.is(':visible')) {
@@ -124,8 +134,11 @@ jQuery(document).ready(function() {
                adjustmainpanelheight();
             });
          }
+         return false;
+      }else{
+         return true;
       }
-      return false;
+
    });
    
    function closeVisibleSubMenu() {

@@ -14,11 +14,12 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
-		$this->cleanDatabase();
+//		$this->cleanDatabase();
 
-		$this->call('UsersTableSeeder');
-		$this->call('ArticleTypesTableSeeder');
-		$this->call('ClientsTableSeeder');
+//		$this->call('UsersTableSeeder');
+//		$this->call('ArticleTypesTableSeeder');
+//		$this->call('ClientsTableSeeder');
+		$this->call('ContractsTableSeeder');
 	}
 
 	public function cleanDatabase(){

@@ -54,7 +54,7 @@ table tr.contract td {
 }
 .panel.contract-terminated .panel-heading,
 .label-terminated {
-  background-color: #f0ad4e;
+  background-color: #5bc0de;
 }
 table tr.flagged {
   background-color: #d9534f;

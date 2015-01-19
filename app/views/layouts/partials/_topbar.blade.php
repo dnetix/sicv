@@ -2,9 +2,10 @@
 
     <a class="menutoggle"><i class="fa fa-bars"></i></a>
 
-    <form class="searchform" action="http://themepixels.com/demo/webpage/bracket/index.html" method="post">
-        <input type="text" class="form-control" name="keyword" placeholder="Busqueda r&aacute;pida"/>
-    </form>
+    {{ Form::open(['route' => 'user.search', 'class' => 'searchform']) }}
+        {{ Form::text('searchTerms', null, ['class' => 'form-control', 'placeholder' => 'B&uacute;squeda r&aacute;pida', 'id' => 'quicksearch']) }}
+    {{ Form::close() }}
+
 
     @if($currentUser)
     <div class="header-right">

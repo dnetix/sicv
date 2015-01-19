@@ -10,6 +10,7 @@ Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@authentic
 Route::group(['before' => 'auth'], function(){
     Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'user.dashboard']);
     Route::get('logout', ['uses' => 'UserController@logout', 'as' => 'user.logout']);
+    Route::post('search', ['uses' => 'HomeController@search', 'as' => 'user.search']);
 
     Route::get('client/new', ['uses' => 'ClientController@create', 'as' => 'client.new']);
     Route::post('client/new', ['uses' => 'ClientController@store', 'as' => 'client.store']);
@@ -25,11 +26,14 @@ Route::group(['before' => 'auth'], function(){
     Route::get('/contract/view/{id}', ['uses' => 'ContractController@view', 'as' => 'contract.view']);
     Route::get('/contract/new/{client_id?}', ['uses' => 'ContractController@create', 'as' => 'contract.new']);
     Route::post('/contract/new', ['uses' => 'ContractController@store', 'as' => 'contract.store']);
+    Route::get('/contract/clone/{id}', ['uses' => 'ContractController@copy', 'as' => 'contract.clone']);
     Route::get('/contract/day', ['uses' => 'ContractController@contractsofday', 'as' => 'contract.day']);
     Route::post('/contract/extension', ['uses' => 'ContractController@extension', 'as' => 'contract.extension']);
     Route::post('/contract/terminate', ['uses' => 'ContractController@terminate', 'as' => 'contract.terminate']);
 
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
+
+    Route::get('/report/expiredcontracts', ['uses' => 'ReportController@expiredcontracts', 'as' => 'report.expiredcontracts']);
 
 });
 

@@ -56,7 +56,6 @@ App::error(function(\SICV\Core\Validations\FormValidationException $exception, $
 	if(Request::ajax()){
 		return Response::make($exception->getErrors()->first(), Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY);
 	}else{
-		dd($exception);
 		return Redirect::back()->withInput()->withErrors($exception->getErrors());
 	}
 });
