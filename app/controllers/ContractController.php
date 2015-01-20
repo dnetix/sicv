@@ -3,6 +3,7 @@
 use SICV\Articles\Actions\CreateOrRetrieveArticleCommand;
 use SICV\Articles\ArticleRepository;
 use SICV\Clients\ClientRepository;
+use SICV\Contracts\Actions\AnnulContractCommand;
 use SICV\Contracts\Actions\TerminateContractCommand;
 use SICV\Core\Commander\CommandBus;
 use SICV\Contracts\Actions\CreateNewContractCommand;
@@ -102,7 +103,38 @@ class ContractController extends BaseController {
         $data['extensions'] = $contract->extensions;
         $data['clientNotes'] = $this->clientRepository->getClientNotes($data['client'], $contract->id());
 
+        if($contract->isAnnulled()){
+            $data['annul'] = $contract->annul;
+        }
+
         return View::make('contract.contract_view', $data);
+    }
+
+    public function annul($id = null){
+        if(is_null($id)){
+            $id = Input::get('id');
+        }
+        
+        $data = [
+            'created_at' => Date::create()->toSQLTimestamp(),
+            'note' => Input::get('note'),
+            'password' => Input::get('password'),
+            'contract_id' => $id,
+            'user_id' => Auth::id()
+        ];
+        
+        $command = new AnnulContractCommand($data);
+
+        try {
+            $annul = $this->execute($command);
+        } catch (Exception $e) {
+            Flash::error($e->getMessage());
+            return Redirect::back();
+        }
+
+        Flash::overlay()->info("Ha anulado el contrato");
+        return Redirect::route('contract.view', $annul->contractId());
+
     }
 
     public function extension(){

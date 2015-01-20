@@ -5,6 +5,7 @@ use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use SICV\Clients\ClientNote;
 use SICV\Contracts\Contract;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
@@ -37,12 +38,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->name;
 	}
 
+	/* ----------- Relationships --------------- */
+
 	public function contracts(){
 		return $this->hasMany(Contract::class);
 	}
 
 	public function clientNotes(){
-		// TO ClientNotes
+		return $this->hasMany(ClientNote::class);
+	}
+
+	public function annuls(){
+		return $this->hasMany(Annul::class);
 	}
 
 }

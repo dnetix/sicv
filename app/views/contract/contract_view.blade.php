@@ -51,6 +51,8 @@
                         @include('contract.partials.displays._active')
                     @elseif($contract->isTerminated())
                         @include('contract.partials.displays._terminated')
+                    @elseif($contract->isAnnulled())
+                        @include('contract.partials.displays._annulled')
                     @endif
 
                 </div>

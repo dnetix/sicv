@@ -63,4 +63,8 @@ class ContractRepository {
 
     }
 
+    public function saveAnnul(Annul &$annul) {
+        return $annul->save();
+    }
+
 }

@@ -30,6 +30,7 @@ Route::group(['before' => 'auth'], function(){
     Route::get('/contract/day', ['uses' => 'ContractController@contractsofday', 'as' => 'contract.day']);
     Route::post('/contract/extension', ['uses' => 'ContractController@extension', 'as' => 'contract.extension']);
     Route::post('/contract/terminate', ['uses' => 'ContractController@terminate', 'as' => 'contract.terminate']);
+    Route::post('/contract/annul/{id?}', ['uses' => 'ContractController@annul', 'as' => 'contract.annul']);
 
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
 

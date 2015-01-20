@@ -153,6 +153,10 @@ class Contract extends Eloquent  {
 		return $this->state() == ContractStates::TERMINATED;
 	}
 
+	public function isAnnulled(){
+		return $this->state() == ContractStates::ANNULLED;
+	}
+
 	public function client(){
 		return $this->belongsTo(Client::class);
 	}
@@ -167,6 +171,14 @@ class Contract extends Eloquent  {
 
 	public function extensions(){
 		return $this->hasMany(Extension::class);
+	}
+
+	/**
+	 * Returns the relationship with the annul
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+	public function annul(){
+		return $this->hasOne(Annul::class);
 	}
 
 	/** SCOPES (Testing) */

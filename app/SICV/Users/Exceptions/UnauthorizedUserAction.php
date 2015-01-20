@@ -1,0 +1,11 @@
+<?php  namespace SICV\Users\Exceptions;
+
+use Exception;
+
+class UnauthorizedUserAction extends Exception {
+
+    function __construct($message = "No tiene permisos para realizar esta accion") {
+        parent::__construct($message);
+    }
+
+}
