@@ -82,14 +82,14 @@
                     <div class="form-group">
                         {{ Form::label('months', 'Nro Meses:', ['class' => 'control-label col-sm-6']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('months', (isset($contract) ? $contract->months() : 4), ['class' => 'form-control']) }}
+                            {{ Form::text('months', (isset($contract) ? $contract->months() : $default_months), ['class' => 'form-control']) }}
                         </div>
                     </div>
 
                     <div class="form-group">
                         {{ Form::label('percentage', 'Porcentaje:', ['class' => 'control-label col-sm-6']) }}
                         <div class="col-sm-3">
-                            {{ Form::text('percentage', (isset($contract) ? $contract->percentage() + 0 : 10), ['class' => 'form-control percent', 'autocomplete' => 'off']) }}
+                            {{ Form::text('percentage', (isset($contract) ? $contract->percentage() + 0 : $default_percentage), ['class' => 'form-control percent', 'autocomplete' => 'off']) }}
                         </div>
                     </div>
                 </div>

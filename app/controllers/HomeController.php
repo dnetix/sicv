@@ -42,6 +42,11 @@ class HomeController extends BaseController {
 		}
 	}
 
+	public function goldprice(){
+		$data['goldprice'] = (new \SICV\Utils\DataMining\GoldPrice\GoldPriceRateMiner())->getGoldInformation();
+		return View::make('preview._gold_price', $data);
+	}
+
 	public function preview($template){
 		return View::make('preview.'.$template);
 	}

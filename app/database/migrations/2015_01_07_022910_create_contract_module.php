@@ -28,7 +28,7 @@ class CreateContractModule extends Migration {
 			$table->float('percentage');
 			$table->integer('amount');
 			$table->string('state', 10)->index();
-			$table->timestamp('created_at');
+			$table->timestamp('created_at')->index();
 			$table->timestamp('updated_at')->nullable();
 			$table->timestamp('end_date')->nullable();
 			$table->integer('end_amount')->nullable();

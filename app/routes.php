@@ -7,10 +7,15 @@ Route::get('/', "HomeController@index");
 Route::get('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@authenticate']);
 
+Route::get('/testing', function(){
+    dd(Config::get('sicv.gold_price_miners'));
+});
+
 Route::group(['before' => 'auth'], function(){
     Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'user.dashboard']);
     Route::get('logout', ['uses' => 'UserController@logout', 'as' => 'user.logout']);
     Route::post('search', ['uses' => 'HomeController@search', 'as' => 'user.search']);
+    Route::get('/goldprice', ['uses' => 'HomeController@goldprice', 'as' => 'goldprice']);
 
     Route::get('client/new', ['uses' => 'ClientController@create', 'as' => 'client.new']);
     Route::post('client/new', ['uses' => 'ClientController@store', 'as' => 'client.store']);

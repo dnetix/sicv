@@ -42,6 +42,8 @@ class ContractController extends BaseController {
             }
         }
         $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
+        $data['default_months'] = Config::get('sicv.default_months');
+        $data['default_percentage'] = Config::get('sicv.default_percentage');
 
         return View::make('contract.contract_new', $data);
     }

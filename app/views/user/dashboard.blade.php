@@ -54,7 +54,7 @@
             </div>
 
             <div class="panel panel-warning panel-stat">
-                <a href="#">
+                <a href="javascript:void(0)" onclick="getGoldInformation()">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-4">
@@ -73,6 +73,7 @@
         <div class="col-md-9 col-sm-8 col-xs-12">
 
             <div id="client_results"></div>
+            <div id="gold_price"></div>
 
             <div id="contracts_day_panel">
                 @include('contract.partials._contracts_day_panel')
@@ -88,6 +89,7 @@
 @endsection
 
 @section('js')
+    <script src="{{ public_assets('js/utils.js') }}"></script>
     <script src="{{ public_assets('js/clients.js') }}"></script>
     <script src="{{ public_assets('js/contractsofday.js') }}"></script>
 @endsection
