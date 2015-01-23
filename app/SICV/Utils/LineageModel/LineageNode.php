@@ -14,6 +14,10 @@ class LineageNode {
 
     }
 
+    public function id(){
+        return $this->id;
+    }
+
     public function getData(){
         return $this->data;
     }

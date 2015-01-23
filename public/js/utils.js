@@ -22,7 +22,44 @@ function togglePreSellout(contractId, field){
             if(data.added){
                 $(field).prop('checked', true);
             }else{
-                $(field).prop('checked', false);
+                if($(field).data('remove')){
+                    $("#contract_id_" + contractId).remove();
+                    if($(field).data('kind')){
+                        updateContractStatistics($(field).data('kind'));
+                    }
+                }else{
+                    $(field).prop('checked', false);
+                }
+            }
+        }
+    });
+}
+
+function updateContractStatistics(kind){
+    $("#contract_statistics").html(getAjaxLoader());
+    $.ajax({
+        url: SITE_BASE + "report/contractstatistics/" + kind,
+        type: "get",
+        dataType: "html",
+        success: function (data) {
+            $("#contract_statistics").html(data);
+        }
+    });
+}
+
+function selectAll(sw){
+    var action = $(sw).prop('checked') ? "check" : "uncheck";
+    $(".ckbox-warning input").each(function(){
+        var input = $(this);
+        if(action == "check"){
+            if(!input.prop("checked")){
+                input.prop("checked", true);
+                input.trigger("change");
+            }
+        }else{
+            if(input.prop("checked")){
+                input.prop("checked", false);
+                input.trigger("change");
             }
         }
     });

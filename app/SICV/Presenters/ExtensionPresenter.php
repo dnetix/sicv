@@ -6,7 +6,7 @@ use SICV\Utils\Presenters\Presenter;
 class ExtensionPresenter extends Presenter {
 
     public function amount(){
-        return '$ '.number_format($this->entity->amount());
+        return $this->toMoney($this->entity->amount());
     }
 
     public function createdAt(){

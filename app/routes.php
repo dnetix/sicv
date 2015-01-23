@@ -7,10 +7,6 @@ Route::get('/', "HomeController@index");
 Route::get('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@authenticate']);
 
-Route::get('/testing', function(){
-    \SICV\Contracts\Contract::find(1)->isPreSellout();
-});
-
 Route::group(['before' => 'auth'], function(){
     Route::get('dashboard', ['uses' => 'HomeController@dashboard', 'as' => 'user.dashboard']);
     Route::get('logout', ['uses' => 'UserController@logout', 'as' => 'user.logout']);
@@ -43,6 +39,7 @@ Route::group(['before' => 'auth'], function(){
 
     Route::get('/report/expiredcontracts', ['uses' => 'ReportController@expiredcontracts', 'as' => 'report.expiredcontracts']);
     Route::get('/report/presellouts', ['uses' => 'ReportController@presellouts', 'as' => 'report.presellouts']);
+    Route::get('report/contractstatistics/{kind}', ['uses' => 'ReportController@contractstatistics', 'as' => 'report.contractstatistics']);
 
 });
 

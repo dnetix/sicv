@@ -66,6 +66,17 @@ class ContractRepository {
         }
     }
 
+    public function getPreselloutContracts(){
+        $contractIDS = \DB::select(\DB::raw('SELECT contract_id FROM pre_sellouts'));
+        // Creates just an array removing the array of arrays
+        $contractIDS = array_column($contractIDS, 'contract_id');
+        if(sizeof($contractIDS) >= 1){
+            return Contract::whereIn('id', $contractIDS)->with(['extensions', 'articles', 'client', 'extensions', 'preSellout'])->get();
+        }else{
+            return new Collection();
+        }
+    }
+
     public function saveAnnul(Annul &$annul) {
         return $annul->save();
     }

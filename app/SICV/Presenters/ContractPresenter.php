@@ -10,15 +10,15 @@ class ContractPresenter extends Presenter {
     public $lastExtension;
 
     public function amount(){
-        return '$ '.number_format($this->entity->amount());
+        return $this->toMoney($this->entity->amount());
     }
 
     public function endAmount(){
-        return '$ '.number_format($this->entity->endAmount());
+        return $this->toMoney($this->entity->endAmount());
     }
 
     public function payment(){
-        return '$ '.number_format($this->entity->payment());
+        return $this->toMoney($this->entity->payment());
     }
 
     public function percentage(){
@@ -26,11 +26,11 @@ class ContractPresenter extends Presenter {
     }
 
     public function amountToTerminate(){
-        return '$ '.number_format($this->entity->amountToTerminate());
+        return $this->toMoney($this->entity->amountToTerminate());
     }
 
     public function payedExtensions(){
-        return '$ '.number_format($this->entity->payedExtensions());
+        return $this->toMoney($this->entity->payedExtensions());
     }
 
     public function dueDate(){
@@ -50,7 +50,7 @@ class ContractPresenter extends Presenter {
     }
 
     public function duedExtensions(){
-        return '$ '.number_format($this->entity->duedExtensions());
+        return $this->toMoney($this->entity->duedExtensions());
     }
 
     public function clientName(){
@@ -170,7 +170,7 @@ class ContractPresenter extends Presenter {
     }
 
     public function profit(){
-        return '$ '.number_format($this->entity->profit()).' ('.($this->entity->profitPercent() + 0).'%)';
+        return $this->toMoney($this->entity->profit()).' ('.($this->entity->profitPercent() + 0).'%)';
     }
 
 }

@@ -15,7 +15,7 @@ class AnnulPresenter extends Presenter {
     }
 
     public function originalAmount(){
-        return '$ '.number_format($this->entity->originalAmount());
+        return $this->toMoney($this->entity->originalAmount());
     }
 
     public function userName(){

@@ -19,4 +19,8 @@ abstract class Presenter {
         return $this->entity->{$name}($arguments);
     }
 
+    public function toMoney($amount){
+        return '$ '.number_format($amount);
+    }
+
 }

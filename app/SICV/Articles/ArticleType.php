@@ -28,4 +28,8 @@ class ArticleType extends Eloquent  {
 		return $this->name();
 	}
 
+	public static function isGold($article_type_id){
+		return $article_type_id == 2;
+	}
+
 }

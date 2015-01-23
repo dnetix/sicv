@@ -171,9 +171,6 @@ jQuery(document).ready(function() {
       return false;
    });
    
-   // Form Toggles
-   jQuery('.toggle').toggles({on: true});
-   
    // Minimize Button in Panels
    jQuery('.minimize').click(function(){
       var t = jQuery(this);
