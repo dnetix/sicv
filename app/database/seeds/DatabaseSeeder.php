@@ -3,7 +3,7 @@
 class DatabaseSeeder extends Seeder {
 
 	protected $tables = [
-		'users', 'article_types', 'clients'
+		'users', 'article_types', 'clients', 'article_contract', 'articles', 'contracts'
 	];
 
 	/**
@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
-//		$this->cleanDatabase();
+		$this->cleanDatabase();
 
-//		$this->call('UsersTableSeeder');
-//		$this->call('ArticleTypesTableSeeder');
-//		$this->call('ClientsTableSeeder');
+		$this->call('UsersTableSeeder');
+		$this->call('ArticleTypesTableSeeder');
+		$this->call('ClientsTableSeeder');
 		$this->call('ContractsTableSeeder');
 	}
 

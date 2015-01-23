@@ -157,6 +157,20 @@ class Contract extends Eloquent  {
 		return $this->state() == ContractStates::ANNULLED;
 	}
 
+	public function lastExtension(){
+		return $this->extensions->last();
+	}
+
+	public function isPreSellout(){
+		if(is_null($this->preSellout)){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	/* ----------- Relationships --------------- */
+
 	public function client(){
 		return $this->belongsTo(Client::class);
 	}
@@ -181,6 +195,8 @@ class Contract extends Eloquent  {
 		return $this->hasOne(Annul::class);
 	}
 
-	/** SCOPES (Testing) */
+	public function preSellout(){
+		return $this->hasOne(PreSellout::class);
+	}
 
 }

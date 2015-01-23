@@ -7,6 +7,7 @@ use SICV\Utils\Presenters\Presenter;
 class ContractPresenter extends Presenter {
 
     public $dueDateHelper;
+    public $lastExtension;
 
     public function amount(){
         return '$ '.number_format($this->entity->amount());
@@ -56,6 +57,10 @@ class ContractPresenter extends Presenter {
         return $this->entity->client->name();
     }
 
+    public function clientContactInfo(){
+        return $this->entity->client->present()->phones();
+    }
+
     public function state(){
         return ContractStates::$FORHUMAN[$this->entity->state()];
     }
@@ -65,14 +70,18 @@ class ContractPresenter extends Presenter {
         return $dateHelper->translateToHumanDate().' ['.$dateHelper->translateToTime().']';
     }
 
+    public function shortCreatedAt(){
+        return DateHelper::create($this->entity->createdAt())->translateToShortDate();
+    }
+
     public function elapsedSinceCreated(){
         return DateHelper::getDifference($this->entity->createdAt())->forHumans();
     }
 
     public function elapsedMonths(){
         $difference = $this->entity->elapsedDifference();
-        if($difference->months() != 0){
-            return $difference->months() . (($difference->months() > 1) ? ' meses' : ' mes');
+        if($difference->inMonths() != 0){
+            return $difference->inMonths() . (($difference->inMonths() > 1) ? ' meses' : ' mes');
         }else{
             return $difference->forHumans();
         }
@@ -86,10 +95,26 @@ class ContractPresenter extends Presenter {
         return implode(', ', $articleNames);
     }
 
+    public function lastExtensionDate(){
+        $lastExtension = $this->entity->lastExtension();
+        if(is_null($lastExtension)){
+            return '';
+        }
+        return DateHelper::create($lastExtension->createdAt())->translateToShortDate();
+    }
+
+    public function lastExtensionDateDiff(){
+        $lastExtension = $this->entity->lastExtension();
+        if(is_null($lastExtension)){
+            return '';
+        }
+        return DateHelper::getDifference($lastExtension->createdAt())->forHumans();
+    }
+
     /**
      * Presents a good looking view for months statistics
      */
-    public function monthStatistics(){
+    public function monthStatistics($small = false){
         //TODO Refactor and find right place
         $monthsElapsed = $this->entity->elapsedMonths();
         $monthsExtended = $this->entity->extendedMonths();
@@ -122,6 +147,14 @@ class ContractPresenter extends Presenter {
         }
         $statistics[] = ['class' => $class, 'months' => $parameter];
 
+        if($small){
+            $btnType = 'btn-sm';
+            $btnIcon = '';
+        }else{
+            $btnType = 'btn-lg';
+            $btnIcon = '<i class="fa fa-calendar-o"></i> ';
+        }
+
         $return = '';
         $tooltips = [
             'Meses transcurridos',
@@ -130,7 +163,7 @@ class ContractPresenter extends Presenter {
             'Meses restantes'
         ];
         foreach($statistics as $index => $data){
-            $return .= '<span data-toggle="tooltip" data-original-title="'.$tooltips[$index].'" class="tooltips btn btn-lg btn-'.$data['class'].'"><i class="fa fa-calendar-o"></i> '.$data['months']."</span>\n";
+            $return .= '<span data-toggle="tooltip" data-original-title="'.$tooltips[$index].'" class="tooltips btn '.$btnType.' btn-'.$data['class'].'">'.$btnIcon.$data['months']."</span>\n";
         }
 
         return $return;

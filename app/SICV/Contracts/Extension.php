@@ -33,9 +33,4 @@ class Extension extends Eloquent {
         return $this->belongsTo(Contract::class);
     }
 
-    // Trying to remove updated_at, let's see
-    public function getDates(){
-        return ['created_at'];
-    }
-
 }

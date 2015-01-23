@@ -99,3 +99,6 @@ table tr.flagged a {
   background-color: #f0ad4e;
   color: #ffffff;
 }
+.expired-contracts td.month-statistics {
+  min-width: 160px;
+}

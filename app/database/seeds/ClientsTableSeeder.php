@@ -9,7 +9,7 @@ class ClientsTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		foreach(range(1, 10000) as $index)
+		foreach(range(1, 100) as $index)
 		{
 			Client::create([
 				'name' => $faker->name,

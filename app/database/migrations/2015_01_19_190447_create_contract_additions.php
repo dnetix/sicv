@@ -12,6 +12,13 @@ class CreateContractAdditions extends Migration {
 	 */
 	public function up()
 	{
+		Schema::create('pre_sellouts', function(Blueprint $table){
+			$table->increments('id');
+			$table->integer('contract_id')->unsigned();
+
+			$table->foreign('contract_id')->references('id')->on('contracts');
+		});
+
 		Schema::create('annuls', function(Blueprint $table){
 			$table->integer('id');
 			$table->dateTime('created_at');
@@ -23,6 +30,25 @@ class CreateContractAdditions extends Migration {
 			$table->foreign('contract_id')->references('id')->on('contracts');
 			$table->foreign('user_id')->references('id')->on('users');
 		});
+
+		Schema::create('sellouts', function(Blueprint $table){
+			$table->increments('id');
+			$table->dateTime('date');
+			$table->text('note')->nullable();
+			$table->integer('user_id')->unsigned();
+
+			$table->foreign('user_id')->references('id')->on('users');
+		});
+
+		Schema::create('sellout_contract', function(Blueprint $table){
+			$table->increments('id');
+			$table->integer('sellout_id')->unsigned();
+			$table->integer('contract_id')->unsigned();
+
+			$table->foreign('sellout_id')->references('id')->on('sellouts');
+			$table->foreign('contract_id')->references('id')->on('contracts');
+		});
+
 	}
 
 
@@ -33,7 +59,10 @@ class CreateContractAdditions extends Migration {
 	 */
 	public function down()
 	{
+		Schema::drop('pre_sellouts');
 		Schema::drop('annuls');
+		Schema::drop('sellouts');
+		Schema::drop('sellout_contract');
 	}
 
 }

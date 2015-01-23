@@ -8,7 +8,7 @@ Route::get('/login', ['as' => 'user.login', 'uses' => 'UserController@login']);
 Route::post('/login', ['as' => 'user.login', 'uses' => 'UserController@authenticate']);
 
 Route::get('/testing', function(){
-    dd(Config::get('sicv.gold_price_miners'));
+    \SICV\Contracts\Contract::find(1)->isPreSellout();
 });
 
 Route::group(['before' => 'auth'], function(){
@@ -37,9 +37,12 @@ Route::group(['before' => 'auth'], function(){
     Route::post('/contract/terminate', ['uses' => 'ContractController@terminate', 'as' => 'contract.terminate']);
     Route::post('/contract/annul/{id?}', ['uses' => 'ContractController@annul', 'as' => 'contract.annul']);
 
+    Route::post('/sellout/presellout/{id?}', ['uses' => 'SelloutController@presellout', 'as' => 'contract.presellout']);
+
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
 
     Route::get('/report/expiredcontracts', ['uses' => 'ReportController@expiredcontracts', 'as' => 'report.expiredcontracts']);
+    Route::get('/report/presellouts', ['uses' => 'ReportController@presellouts', 'as' => 'report.presellouts']);
 
 });
 

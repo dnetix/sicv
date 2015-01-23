@@ -9,6 +9,8 @@ return array(
         'Cigyd',
         'GoldPriceRate',
         'GoldPriceTicker'
-    )
+    ),
+
+    'max_expired_contracts' => 200
 
 );

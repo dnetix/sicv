@@ -11,7 +11,7 @@ class ContractsTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		/*foreach(range(1, 100000) as $index)
+		foreach(range(1, 500) as $index)
 		{
 			Article::create([
 				'description' => $faker->sentence(),
@@ -19,27 +19,39 @@ class ContractsTableSeeder extends Seeder {
 			]);
 		}
 
-		foreach(range(1, 20000) as $index)
+		foreach(range(1, 200) as $index)
 		{
 			Contract::create([
 				'user_id' => 1,
-				'client_id' => $faker->numberBetween(1, 10000),
+				'client_id' => $faker->numberBetween(1, 100),
 				'months' => $faker->numberBetween(3, 5),
 				'amount' => $faker->numberBetween(20000, 5000000),
+				'percentage' => 10,
 				'state' => 'active',
-				'created_at' => $faker->dateTimeBetween('-5 years')
+				'created_at' => $faker->dateTimeBetween('-2 years')
 			]);
 		}
 
-		foreach(range(1, 42940) as $index)
+		foreach(range(1, 200) as $index)
 		{
 			DB::table('article_contract')->insert(
 				[
 					'contract_id' => $index,
-					'article_id' => $faker->numberBetween(1, 100000)
+					'article_id' => $faker->numberBetween(1, 500)
 				]
 			);
-		}*/
+		}
+		foreach(range(1, 200) as $index)
+		{
+			if($faker->numberBetween(0, 1)){
+				DB::table('article_contract')->insert(
+					[
+						'contract_id' => $index,
+						'article_id' => $faker->numberBetween(1, 500)
+					]
+				);
+			}
+		}
 	}
 
 }

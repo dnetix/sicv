@@ -69,6 +69,8 @@ class Client extends Eloquent {
         return $this->flagged == 1;
     }
 
+    /* ----------- Relationships --------------- */
+
     public function contracts(){
         return $this->hasMany(Contract::class)->with('articles');
     }

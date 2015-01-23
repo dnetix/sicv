@@ -94,6 +94,10 @@ class DateHelper extends DateTime {
         return new DateDifference($this->diff(new static($toDate)));
     }
 
+    public function translateToShortDate(){
+        return $this->format('d/m/Y');
+    }
+
     public function translateToHumanDate(){
         return self::$DAYS[$this->dayOfWeek].', '.$this->day.' de '.self::$MONTHS[$this->month - 1].' de '.$this->year;
     }
