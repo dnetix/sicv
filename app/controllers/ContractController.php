@@ -63,33 +63,39 @@ class ContractController extends BaseController {
         //TODO Refactor and a LOT!
 
         // Obtiene los articulos y los crea en caso de que no existan ya?
-        $articlesInformation = Input::only(['article', 'weight', 'article_type_id', 'article_id']);
-        $article_count = sizeof(Input::get('article'));
+        $articlesInformation = Input::only(['description', 'weight', 'article_type_id', 'article_id']);
+        $amounts = Input::get('article_amount');
 
-        $articles_id = [];
+        $articlesWithAmount = [];
+        $contractAmount = 0;
 
-        for($i = 0; $i < $article_count; $i++){
-            if(!empty($articlesInformation['article'])) {
-                $articles_id[] = $this->execute(
+        foreach($amounts as $index => $amount){
+            if(!empty($articlesInformation['description'][$index])) {
+                $article = $this->execute(
                     new CreateOrRetrieveArticleCommand([
-                        'description' => $articlesInformation['article'][$i],
-                        'weight' => $articlesInformation['weight'][$i],
-                        'article_type_id' => $articlesInformation['article_type_id'][$i],
-                        'possible_id' => $articlesInformation['article_id'][$i]
+                        'description' => $articlesInformation['description'][$index],
+                        'weight' => $articlesInformation['weight'][$index],
+                        'article_type_id' => $articlesInformation['article_type_id'][$index],
+                        'possible_id' => $articlesInformation['article_id'][$index]
                     ])
                 );
+
+                $amount = $this->normalizeAmount($amounts[$index]);
+                $contractAmount += $amount;
+                $articlesWithAmount[] = compact('article', 'amount');
             }
         }
 
-        if(sizeof($articles_id) == 0){
-            //TODO remove this
+        if(sizeof($articlesWithAmount) == 0){
             Flash::error("WTF are you doing?");
             return Redirect::to('user.dashboard');
         }
 
-        $createNewContractCommand = new CreateNewContractCommand();
-        $createNewContractCommand->mapInputData(Input::all(), Input::get('client_id'), Auth::id(), $articles_id);
-        $this->execute($createNewContractCommand);
+        $command = (new CreateNewContractCommand(
+            Auth::id(), Input::get('client_id'), Input::get('months'), Input::get('percentage'), $contractAmount
+        ))->setArticles($articlesWithAmount);
+
+        $this->execute($command);
 
         Flash::overlay()->info('Se ha guardado el contrato');
         return Redirect::route('user.dashboard');

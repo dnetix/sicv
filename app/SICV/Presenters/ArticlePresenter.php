@@ -8,4 +8,12 @@ class ArticlePresenter extends Presenter {
         return $this->entity->articleType->name();
     }
 
+    public function name(){
+
+    }
+
+    public function articleAmount(){
+        return $this->toMoney($this->entity->articleAmount());
+    }
+
 }

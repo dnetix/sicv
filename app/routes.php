@@ -34,11 +34,12 @@ Route::group(['before' => 'auth'], function(){
     Route::post('/contract/annul/{id?}', ['uses' => 'ContractController@annul', 'as' => 'contract.annul']);
 
     Route::post('/sellout/presellout/{id?}', ['uses' => 'SelloutController@presellout', 'as' => 'contract.presellout']);
+    Route::get('/sellout/presellouts', ['uses' => 'SelloutController@presellouts', 'as' => 'sellout.presellouts']);
+    Route::get('/sellout/process', ['uses' => 'SelloutController@process', 'as' => 'sellout.process']);
 
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
 
     Route::get('/report/expiredcontracts', ['uses' => 'ReportController@expiredcontracts', 'as' => 'report.expiredcontracts']);
-    Route::get('/report/presellouts', ['uses' => 'ReportController@presellouts', 'as' => 'report.presellouts']);
     Route::get('report/contractstatistics/{kind}', ['uses' => 'ReportController@contractstatistics', 'as' => 'report.contractstatistics']);
 
 });

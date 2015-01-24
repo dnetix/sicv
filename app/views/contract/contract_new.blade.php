@@ -55,7 +55,7 @@
                     <div class="form-group">
                         {{ Form::label('amount', 'Valor Contrato:', ['class' => 'control-label col-sm-2']) }}
                         <div class="col-sm-4">
-                            {{ Form::text('amount', (isset($contract) ? $contract->present()->amount() : null), ['class' => 'form-control money', 'data-also' => 'payment', 'data-percent' => 'percentage', 'autocomplete' => 'off']) }}
+                            {{ Form::text('amount', (isset($contract) ? $contract->present()->amount() : null), ['class' => 'form-control money', 'readonly' => 'readonly', 'id' => 'contract_amount']) }}
                         </div>
 
                         {{ Form::label('payment', 'Prorroga:', ['class' => 'control-label col-sm-2']) }}

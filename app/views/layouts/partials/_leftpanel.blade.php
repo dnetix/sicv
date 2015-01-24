@@ -22,7 +22,7 @@
             <li class="nav-parent"><a href="#"><i class="fa fa-book"></i> <span>Informes</span></a>
                 <ul class="children">
                     <li><a href="{{ route('report.expiredcontracts') }}"><i class="fa fa-caret-right"></i> Contratos Vencidos</a></li>
-                    <li><a href="{{ route('report.presellouts') }}"><i class="fa fa-caret-right"></i> Contratos Presacados</a></li>
+                    <li><a href="{{ route('sellout.presellouts') }}"><i class="fa fa-caret-right"></i> Contratos Presacados</a></li>
                 </ul>
             </li>
         </ul>

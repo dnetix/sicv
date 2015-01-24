@@ -1,8 +1,13 @@
 <div class="article_fields {{ isset($default_article) ? 'default_article' : '' }}">
     <div class="form-group">
-        {{ Form::label('article_description', 'Articulo:', ['class' => 'control-label col-sm-2']) }}
-        <div class="col-sm-10">
-            {{ Form::text('article[]', (isset($article) ? $article->description() : null), ['class' => 'form-control', 'id' => 'article_description', 'placeholder' => 'Descripcion del art&iacute;culo']) }}
+        {{ Form::label('', 'Articulo:', ['class' => 'control-label col-sm-2']) }}
+        <div class="col-sm-6">
+            {{ Form::text('description[]', (isset($article) ? $article->description() : null), ['class' => 'form-control', 'id' => 'article_description', 'placeholder' => 'Descripcion del art&iacute;culo']) }}
+        </div>
+
+        {{ Form::label('article_amount', 'Valor:', ['class' => 'control-label col-sm-1']) }}
+        <div class="col-sm-3">
+            {{ Form::text('article_amount[]', (isset($article) ? $article->present()->articleAmount() : null), ['class' => 'form-control money article_amount', 'id' => 'article_amount', 'placeholder' => 'Valor', 'onkeyup' => 'updateContractAmount()', 'autocomplete' => 'off']) }}
         </div>
     </div>
     <div class="form-group">

@@ -6,18 +6,18 @@ use SICV\Utils\Dates\DateHelper;
 
 class ContractRepository {
 
-    public function create(&$contract) {
+    public function save(&$contract) {
         $contract->save();
     }
 
     /**
      * Associates a contract with the articles sended as parameter
-     * @param $contract
-     * @param array $articles_id
+     * @param Contract $contract
+     * @param array $articlesWitAmount
      */
-    public function associateWithArticles(Contract &$contract, array $articles_id) {
-        foreach($articles_id as $article_id){
-            $contract->articles()->attach($article_id);
+    public function associateWithArticles(Contract &$contract, array $articlesWitAmount) {
+        foreach($articlesWitAmount as $articleWitAmount){
+            $contract->articles()->attach($articleWitAmount['article'], ['article_amount' => $articleWitAmount['amount']]);
         }
     }
 

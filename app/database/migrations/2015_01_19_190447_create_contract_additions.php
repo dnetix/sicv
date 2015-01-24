@@ -59,10 +59,14 @@ class CreateContractAdditions extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
 		Schema::drop('pre_sellouts');
 		Schema::drop('annuls');
 		Schema::drop('sellouts');
 		Schema::drop('sellout_contract');
+
+		DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}
 
 }

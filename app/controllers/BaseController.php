@@ -29,4 +29,9 @@ class BaseController extends Controller {
 		return $this->commandBus->execute($command);
 	}
 
+	protected function normalizeAmount($amount) {
+		//TODO Extract to a responsable
+		return preg_replace('/[\s\$\'\.\,]/', '', $amount);
+	}
+
 }

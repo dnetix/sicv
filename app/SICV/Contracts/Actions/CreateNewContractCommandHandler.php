@@ -19,23 +19,15 @@ class CreateNewContractCommandHandler implements CommandHandler {
     public function handle($command) {
 
         $contract = new Contract();
-        $this->fillContractFields($contract, $command);
-        $this->createNewContract($contract);
-        $this->associateContractWithArticles($contract, $command->articles_id);
 
-    }
+        $contract->fill($command->toAttributes());
+        $contract->toActive();
 
-    private function fillContractFields(Contract &$contract, $command) {
-        $contract->fill((array) $command);
-        $contract->state = ContractStates::ACTIVE;
-    }
+        $this->contractRepository->save($contract);
+        $this->contractRepository->associateWithArticles($contract, $command->articlesWithAmount());
 
-    private function createNewContract(&$contract) {
-        $this->contractRepository->create($contract);
-    }
+        return $contract;
 
-    private function associateContractWithArticles(&$contract, $articles_id) {
-        $this->contractRepository->associateWithArticles($contract, $articles_id);
     }
 
 }

@@ -2,7 +2,7 @@
 
 @section('pageheader')
     <div class="pageheader">
-        <h2><i class="glyphicon glyphicon-list"></i> Contratos Vencidos</h2>
+        <h2><i class="glyphicon glyphicon-list"></i> Contratos seleccionados para terminar</h2>
         <div class="breadcrumb-wrapper">
             <span class="label">{{ Date::toHumanDate() }}</span>
         </div>
@@ -14,6 +14,10 @@
 
     <div id="contract_statistics">
         @include('report.partials._contracts_statistics')
+    </div>
+
+    <div class="text-center mb20">
+        <a href="{{ route('sellout.process') }}" class="btn btn-primary btn-lg">Continuar con el proceso de saca</a>
     </div>
 
     <div class="expired-contracts">

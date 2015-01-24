@@ -145,8 +145,16 @@ class Contract extends Eloquent  {
 		return floor($this->payedExtensions() / $this->payment());
 	}
 
+	public function articlesCount(){
+		return $this->articles->count();
+	}
+
 	public function isActive(){
 		return $this->state() == ContractStates::ACTIVE;
+	}
+
+	public function toActive(){
+		return $this->state = ContractStates::ACTIVE;
 	}
 
 	public function isTerminated(){
@@ -180,7 +188,8 @@ class Contract extends Eloquent  {
 	}
 
 	public function articles(){
-		return $this->belongsToMany(Article::class);
+		return $this->belongsToMany(Article::class)
+			->withPivot(['article_amount']);
 	}
 
 	public function extensions(){

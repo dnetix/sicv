@@ -40,6 +40,20 @@ class Article extends Eloquent  {
 		return $this->article_type_id;
 	}
 
+	public function isGold(){
+		return $this->articleTypeId() == 2;
+	}
+
+	/**
+	 * Should only be call if has a relationship with a contract
+	 * @return mixed
+	 */
+	public function articleAmount(){
+		return $this->pivot->article_amount;
+	}
+
+	/* ----------- Relationships --------------- */
+
 	public function articleType(){
 		return $this->belongsTo(ArticleType::class);
 	}

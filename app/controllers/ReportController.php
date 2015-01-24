@@ -18,18 +18,6 @@ class ReportController extends BaseController {
         parent::__construct($commandBus);
     }
 
-    public function presellouts(){
-
-        $contracts = $this->contractRepository->getPreselloutContracts();
-
-        $command = new RetrievePreSelloutStatisticsCommand($contracts);
-        $data['contractStatistics'] = $this->execute($command);
-        $data['contracts'] =& $contracts;
-        $data['kindStatistics'] = 'presellouts';
-
-        return View::make('report.presellout_contracts', $data);
-    }
-
     public function expiredcontracts(){
         $contracts = $this->contractRepository->getExpiredContracts();
         return View::make('report.expired_contracts', compact('contracts'));

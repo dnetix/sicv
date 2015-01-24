@@ -66,16 +66,16 @@ function updateValues(element){
    }else{
       element.closest('.form-group').removeClass('has-warning');
    }
-   var also = element.data('also');
-   if(also){
-      var percent = element.data('percent');
-      if(percent){
-         $("#"+also).val(numberToMoney(Math.ceil(amount * (parseFloat($("#"+percent).val()) / 100))));
-      }else{
-         $("#"+also).val(numberToMoney(amount));
-      }
-   }
+}
 
+function setMoneyListeners(inputElement){
+   if(inputElement){
+      jQuery(inputElement).on('keyup', moneyKeyUpListener);
+   }else{
+      jQuery(".money").each(function (){
+         jQuery(this).on('keyup', moneyKeyUpListener);
+      });
+   }
 }
 
 jQuery(window).load(function() {
@@ -87,7 +87,6 @@ jQuery(window).load(function() {
    jQuery('.gritter_message').trigger('fullyLoaded');
 });
 
-var moneyElement;
 jQuery(document).ready(function() {
 
    jQuery(document).mousemove(function(){
@@ -99,19 +98,7 @@ jQuery(document).ready(function() {
       }, 30000);
    });
 
-   jQuery(".money").each(function (){
-      moneyElement = jQuery(this);
-      moneyElement.on('keyup', moneyKeyUpListener);
-      var percent = jQuery(this).data('percent');
-      if(percent){
-         jQuery("#"+percent).on('keyup', function(event){
-            if(!isNaN(String.fromCharCode(event.which)) || event.which == 8 || event.which == 46) {
-               updateValues(moneyElement);
-            }
-         });
-      }
-   });
-
+   setMoneyListeners();
 
    // Toggle Left Menu
    jQuery('.nav-parent > a').click(function() {

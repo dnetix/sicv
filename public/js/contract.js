@@ -1,9 +1,16 @@
+$(document).ready(function(){
+    $("#percentage").on('keyup', updateContractAmount);
+});
+
 function addArticleFieldsContract(){
     var node = $(".article_fields.default_article").clone();
     node.find(".form-control").each(function(){
         $(this).val("");
     });
-    node.appendTo("#contract_articles").removeClass("default_article")
+    node.find(".money").each(function(){
+        setMoneyListeners(this);
+    });
+    node.appendTo("#contract_articles").removeClass("default_article");
 }
 
 function removeArticleFieldsContract(element){
@@ -13,9 +20,15 @@ function removeArticleFieldsContract(element){
     }
 }
 
-function setAmountExtension(amount){
-    $(".extensions #amount").val(amount);
-    updateValues($(".extensions #amount"));
+function updateContractAmount(){
+    var total = 0;
+    $(".article_amount").each(function(){
+        total += parseInt(moneyToNumber($(this).val()));
+    });
+    $("#contract_amount").val(numberToMoney(total));
+    $("#contract_amount").trigger('keyup');
+
+    $("#payment").val(numberToMoney(Math.ceil(total * ($("#percentage").val() / 100))));
 }
 
 function updateArticleLocation(element){
@@ -74,8 +87,8 @@ function validateContract(){
         });
         return false;
     }
-    var amount = moneyToNumber($("#amount").val());
-    if(!amount || isNaN(amount) || parseInt(amount) < 5000){
+    var contract_amount = moneyToNumber($("#contract_amount").val());
+    if(!contract_amount || isNaN(contract_amount) || parseInt(contract_amount) < 5000){
         addGritterNotification({
             title: "Error",
             text: "Por favor asignele un valor válido al contrato",

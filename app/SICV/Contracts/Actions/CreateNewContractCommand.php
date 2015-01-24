@@ -10,7 +10,7 @@ class CreateNewContractCommand extends Command {
     public $percentage;
     public $amount;
 
-    public $articles_id = [];
+    public $articlesWithAmount = [];
 
     private $fields = [
         'user_id',
@@ -20,22 +20,32 @@ class CreateNewContractCommand extends Command {
         'amount'
     ];
 
-    public function setArticlesIds($articles_id){
-        $this->articles_id = $articles_id;
+    function __construct($user_id, $client_id, $months, $percentage, $amount) {
+        $this->user_id = $user_id;
+        $this->client_id = $client_id;
+        $this->months = $months;
+        $this->percentage = $percentage;
+        $this->amount = $this->normalizeAmount($amount);
     }
 
-    public function mapInputData($input, $client_id, $user_id, array $articles_id){
-        if (is_array($input)) {
-            foreach ($input as $key => $value) {
-                if (in_array($key, $this->fields) && !empty($value)) {
-                    $this->$key = $value;
-                }
-            }
+    public function setArticles($articlesWithAmount){
+        foreach($articlesWithAmount as $index => $articleWithAmount){
+            $articlesWithAmount[$index]['amount'] = $this->normalizeAmount($articlesWithAmount[$index]['amount']);
         }
-        $this->amount = $this->normalizeAmount($this->amount);
-        $this->client_id = $client_id;
-        $this->user_id = $user_id;
-        $this->articles_id = $articles_id;
+        $this->articlesWithAmount = $articlesWithAmount;
+        return $this;
+    }
+
+    public function articlesWithAmount(){
+        return $this->articlesWithAmount;
+    }
+
+    public function toAttributes(){
+        $array = [];
+        foreach($this->fields as $field){
+            $array[$field] = $this->$field;
+        }
+        return $array;
     }
 
 }
