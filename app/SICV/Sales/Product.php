@@ -20,6 +20,28 @@ class Product extends Eloquent {
 
     public $timestamps = false;
 
+    public function setBuyPrice($buyPrice){
+        $this->buy_price = $buyPrice;
+        return $this;
+    }
+
+    public function setSellPrice($sellPrice){
+        $this->sell_price = $sellPrice;
+        return $this;
+    }
+
+    public function setArticleId($articleId){
+        $this->article_id = $articleId;
+        return $this;
+    }
+
+    public function setContractId($contractId){
+        $this->contract_id = $contractId;
+        return $this;
+    }
+
+    /* ----------- Relationships --------------- */
+
     public function article(){
         return $this->belongsTo(Article::class);
     }

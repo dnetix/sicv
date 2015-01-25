@@ -36,6 +36,8 @@ Route::group(['before' => 'auth'], function(){
     Route::post('/sellout/presellout/{id?}', ['uses' => 'SelloutController@presellout', 'as' => 'contract.presellout']);
     Route::get('/sellout/presellouts', ['uses' => 'SelloutController@presellouts', 'as' => 'sellout.presellouts']);
     Route::get('/sellout/process', ['uses' => 'SelloutController@process', 'as' => 'sellout.process']);
+    Route::post('/sellout/create', ['uses' => 'SelloutController@create', 'as' => 'sellout.create']);
+    Route::get('/sellout/view/{id}', ['uses' => 'SelloutController@view', 'as' => 'sellout.view']);
 
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
 

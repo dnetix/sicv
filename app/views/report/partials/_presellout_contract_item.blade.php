@@ -21,10 +21,12 @@
         {{ $contract->present()->lastExtensionDate() }}
         <p><small>{{ $contract->present()->lastExtensionDateDiff() }}</small></p>
     </td>
+    @if(!isset($nochange))
     <td>
         <div class="ckbox ckbox-warning">
             <input type="checkbox" {{ isset($remove) ? 'data-remove="true"' : '' }}{{ isset($kindStatistics) ? 'data-kind="'.$kindStatistics.'"' : '' }} name="preSellout[]" value="{{ $contract->id() }}" onchange="togglePreSellout({{ $contract->id() }}, this)" id="preSellout_{{ $contract->id() }}" {{ $contract->isPreSellout() ? ' checked="checked"' : '' }}>
             <label for="preSellout_{{ $contract->id() }}"></label>
         </div>
     </td>
+    @endif
 </tr>

@@ -113,6 +113,9 @@ class ContractController extends BaseController {
 
         if($contract->isAnnulled()){
             $data['annul'] = $contract->annul;
+        }else if($contract->isEnded()){
+            $data['products'] = $contract->products;
+            $data['sellout'] = $contract->sellout->first();
         }
 
         return View::make('contract.contract_view', $data);

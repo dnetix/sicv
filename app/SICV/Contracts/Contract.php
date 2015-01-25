@@ -5,10 +5,17 @@ use Illuminate\Database\Eloquent\Collection;
 use SICV\Articles\Article;
 use SICV\Clients\Client;
 use SICV\Presenters\ContractPresenter;
+use SICV\Sales\Product;
+use SICV\Sellouts\Sellout;
 use SICV\Users\User;
 use SICV\Utils\Dates\DateHelper;
 use SICV\Utils\Presenters\PresentableTrait;
 
+/**
+ * Class Contract
+ * @property String $state
+ * @package SICV\Contracts
+ */
 class Contract extends Eloquent  {
 
 	protected $presenter = ContractPresenter::class;
@@ -69,6 +76,11 @@ class Contract extends Eloquent  {
 
 	public function endDate(){
 		return $this->end_date;
+	}
+
+	public function setEndDate($endDate){
+		$this->end_date = $endDate;
+		return $this;
 	}
 
 	/**
@@ -154,11 +166,21 @@ class Contract extends Eloquent  {
 	}
 
 	public function toActive(){
-		return $this->state = ContractStates::ACTIVE;
+		$this->state = ContractStates::ACTIVE;
+		return $this;
+	}
+
+	public function toEnded(){
+		$this->state = ContractStates::ENDED;
+		return $this;
 	}
 
 	public function isTerminated(){
 		return $this->state() == ContractStates::TERMINATED;
+	}
+
+	public function isEnded(){
+		return $this->state() == ContractStates::ENDED;
 	}
 
 	public function isAnnulled(){
@@ -189,7 +211,7 @@ class Contract extends Eloquent  {
 
 	public function articles(){
 		return $this->belongsToMany(Article::class)
-			->withPivot(['article_amount']);
+			->withPivot(['id', 'article_amount']);
 	}
 
 	public function extensions(){
@@ -206,6 +228,14 @@ class Contract extends Eloquent  {
 
 	public function preSellout(){
 		return $this->hasOne(PreSellout::class);
+	}
+
+	public function sellout(){
+		return $this->belongsToMany(Sellout::class);
+	}
+
+	public function products(){
+		return $this->hasMany(Product::class);
 	}
 
 }

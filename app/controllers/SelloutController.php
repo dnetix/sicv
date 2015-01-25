@@ -4,6 +4,8 @@ use SICV\Contracts\Actions\ToggleContractPreSelloutCommand;
 use SICV\Contracts\ContractRepository;
 use SICV\Core\Commander\CommandBus;
 use SICV\Reports\Actions\RetrievePreSelloutStatisticsCommand;
+use SICV\Sales\Product;
+use SICV\Sellouts\Sellout;
 
 class SelloutController extends BaseController {
 
@@ -64,6 +66,67 @@ class SelloutController extends BaseController {
         $data['suggestions'] =& $articlesSuggestions;
         return View::make('sellout.sellout_prices_suggestions', $data);
 
+    }
+
+    public function create(){
+        // Receive sell prices its an array contract_article_id => sell_price
+        $sellPrices = Input::get('sell_price');
+
+        $contracts = $this->contractRepository->getPreselloutContracts();
+
+        if($contracts->count() == 0){
+            Flash::overlay()->error("Nada que sacar");
+            return Redirect::route('user.dashboard');
+        }
+
+        $moveGoldAsProduct = Config::get('sicv.sellouts.move_gold_as_product');
+
+        DB::beginTransaction();
+
+        $sellout = (new Sellout())->setUserId(Auth::id())->setNote(Input::get('note'));
+        $sellout->save();
+        $goldWeight = 0;
+
+        foreach($contracts as $contract){
+            // Change the contract state to ENDED
+            $contract->toEnded()->setEndDate(Date::create()->toSQLTimestamp())->save();
+            // Make the relationship with the sellout
+            $sellout->contracts()->attach($contract);
+
+            $command = new ToggleContractPreSelloutCommand($contract->id());
+            $this->execute($command);
+
+            $articles = $contract->articles;
+            foreach($articles as $article){
+                // Create the products
+                if(!$article->isGold() || $moveGoldAsProduct) {
+                    $product = (new Product())
+                        ->setArticleId($article->id())
+                        ->setBuyPrice($article->pivot->article_amount)
+                        ->setSellPrice($this->normalizeAmount($sellPrices[$article->pivot->id]))
+                        ->setContractId($contract->id());
+                    $product->save();
+                }else{
+                    $goldWeight += $article->weight();
+                }
+            }
+        }
+        $sellout->setGoldWeight($goldWeight)->update();
+
+        DB::commit();
+    }
+
+    public function view($id){
+        $sellout = Sellout::findOrFail($id);
+        $contracts = $sellout->contracts()->with(['client', 'extensions', 'articles'])->get();
+
+        $command = new RetrievePreSelloutStatisticsCommand($contracts);
+        $data['contractStatistics'] = $this->execute($command);
+
+        $data['contracts'] =& $contracts;
+
+        $data['sellout'] =& $sellout;
+        return View::make('sellout.sellout_view', $data);
     }
 
 }

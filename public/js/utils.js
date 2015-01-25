@@ -35,6 +35,20 @@ function togglePreSellout(contractId, field){
     });
 }
 
+function removePreSellout(contractId){
+    $.ajax({
+        url: SITE_BASE + "sellout/presellout",
+        type: "post",
+        data: {
+            contract_id: contractId
+        },
+        dataType: "json",
+        success: function (data) {
+            $(".presellout").remove();
+        }
+    });
+}
+
 function updateContractStatistics(kind){
     $("#contract_statistics").html(getAjaxLoader());
     $.ajax({

@@ -33,14 +33,15 @@ class CreateContractAdditions extends Migration {
 
 		Schema::create('sellouts', function(Blueprint $table){
 			$table->increments('id');
-			$table->dateTime('date');
 			$table->text('note')->nullable();
 			$table->integer('user_id')->unsigned();
+			$table->float('gold_weight');
+			$table->timestamps();
 
 			$table->foreign('user_id')->references('id')->on('users');
 		});
 
-		Schema::create('sellout_contract', function(Blueprint $table){
+		Schema::create('contract_sellout', function(Blueprint $table){
 			$table->increments('id');
 			$table->integer('sellout_id')->unsigned();
 			$table->integer('contract_id')->unsigned();
@@ -61,10 +62,10 @@ class CreateContractAdditions extends Migration {
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
+		Schema::drop('contract_sellout');
+		Schema::drop('sellouts');
 		Schema::drop('pre_sellouts');
 		Schema::drop('annuls');
-		Schema::drop('sellouts');
-		Schema::drop('sellout_contract');
 
 		DB::statement('SET FOREIGN_KEY_CHECKS=1');
 	}

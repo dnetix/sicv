@@ -8,7 +8,7 @@ class ContractStates {
      */
     const TERMINATED = 'terminated';
     /**
-     * When the client doesn't pay for it and it runs out of time
+     * When the client doesn't pay for it and it runs out of time SELLOUT
      */
     const ENDED = 'ended';
     const ANNULLED = 'annulled';

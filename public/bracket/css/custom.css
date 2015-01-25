@@ -64,6 +64,14 @@ table tr.contract td {
 .label-annulled {
   color: #ffffff;
 }
+.panel.contract-ended .panel-heading,
+.label-ended {
+  background-color: #660066;
+}
+.panel.contract-ended .panel-heading .panel-title,
+.label-ended {
+  color: #ffffff;
+}
 table tr.flagged {
   background-color: #d9534f;
 }

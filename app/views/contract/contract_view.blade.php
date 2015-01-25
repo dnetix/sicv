@@ -21,7 +21,7 @@
 
             <div class="panel panel-contract-options contract-{{ $contract->state() }}">
                 <div class="panel-heading">
-                    <div class="panel-title">Contrato {{ $contract->present()->state() }}</div>
+                    <div class="panel-title">Contrato {{ $contract->present()->state() }} {{ $contract->isPreSellout() ? '<span class="label label-danger presellout">En Presaca</span>' : '' }}</div>
                 </div>
                 <div class="panel-body">
                     {{-- //TODO views for all states --}}
@@ -51,10 +51,11 @@
                         @include('contract.partials.displays._active')
                     @elseif($contract->isTerminated())
                         @include('contract.partials.displays._terminated')
+                    @elseif($contract->isEnded())
+                        @include('contract.partials.displays._ended')
                     @elseif($contract->isAnnulled())
                         @include('contract.partials.displays._annulled')
                     @endif
-
                 </div>
             </div>
 
@@ -94,6 +95,12 @@
                         <h4>No se han realizado abonos</h4>
                     @endforelse
                     <hr />
+                    @if($contract->isPreSellout())
+                        <div class="form-group text-center presellout">
+                            <input type="button" class="btn btn-danger" value="Remover de la Presaca" onclick="removePreSellout({{ $contract->id() }}, this)" />
+                            <hr />
+                        </div>
+                    @endif
                     <div class="form-group">
                         {{ Form::label('amount', 'Valor:', ['class' => 'control-label col-sm-3']) }}
                         <div class="col-sm-8">
@@ -120,6 +127,7 @@
 @endsection
 
 @section('js')
+    <script src="{{ public_assets('js/utils.js') }}"></script>
     <script src="{{ public_assets('js/contract.js') }}"></script>
     <script src="{{ public_assets('js/clients.js') }}"></script>
 @endsection
