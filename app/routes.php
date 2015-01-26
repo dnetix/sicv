@@ -42,7 +42,8 @@ Route::group(['before' => 'auth'], function(){
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
 
     Route::get('/report/expiredcontracts', ['uses' => 'ReportController@expiredcontracts', 'as' => 'report.expiredcontracts']);
-    Route::get('report/contractstatistics/{kind}', ['uses' => 'ReportController@contractstatistics', 'as' => 'report.contractstatistics']);
+    Route::get('/report/contractstatistics/{kind}', ['uses' => 'ReportController@contractstatistics', 'as' => 'report.contractstatistics']);
+    Route::get('/report/financial', ['uses' => 'ReportController@financial', 'as' => 'report.financial']);
 
 });
 

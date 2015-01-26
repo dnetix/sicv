@@ -27,6 +27,7 @@ class Contract extends Eloquent  {
 		'user_id',
 		'client_id',
 		'months',
+		'created_at',
 		'percentage',
 		'amount',
 		'state',
@@ -80,6 +81,15 @@ class Contract extends Eloquent  {
 
 	public function setEndDate($endDate){
 		$this->end_date = $endDate;
+		return $this;
+	}
+
+	/**
+	 * Just for migration purposes
+	 * @param $id
+	 */
+	public function setId($id){
+		$this->id = $id;
 		return $this;
 	}
 

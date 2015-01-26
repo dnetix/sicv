@@ -7,6 +7,8 @@ class ArticleType extends Eloquent  {
 	protected $table = 'article_types';
 	public $timestamps = false;
 
+	const GOLD_ID = 4;
+
 	protected $fillable = [
 		'article_type',
 		'article_type_id'
@@ -29,7 +31,7 @@ class ArticleType extends Eloquent  {
 	}
 
 	public static function isGold($article_type_id){
-		return $article_type_id == 2;
+		return $article_type_id == self::GOLD_ID;
 	}
 
 }

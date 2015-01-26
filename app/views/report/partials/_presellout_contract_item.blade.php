@@ -15,14 +15,15 @@
         {{ $contract->present()->shortCreatedAt() }}
     </td>
     <td class="month-statistics">
-        {{ $contract->present()->monthStatistics(true) }}
+        <div class="text-center">{{ $contract->present()->monthStatistics(true) }}</div>
+        <p class="text-center">Abonado: {{ $contract->present()->payedExtensions() }}</p>
     </td>
     <td>
         {{ $contract->present()->lastExtensionDate() }}
         <p><small>{{ $contract->present()->lastExtensionDateDiff() }}</small></p>
     </td>
     @if(!isset($nochange))
-    <td>
+    <td class="hidden-print">
         <div class="ckbox ckbox-warning">
             <input type="checkbox" {{ isset($remove) ? 'data-remove="true"' : '' }}{{ isset($kindStatistics) ? 'data-kind="'.$kindStatistics.'"' : '' }} name="preSellout[]" value="{{ $contract->id() }}" onchange="togglePreSellout({{ $contract->id() }}, this)" id="preSellout_{{ $contract->id() }}" {{ $contract->isPreSellout() ? ' checked="checked"' : '' }}>
             <label for="preSellout_{{ $contract->id() }}"></label>

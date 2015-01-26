@@ -1,0 +1,220 @@
+<?php
+
+use Illuminate\Console\Command;
+use SICV\Articles\Article;
+use SICV\Contracts\Contract;
+use SICV\Contracts\ContractStates;
+use SICV\Contracts\Extension;
+use SICV\Contracts\PreSellout;
+use SICV\Users\User;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
+
+class SicvCommand extends Command {
+
+	protected $name = 'sicv:migrate';
+	protected $description = 'Migra la informacion de la vieja base de datos a la nueva';
+	protected $connection;
+
+	protected $userAssociations = [];
+	protected $clientAssociations = [];
+
+	protected $articleIdsAssociatons = [
+		'1' => '2',
+		'2' => '4',
+		'3' => '5',
+		'4' => '13',
+		'5' => '15',
+		'6' => '14',
+		'7' => '20',
+		'8' => '21',
+		'9' => '19',
+		'10' => '22',
+		'11' => '23',
+		'12' => '25',
+		'13' => '26',
+		'14' => '27',
+		'15' => '28'
+	];
+
+	protected $contractStatesAssociations = [
+		'1' => ContractStates::ACTIVE,
+		'2' => ContractStates::TERMINATED,
+		'3' => ContractStates::ENDED,
+		'4' => ContractStates::ENDED,
+		'5' => ContractStates::ENDED,
+		'6' => ContractStates::LEGALPROBLEM,
+		'7' => ContractStates::ANNULLED
+	];
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+	public function fire()
+	{
+		$this->createDBConfig();
+		echo "Creating the new connection to the old database...\n";
+		$this->connection = DB::connection('olddb');
+		echo "Migrating the users...\n";
+		$this->createUsersWithAssociations();
+		echo "Migrating the clients...\n";
+		$this->migrateClientsWithAssociation();
+		echo "Migrating the contracts...\n";
+		$this->migrateContracts();
+		echo "Migrating the extensions...\n";
+		$this->migrateExtensions();
+
+		echo "PROCESS TERMINATED\nPlease check for annulations\n";
+
+	}
+
+	public function createDBConfig() {
+		// Create the old db connection
+		Config::set(
+			'database.connections.olddb',
+			[
+				'driver' => 'mysql',
+				'host' => 'localhost',
+				'database' => $this->argument('old_db'),
+				'username' => 'root',
+				'password' => $this->option('root_pass'),
+				'collation' => 'utf8_general_ci',
+				'charset' => 'utf8'
+			]
+		);
+	}
+
+	public function migrateClientsWithAssociation() {
+		echo "\tObtaining the clients from the old database...\n";
+		$clients = $this->connection->table('cliente')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($clients as $client) {
+			// Associate the client old_id with the new id
+			$newClient = \SICV\Clients\Client::create(
+				[
+					'name' => ucwords(strtolower($client['nombre'])),
+					'id_type' => 'CC',
+					'id_number' => $client['idcliente'],
+					'id_expedition' => ucwords(strtolower($client['lugarexpedicion'])),
+					'address' => $client['direccion'],
+					'phone_number' => $client['telefono'],
+					'cell_number' => $client['celular'],
+					'city' => $client['ciudad']
+				]
+			);
+			$this->clientAssociations[$client['idcliente']] = $newClient->id();
+			echo "{$client['idcliente']} ";
+		}
+		echo "\n";
+	}
+
+	public function createUsersWithAssociations() {
+		echo "\tObtaining the users from the old database...\n";
+		$users = $this->connection->table('usuario')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($users as $user) {
+			$newUser = (new User(
+				[
+					'username' => $user['idusuario'],
+					'name' => $user['nombre'],
+					'email' => is_null($user['email']) ? $user['idusuario'].'@temp.com' : $user['email'],
+					'active' => 1,
+					'role' => 100
+				]
+			))->setPassword('temporal');
+			$newUser->save();
+			$this->userAssociations[$user['idusuario']] = $newUser->id();
+			echo "{$user['idusuario']} ";
+		}
+		echo "\n";
+	}
+
+	public function getNewArticleType($old_article_type){
+		return $this->articleIdsAssociatons[$old_article_type];
+	}
+
+	public function getNewClientId($old_client_id){
+		return $this->clientAssociations[$old_client_id];
+	}
+
+	public function getNewUserId($old_user_id){
+		return $this->userAssociations[$old_user_id];
+	}
+
+	public function getNewContractState($old_contract_state){
+		return $this->contractStatesAssociations[$old_contract_state];
+	}
+
+	public function migrateContracts() {
+		echo "\tObtaining the contracts from the old database...\n";
+		$contracts = $this->connection->table('contrato')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($contracts as $contract) {
+			$newContract = (
+			new Contract(
+				[
+					'user_id' => $this->getNewUserId($contract['usuario']),
+					'client_id' => $this->getNewClientId($contract['cliente']),
+					'months' => $contract['nromeses'],
+					'percentage' => $contract['porcentaje'],
+					'amount' => $contract['valor'],
+					'state' => $this->getNewContractState($contract['estado']),
+					'created_at' => $contract['fechaingreso'],
+					'end_date' => $contract['fechasalida'],
+					'end_amount' => $contract['valorcancelado']
+				]
+			)
+			)->setId($contract['idcontrato']);
+			$newContract->save();
+			dd($newContract);
+			// Creo el nuevo articulo
+			$article = Article::create(
+				[
+					'description' => $contract['articulo'],
+					'weight' => $contract['peso'],
+					'article_type_id' => $this->getNewArticleType($contract['tipoarticulo'])
+				]
+			);
+			// Guardo la relacion
+			$newContract->articles()->attach($article, ['article_amount' => $contract['valor']]);
+			echo "{$newContract->id()} ";
+		}
+		echo "\n";
+	}
+
+	public function migrateExtensions() {
+		echo "\tObtaining the extensions from the old database...\n";
+		$extensions = $this->connection->table('prorroga')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($extensions as $extension) {
+			$newExtension = Extension::create(
+				[
+					'amount' => $extension['valor'],
+					'contract_id' => $extension['contrato'],
+					'user_id' => $this->getNewUserId($extension['usuario']),
+					'created_at' => $extension['fecha'] . ' ' . $extension['hora']
+				]
+			);
+			echo "{$newExtension->id()} ";
+		}
+		echo "\n";
+	}
+
+	protected function getArguments()
+	{
+		return array(
+			array('old_db', InputArgument::REQUIRED, 'Nombre de la base de datos vieja.'),
+		);
+	}
+
+	protected function getOptions()
+	{
+		return array(
+			array('new_db', null, InputOption::VALUE_OPTIONAL, 'Nombre de la base de datos nueva', 'sicv'),
+			array('root_pass', null, InputOption::VALUE_OPTIONAL, 'Contraseña de root', 'root'),
+		);
+	}
+
+}

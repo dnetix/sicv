@@ -17,6 +17,10 @@ class Extension extends Eloquent {
         'created_at'
     ];
 
+    public function id(){
+        return $this->id;
+    }
+
     public function amount(){
         return $this->amount;
     }

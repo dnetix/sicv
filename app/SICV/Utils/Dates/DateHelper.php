@@ -122,6 +122,13 @@ class DateHelper extends DateTime {
         return $this->format('Y-m-d H:i:s');
     }
 
+    public function toSQLReport($endOfDay = false){
+        if($endOfDay){
+            return $this->format('Y-m-d').' 23:59:59';
+        }
+        return $this->format('Y-m-d').' 00:00:00';
+    }
+
     public function changeDays($numberOfDaysWithSign){
         return $this->modify($numberOfDaysWithSign.' days');
     }

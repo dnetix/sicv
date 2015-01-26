@@ -41,7 +41,12 @@ class Article extends Eloquent  {
 	}
 
 	public function isGold(){
-		return $this->articleTypeId() == 2;
+		return $this->articleTypeId() == ArticleType::GOLD_ID;
+	}
+
+	public function setWeight($weight){
+		$this->weight = $weight;
+		return $this;
 	}
 
 	/**

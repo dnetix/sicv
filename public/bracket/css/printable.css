@@ -1,0 +1,40 @@
+@media print {
+  * {
+    text-shadow: none !important;
+    border: none !important;
+  }
+  a[href]:after {
+    content: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .leftpanel {
+    display: none !important;
+  }
+  .headerbar {
+    display: none !important;
+  }
+  .printable.table > tbody > tr > td {
+    padding: 0;
+  }
+  .printable.table > tbody > tr > td,
+  .printable.table > tbody > tr > td > p,
+  .printable.table > tbody > tr > td > span,
+  .printable.table > tbody > tr > td > a {
+    font-size: 10px;
+  }
+  .printable.table > tbody > tr > td > p {
+    color: #333333;
+  }
+  .expired-contracts table td.month-statistics {
+    min-width: 10px !important;
+    text-align: center;
+  }
+  .printable .btn,
+  .printable .btn-sm {
+    display: inline-block;
+    padding: 1px !important;
+    margin: 1px;
+  }
+}

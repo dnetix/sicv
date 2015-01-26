@@ -3,7 +3,7 @@
     <a class="menutoggle"><i class="fa fa-bars"></i></a>
 
     {{ Form::open(['route' => 'user.search', 'class' => 'searchform']) }}
-        {{ Form::text('searchTerms', null, ['class' => 'form-control', 'placeholder' => 'B&uacute;squeda r&aacute;pida', 'id' => 'quicksearch']) }}
+        {{ Form::text('searchTerms', null, ['autocomplete' => 'off', 'class' => 'form-control', 'placeholder' => 'B&uacute;squeda r&aacute;pida', 'id' => 'quicksearch']) }}
     {{ Form::close() }}
 
 

@@ -151,7 +151,7 @@ class ContractPresenter extends Presenter {
             $btnType = 'btn-sm';
             $btnIcon = '';
         }else{
-            $btnType = 'btn-lg';
+            $btnType = 'btn btn-lg';
             $btnIcon = '<i class="fa fa-calendar-o"></i> ';
         }
 
@@ -163,7 +163,7 @@ class ContractPresenter extends Presenter {
             'Meses restantes'
         ];
         foreach($statistics as $index => $data){
-            $return .= '<span data-toggle="tooltip" data-original-title="'.$tooltips[$index].'" class="tooltips btn '.$btnType.' btn-'.$data['class'].'">'.$btnIcon.$data['months']."</span>\n";
+            $return .= '<span data-toggle="tooltip" data-original-title="'.$tooltips[$index].'" class="tooltips '.$btnType.' btn-'.$data['class'].'">'.$btnIcon.$data['months']."</span>\n";
         }
 
         return $return;

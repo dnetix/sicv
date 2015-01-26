@@ -11,3 +11,6 @@
 |
 */
 
+Artisan::add(new SicvCommand);
+Artisan::add(new SicvFix);
+Artisan::add(new SicvCheck);

@@ -12,19 +12,29 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'users';
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
 	protected $hidden = array('password', 'remember_token');
+	//TODO check for password mass assigment active just for migration purposes
+	protected $fillable = [
+		'username',
+		'name',
+		'email',
+		'role',
+		'active',
+	];
+	
+	public function id(){
+		return $this->id;
+	}
+
+	public function name(){
+		return $this->name;
+	}
+
+	public function setPassword($password){
+		$this->password = $password;
+		return $this;
+	}
 
 	/**
 	 * When it try to set the password automatically hashit
@@ -32,10 +42,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public function setPasswordAttribute($value){
 		$this->attributes['password'] = \Hash::make($value);
-	}
-
-	public function name(){
-		return $this->name;
 	}
 
 	/* ----------- Relationships --------------- */

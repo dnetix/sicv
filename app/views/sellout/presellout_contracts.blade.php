@@ -9,6 +9,10 @@
     </div>
 @endsection
 
+@section('head')
+    <link href="{{ public_assets('bracket/css/printable.css') }}" rel="stylesheet" />
+@endsection
+
 @section('content')
 <div class="contentpanel">
 
@@ -16,12 +20,12 @@
         @include('report.partials._contracts_statistics')
     </div>
 
-    <div class="text-center mb20">
+    <div class="text-center mb20 hidden-print">
         <a href="{{ route('sellout.process') }}" class="btn btn-primary btn-lg">Continuar con el proceso de saca</a>
     </div>
 
     <div class="expired-contracts">
-        <table class="table table-striped">
+        <table class="table table-striped printable">
             <thead>
             <tr>
                 <th>Contrato</th>
@@ -30,7 +34,7 @@
                 <th>Fecha</th>
                 <th>En Meses</th>
                 <th>&Uacute;ltimo Abono</th>
-                <th>Presaca</th>
+                <th class="hidden-print">Presaca</th>
             </tr>
             </thead>
             <tbody>

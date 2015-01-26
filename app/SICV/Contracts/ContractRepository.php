@@ -25,7 +25,8 @@ class ContractRepository {
         if(is_null($day)){
             $day = date('Y-m-d');
         }
-        return Contract::whereBetween('created_at', [$day.' 00:00:00', $day.' 23:59:59'])->with(['client', 'articles'])->orderBy('id', 'desc')->get();
+        //TODO use the DateHelper to SQL here
+        return Contract::whereBetween('created_at', [$day.' 00:00:00', $day.' 23:59:59'])->with(['client', 'articles'])->orderBy('id', 'desc')->limit(1000)->get();
     }
 
 

@@ -8,8 +8,8 @@ class ArticlePresenter extends Presenter {
         return $this->entity->articleType->name();
     }
 
-    public function name(){
-
+    public function description(){
+        return $this->entity->description() . ($this->entity->isGold() ? " [{$this->entity->weight()} g]" : '');
     }
 
     public function articleAmount(){

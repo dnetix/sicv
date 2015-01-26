@@ -8,7 +8,7 @@
                 <div class="stat">
                     <small>Valor Total de Contratos</small>
                     <h2>{{ $contractStatistics->present()->totalAmount() }}</h2>
-                    <div class="text-muted">En {{ $contractStatistics->present()->numberOfContracts() }} contratos preseleccionados ({{ $contractStatistics->present()->numberOfArticles() }}) articulos</div>
+                    <div class="text-muted">En {{ $contractStatistics->present()->numberOfContracts() }} contratos ({{ $contractStatistics->present()->numberOfArticles() }}) articulos</div>
                 </div>
             </div>
             <div class="col-md-2">

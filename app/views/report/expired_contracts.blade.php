@@ -9,10 +9,18 @@
     </div>
 @endsection
 
+@section('head')
+    <link href="{{ public_assets('bracket/css/printable.css') }}" rel="stylesheet" />
+@endsection
+
 @section('content')
 <div class="contentpanel">
 
-    <div class="form-group">
+    <div id="contract_statistics">
+        @include('report.partials._contracts_statistics')
+    </div>
+
+    <div class="form-group hidden-print">
         <div class="ckbox ckbox-warning">
             <input type="checkbox" id="checkboxWarning" onclick="selectAll(this)" />
             <label for="checkboxWarning">Seleccionar Todos</label>
@@ -20,7 +28,7 @@
     </div>
 
     <div class="expired-contracts">
-        <table class="table table-striped">
+        <table class="table table-striped printable">
             <thead>
                 <tr>
                     <th>Contrato</th>
@@ -29,7 +37,7 @@
                     <th>Fecha</th>
                     <th>En Meses</th>
                     <th>&Uacute;ltimo Abono</th>
-                    <th>Presaca</th>
+                    <th class="no-print">Presaca</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,8 +50,6 @@
         </table>
     </div>
 </div>
-
-<!-- contentpanel -->
 @endsection
 
 @section('js')
