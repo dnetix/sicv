@@ -13,7 +13,7 @@
     <div class="form-group">
         {{ Form::label('article_type_id[]', 'Tipo Articulo:', ['class' => 'control-label col-sm-2']) }}
         <div class="col-sm-4">
-            {{ $articleTypes->printAsHTMLSelectWithStructure('article_type_id[]', (isset($article) ? $article->articleTypeId() : null), 2, 'article_type') }}
+            {{ $articleTypes->asHTMLSelect('article_type_id[]', (isset($article) ? $article->articleTypeId() : \SICV\Articles\ArticleType::GOLD_ID), ['id' => 'article_type', 'class' => 'form-control']) }}
         </div>
 
         {{ Form::label('weight[]', 'Peso:', ['class' => 'control-label col-sm-2']) }}

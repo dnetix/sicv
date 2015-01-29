@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Collection;
 use SICV\Articles\Article;
 use SICV\Articles\ArticleType;
 use SICV\Presenters\ContractsStatisticsPresenter;
-use SICV\Utils\LineageModel\LineageTree;
+use SICV\Utils\Hierachical\CategoriesTree;
 use SICV\Utils\Presenters\PresentableTrait;
 
 class ContractsStatistics {
@@ -25,7 +25,7 @@ class ContractsStatistics {
     public $totalPaymentMonth = 0;
 
     /**
-     * @var LineageTree
+     * @var CategoriesTree
      */
     public $articleTypes;
 
@@ -68,6 +68,10 @@ class ContractsStatistics {
         }else{
             return ($this->totalPayedExtensions() / $this->totalAmount()) * 100;
         }
+    }
+
+    public function setArticleTypes($articleTypes){
+        $this->articleTypes = CategoriesTree::load($articleTypes);
     }
 
     /**

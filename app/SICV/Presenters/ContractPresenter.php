@@ -95,17 +95,35 @@ class ContractPresenter extends Presenter {
         return implode(', ', $articleNames);
     }
 
+    private function getlastExtension(){
+        if(is_null($this->lastExtension) && $this->lastExtension !== false){
+            $this->lastExtension = $this->entity->lastExtension();
+            if(is_null($this->lastExtension)){
+                $this->lastExtension = false;
+            }
+        }
+        return $this->lastExtension;
+    }
+
     public function lastExtensionDate(){
-        $lastExtension = $this->entity->lastExtension();
-        if(is_null($lastExtension)){
+        $lastExtension = $this->getlastExtension();
+        if($lastExtension === false){
             return '';
         }
         return DateHelper::create($lastExtension->createdAt())->translateToShortDate();
     }
 
+    public function lastExtensionAmount(){
+        $lastExtension = $this->getlastExtension();
+        if($lastExtension === false){
+            return '';
+        }
+        return $this->toMoney($lastExtension->amount());
+    }
+
     public function lastExtensionDateDiff(){
-        $lastExtension = $this->entity->lastExtension();
-        if(is_null($lastExtension)){
+        $lastExtension = $this->getlastExtension();
+        if($lastExtension === false){
             return '';
         }
         return DateHelper::getDifference($lastExtension->createdAt())->forHumans();

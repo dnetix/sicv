@@ -24,11 +24,11 @@
                     <p class="mt5 mb20">Logueate para entrar a tu cuenta.</p>
 
                     <div class="form-group">
-                        {{ Form::text('username', null, ['class' => 'form-control uname', 'placeholder' => 'Usuario']) }}
+                        {{ Form::text('username', null, ['class' => 'form-control uname', 'placeholder' => 'Usuario', 'required' => 'required']) }}
                     </div>
 
                     <div class="form-group">
-                        {{ Form::password('password', ['class' => 'form-control pword', 'placeholder' => 'Contrase&ntilde;a']) }}
+                        {{ Form::password('password', ['class' => 'form-control pword', 'placeholder' => 'Contrase&ntilde;a', 'required' => 'required']) }}
                     </div>
 
                     <div class="form-group text-center">

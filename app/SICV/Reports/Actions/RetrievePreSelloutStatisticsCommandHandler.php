@@ -18,13 +18,14 @@ class RetrievePreSelloutStatisticsCommandHandler implements CommandHandler {
     public function handle($command) {
 
         $contractStatistics = (new ContractsStatistics())->createStatistics($command->contracts);
-        $contractStatistics->articleTypes = $this->getArticleTypesAsLineageTree();
+        $contractStatistics->setArticleTypes($this->getArticleTypes());
+
         return $contractStatistics;
 
     }
 
-    public function getArticleTypesAsLineageTree(){
-        return $this->articleRepository->getArticleTypesAsLineageTree();
+    public function getArticleTypes(){
+        return $this->articleRepository->getArticleTypes();
     }
 
 }

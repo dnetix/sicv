@@ -20,21 +20,21 @@ class SicvCommand extends Command {
 	protected $clientAssociations = [];
 
 	protected $articleIdsAssociatons = [
-		'1' => '2',
-		'2' => '4',
-		'3' => '5',
-		'4' => '13',
-		'5' => '15',
-		'6' => '14',
-		'7' => '20',
-		'8' => '21',
-		'9' => '19',
-		'10' => '22',
-		'11' => '23',
-		'12' => '25',
-		'13' => '26',
-		'14' => '27',
-		'15' => '28'
+		'1' => '1',
+		'2' => \SICV\Articles\ArticleType::GOLD_ID,
+		'3' => '6',
+		'4' => '14',
+		'5' => '16',
+		'6' => '17',
+		'7' => '19',
+		'8' => '20',
+		'9' => '18',
+		'10' => '21',
+		'11' => '22',
+		'12' => '24',
+		'13' => '25',
+		'14' => '26',
+		'15' => '27'
 	];
 
 	protected $contractStatesAssociations = [
@@ -152,8 +152,7 @@ class SicvCommand extends Command {
 		$contracts = $this->connection->table('contrato')->get();
 		echo "\tPerforming migrations\n";
 		foreach ($contracts as $contract) {
-			$newContract = (
-			new Contract(
+			$newContract = (new Contract(
 				[
 					'user_id' => $this->getNewUserId($contract['usuario']),
 					'client_id' => $this->getNewClientId($contract['cliente']),
@@ -168,7 +167,6 @@ class SicvCommand extends Command {
 			)
 			)->setId($contract['idcontrato']);
 			$newContract->save();
-			dd($newContract);
 			// Creo el nuevo articulo
 			$article = Article::create(
 				[

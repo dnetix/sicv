@@ -20,6 +20,7 @@
     </td>
     <td>
         {{ $contract->present()->lastExtensionDate() }}
+        <p>{{ $contract->present()->lastExtensionAmount() }}</p>
         <p><small>{{ $contract->present()->lastExtensionDateDiff() }}</small></p>
     </td>
     @if(!isset($nochange))

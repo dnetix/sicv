@@ -7,15 +7,23 @@ class ArticleType extends Eloquent  {
 	protected $table = 'article_types';
 	public $timestamps = false;
 
-	const GOLD_ID = 4;
+	const GOLD_ID = 3;
 
 	protected $fillable = [
 		'article_type',
 		'article_type_id'
 	];
 
+	public function id(){
+		return $this->id;
+	}
+
 	public function name(){
 		return $this->article_type;
+	}
+
+	public function parentId(){
+		return $this->article_type_id;
 	}
 
 	public function articles(){

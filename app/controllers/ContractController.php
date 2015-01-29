@@ -10,6 +10,7 @@ use SICV\Contracts\Actions\CreateNewContractCommand;
 use SICV\Contracts\Actions\SaveNewExtensionCommand;
 use SICV\Contracts\ContractRepository;
 use SICV\Core\Validations\FormValidationException;
+use SICV\Utils\Hierachical\CategoriesTree;
 
 class ContractController extends BaseController {
 
@@ -41,7 +42,8 @@ class ContractController extends BaseController {
                 // Do nothing
             }
         }
-        $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
+        $articleTypes = $this->articleRepository->getArticleTypes();
+        $data['articleTypes'] = CategoriesTree::load($articleTypes);
         $data['default_months'] = Config::get('sicv.default_months');
         $data['default_percentage'] = Config::get('sicv.default_percentage');
 
@@ -54,7 +56,8 @@ class ContractController extends BaseController {
         $data['contract'] =& $contract;
         $data['client'] =& $contract->client;
         $data['articles'] =& $contract->articles;
-        $data['articleTypes'] = $this->articleRepository->getArticleTypesAsLineageTree();
+        $articleTypes = $this->articleRepository->getArticleTypes();
+        $data['articleTypes'] = CategoriesTree::load($articleTypes);
 
         return View::make('contract.contract_new', $data);
     }

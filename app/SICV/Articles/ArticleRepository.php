@@ -1,21 +1,21 @@
 <?php  namespace SICV\Articles;
 
-use SICV\Utils\LineageModel\LineageTree;
-
 class ArticleRepository {
 
-    public function getArticleTypesAsLineageTree(){
-        $articleTypes = $this->getArticleTypes();
-
-        $lineageArticleTypes = new LineageTree();
-        foreach($articleTypes as $articleType){
-            $lineageArticleTypes->addNode($articleType->id, $articleType->article_type_id, $articleType);
-        }
-        return $lineageArticleTypes;
+    /**
+     * @param $id
+     * @return ArticleType
+     */
+    public function getArticleTypeById($id){
+        return ArticleType::findOrFail($id);
     }
 
     public function getArticleTypes(){
         return ArticleType::all();
+    }
+
+    public function saveArticleType(ArticleType &$articleType){
+        $articleType->save();
     }
 
     public function getArticleById($id) {

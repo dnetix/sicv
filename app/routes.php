@@ -40,6 +40,9 @@ Route::group(['before' => 'auth'], function(){
     Route::get('/sellout/view/{id}', ['uses' => 'SelloutController@view', 'as' => 'sellout.view']);
 
     Route::post('/article/location/{id?}', ['uses' => 'ArticleController@updateLocation', 'as' => 'article.location']);
+    Route::get('/article/types', ['uses' => 'ArticleController@articletypes', 'as' => 'article.types']);
+    Route::get('/article/type/{id?}', ['uses' => 'ArticleController@articletype', 'as' => 'article.type']);
+    Route::post('/article/type', ['uses' => 'ArticleController@createOrUpdateArticleType', 'as' => 'article.savetype']);
 
     Route::get('/report/expiredcontracts', ['uses' => 'ReportController@expiredcontracts', 'as' => 'report.expiredcontracts']);
     Route::get('/report/contractstatistics/{kind}', ['uses' => 'ReportController@contractstatistics', 'as' => 'report.contractstatistics']);
