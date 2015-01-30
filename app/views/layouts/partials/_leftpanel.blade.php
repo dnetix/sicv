@@ -26,9 +26,15 @@
                     <li><a href="{{ route('sellout.presellouts') }}"><i class="fa fa-caret-right"></i> Contratos Presacados</a></li>
                 </ul>
             </li>
+            <li class="nav-parent"><a href="javascript_void(0)"><i class="glyphicon glyphicon-usd"></i> <span>Ingresos y gastos</span></a>
+                <ul class="children">
+                    <li><a href="{{ route('budget.expenses') }}"><i class="fa fa-caret-right"></i> Gastos</a></li>
+                </ul>
+            </li>
             <li class="nav-parent"><a href="javascript_void(0)"><i class="glyphicon glyphicon-cog"></i> <span>Configuraciones</span></a>
                 <ul class="children">
                     <li><a href="{{ route('article.types') }}"><i class="fa fa-caret-right"></i> Tipos de Articulos</a></li>
+                    <li><a href="{{ route('budget.expensetypes') }}"><i class="fa fa-caret-right"></i> Tipos de Gastos</a></li>
                 </ul>
             </li>
         </ul>

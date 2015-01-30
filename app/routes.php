@@ -48,6 +48,12 @@ Route::group(['before' => 'auth'], function(){
     Route::get('/report/contractstatistics/{kind}', ['uses' => 'ReportController@contractstatistics', 'as' => 'report.contractstatistics']);
     Route::get('/report/financial', ['uses' => 'ReportController@financial', 'as' => 'report.financial']);
 
+    Route::get('/budget/expenses', ['uses' => 'BudgetController@expenses', 'as' => 'budget.expenses']);
+    Route::post('/buget/expense/store', ['uses' => 'BudgetController@storeExpense', 'as' => 'budget.newexpense']);
+    Route::get('/budget/expensetype', ['uses' => 'BudgetController@expenseType', 'as' => 'budget.expensetype']);
+    Route::get('/budget/expensetypes', ['uses' => 'BudgetController@expenseTypes', 'as' => 'budget.expensetypes']);
+    Route::post('/budget/store/expensetype', ['uses' => 'BudgetController@storeExpenseType', 'as' => 'budget.saveexpensetype']);
+
 });
 
 Route::get('/preview/{template}', "HomeController@preview");

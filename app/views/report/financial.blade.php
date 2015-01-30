@@ -29,6 +29,7 @@
                             <div class="stat">
                                 <small>Cancelado de contratos</small>
                                 <h4>{{ $financial->present()->totalContractsTerminations() }}</h4>
+                                <p class="text-muted">{{ $financial->present()->totalExtensionsFromEndAmounts() }} de ganancia</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -37,6 +38,11 @@
                             <div class="stat">
                                 <small>Prestado en Contratos</small>
                                 <h4>{{ $financial->present()->totalContractsAmount() }}</h4>
+                            </div>
+
+                            <div class="stat">
+                                <small>Gastos</small>
+                                <h4>{{ $financial->present()->totalExpenses() }}</h4>
                             </div>
 
                         </div>

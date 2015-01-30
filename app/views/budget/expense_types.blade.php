@@ -16,31 +16,28 @@
         <div class="col-md-7">
             <div class="panel panel-dark">
                 <div class="panel-heading">
-                    <div class="panel-title">Tipos de Articulo</div>
+                    <div class="panel-title">Tipos de Gasto</div>
                 </div>
                 <div class="panel-body">
-                    {{ $articleTypes->asOrderedList() }}
+                    <ul>
+                    @foreach($expenseTypes as $expenseType)
+                        <li>{{ $expenseType->name() }} <a href="javascript:void(0)" onclick="editThis({{ $expenseType->id() }})">Editar</a></li>
+                    @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
             <div class="panel panel-dark">
                 <div class="panel-heading">
-                    <div class="panel-title">Crear o Editar Tipo Articulo</div>
+                    <div class="panel-title">Crear o Editar Tipo Gasto</div>
                 </div>
                 <div class="panel-body">
-                    {{ Form::open(['route' => 'article.savetype', 'class' => 'form-horizontal']) }}
+                    {{ Form::open(['route' => 'budget.saveexpensetype', 'class' => 'form-horizontal']) }}
                     <div class="form-group">
                         {{ Form::label('name', 'Nombre', ['class' => 'control-label col-sm-3']) }}
                         <div class="col-sm-9">
                             {{ Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        {{ Form::label('parent_id', 'Tipo Superior', ['class' => 'control-label col-sm-3']) }}
-                        <div class="col-sm-9">
-                            {{ $articleTypes->asHTMLSelect('parent_id', null, ['class' => 'form-control', 'id' => 'parent_id'], 'Sin tipo superior') }}
                         </div>
                     </div>
 
@@ -61,26 +58,18 @@
 
 @section('js')
     <script>
-        $(document).ready(function(){
-            $('.node').each(function(){
-                var node = $(this);
-                node.html(node.html() + " <a href='javascript:void(0)' onclick='editNode(" + node.data("id") + ")'>Editar</a>");
-            });
-        });
-
-        function editNode(nodeId){
+        function editThis(id){
             $.ajax({
-                url: SITE_BASE + "article/type",
+                url: SITE_BASE + "budget/expensetype",
                 type: "get",
                 dataType: "json",
                 data: {
-                    id: nodeId
+                    id: id
                 },
                 success: function (data) {
                     $("#id").val(data.id);
-                    $("#name").val(data.article_type);
-                    $("#parent_id").val(data.article_type_id);
-                    $("#btn_submit").val("Editar Tipo Articulo");
+                    $("#name").val(data.name);
+                    $("#btn_submit").val("Editar Tipo Gasto");
                 }
             });
         }
@@ -88,7 +77,6 @@
         function cancelNode(){
             $("#id").val("");
             $("#name").val("");
-            $("#parent_id").val("");
             $("#btn_submit").val("Crear Nuevo");
         }
     </script>

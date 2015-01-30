@@ -20,8 +20,16 @@ class FinancialReportPresenter extends Presenter {
         return $this->toMoney($this->entity->totalExtensions());
     }
 
+    public function totalExpenses(){
+        return $this->toMoney($this->entity->totalExpenses());
+    }
+
     public function totalContractsTerminations(){
         return $this->toMoney($this->entity->totalContractsTerminations());
+    }
+
+    public function totalExtensionsFromEndAmounts(){
+        return $this->toMoney($this->entity->totalExtensionsFromEndAmounts());
     }
 
 }

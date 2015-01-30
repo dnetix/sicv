@@ -52,13 +52,14 @@ class ContractRepository {
     }
 
     public function getExpiredContracts($monthDifference = 0) {
+        //TODO Look for a solution to change names in the database and not need to change in here
         $contractIDS = \DB::select(\DB::raw('SELECT x.id FROM (SELECT contracts.id, TIMESTAMPDIFF(MONTH, contracts.created_at, NOW()) AS actual_months, (contracts.months + FLOOR(IFNULL(SUM(extensions.amount), 0) / (contracts.amount * (contracts.percentage / 100)))) AS contract_months FROM contracts
             LEFT JOIN extensions ON contracts.id = extensions.contract_id
             WHERE contracts.state = :state
             GROUP BY contracts.id) AS x
             WHERE x.actual_months > x.contract_months
             LIMIT :limit'), ['state' => ContractStates::ACTIVE, 'limit' => \Config::get('sicv.max_expired_contracts')]);
-        // Creates just an array removing the array of arrays
+        //TODO Create a Util class to handle this kind of stuff, makes the array of arrays an array with the form I need
         $contractIDS = array_column($contractIDS, 'id');
         if(sizeof($contractIDS) >= 1){
             return Contract::whereIn('id', $contractIDS)->with(['extensions', 'articles', 'client', 'extensions', 'preSellout'])->get();

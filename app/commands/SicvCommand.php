@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Command;
 use SICV\Articles\Article;
+use SICV\Budgets\Expense;
 use SICV\Contracts\Contract;
 use SICV\Contracts\ContractStates;
 use SICV\Contracts\Extension;
@@ -65,6 +66,8 @@ class SicvCommand extends Command {
 		$this->migrateContracts();
 		echo "Migrating the extensions...\n";
 		$this->migrateExtensions();
+		echo "Migrating the expenses...\n";
+		$this->migrateExpenses();
 
 		echo "PROCESS TERMINATED\nPlease check for annulations\n";
 
@@ -196,6 +199,25 @@ class SicvCommand extends Command {
 				]
 			);
 			echo "{$newExtension->id()} ";
+		}
+		echo "\n";
+	}
+
+	public function migrateExpenses() {
+		echo "\tObtaining the expenses from the old database...\n";
+		$expenses = $this->connection->table('gasto')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($expenses as $expense) {
+			$newExpense = Expense::create(
+				[
+					'amount' => $expense['valor'],
+					'created_at' => $expense['fecha'],
+					'description' => $expense['concepto'],
+					'expense_type_id' => $expense['tipogasto'],
+					'user_id' => $this->getNewUserId($expense['usuario'])
+				]
+			);
+			echo "{$newExpense->id()} ";
 		}
 		echo "\n";
 	}
