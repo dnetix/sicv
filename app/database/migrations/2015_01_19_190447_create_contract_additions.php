@@ -31,11 +31,13 @@ class CreateContractAdditions extends Migration {
 			$table->foreign('user_id')->references('id')->on('users');
 		});
 
+
 		Schema::create('sellouts', function(Blueprint $table){
 			$table->increments('id');
 			$table->text('note')->nullable();
 			$table->integer('user_id')->unsigned();
 			$table->float('gold_weight');
+			$table->integer('gold_amount')->nullable();
 			$table->timestamps();
 
 			$table->foreign('user_id')->references('id')->on('users');

@@ -7,6 +7,8 @@ use SICV\Contracts\Contract;
 use SICV\Contracts\ContractStates;
 use SICV\Contracts\Extension;
 use SICV\Contracts\PreSellout;
+use SICV\Sales\Invoice;
+use SICV\Sales\Product;
 use SICV\Users\User;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,6 +21,7 @@ class SicvCommand extends Command {
 
 	protected $userAssociations = [];
 	protected $clientAssociations = [];
+	protected $productAssociations = [];
 
 	protected $articleIdsAssociatons = [
 		'1' => '1',
@@ -68,6 +71,12 @@ class SicvCommand extends Command {
 		$this->migrateExtensions();
 		echo "Migrating the expenses...\n";
 		$this->migrateExpenses();
+		echo "Migrating the products...\n";
+		$this->migrateProducts();
+		echo "Migrating the invoices...\n";
+		$this->migrateInvoices();
+		echo "Migrating the invoices products...\n";
+		$this->migrateInvoiceProducts();
 
 		echo "PROCESS TERMINATED\nPlease check for annulations\n";
 
@@ -146,6 +155,10 @@ class SicvCommand extends Command {
 		return $this->userAssociations[$old_user_id];
 	}
 
+	public function getNewProductId($old_product_id){
+		return $this->productAssociations[$old_product_id];
+	}
+
 	public function getNewContractState($old_contract_state){
 		return $this->contractStatesAssociations[$old_contract_state];
 	}
@@ -218,6 +231,68 @@ class SicvCommand extends Command {
 				]
 			);
 			echo "{$newExpense->id()} ";
+		}
+		echo "\n";
+	}
+
+	public function migrateProducts() {
+		echo "\tObtaining the products from the old database...\n";
+		$products = $this->connection->table('articulo')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($products as $product) {
+			// I need to find the id of the article from the contract
+			if(is_null($product['contrato'])){
+				$article = Article::create([
+					'description' => $product['articulo'],
+					'article_type_id' => $this->getNewArticleType($product['tipoarticulo'])
+				]);
+				$article_id = $article->id();
+				$contract_id = null;
+			}else{
+				// The article is in the articles
+				$article = Contract::find($product['contrato'])->articles->first();
+				$article_id = $article->id();
+				$contract_id = $product['contrato'];
+			}
+			$newProduct = Product::create([
+				'buy_price' => $product['valorcompra'],
+				'sell_price' => $product['valorventa'],
+				'article_id' => $article_id,
+				'contract_id' => $contract_id,
+				'quantity' => $product['disponible']
+			]);
+			// Creo las nuevas asociaciones de producto
+			$this->productAssociations[$product['idarticulo']] = $newProduct->id();
+			echo $product['idarticulo']." ";
+		}
+		echo "\n";
+	}
+
+	public function migrateInvoices() {
+		echo "\tObtaining the invoices from the old database...\n";
+		$invoices = $this->connection->table('notacobro')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($invoices as $invoice) {
+			$newInvoice = (new Invoice([
+				'created_at' => \SICV\Utils\Dates\DateHelper::create($invoice['fecha'])->toSQLTimestamp(),
+				'client_id' => $this->getNewClientId($invoice['cliente']),
+				'amount' => (is_null($invoice['total']) ? 0 : $invoice['total']),
+				'user_id' => $this->getNewUserId($invoice['usuario'])
+			]))->setId($invoice['idnotacobro']);
+			$newInvoice->save();
+			echo $newInvoice->id().' ';
+		}
+		echo "\n";
+	}
+
+	public function migrateInvoiceProducts(){
+		echo "\tObtaining the invoice products from the old database...\n";
+		$invoiceProducts = $this->connection->table('detalle')->get();
+		echo "\tPerforming migrations\n";
+		foreach ($invoiceProducts as $invoiceProduct) {
+			$invoice = Invoice::find($invoiceProduct['notacobro']);
+            $invoice->products()->attach($this->getNewProductId($invoiceProduct['articulo']), ['amount' => $invoiceProduct['valor']]);
+			echo $invoice->id().'-'.$invoiceProduct['articulo'].' ';
 		}
 		echo "\n";
 	}

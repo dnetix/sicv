@@ -12,24 +12,36 @@ class FinancialReportPresenter extends Presenter {
         return substr($this->entity->endDate, 0, 10);
     }
 
-    public function totalContractsAmount(){
-        return $this->toMoney($this->entity->totalContractsAmount());
+    public function amountContracted(){
+        return $this->toMoney($this->entity->amountContracted());
     }
 
-    public function totalExtensions(){
-        return $this->toMoney($this->entity->totalExtensions());
+    public function amountTerminated(){
+        return $this->toMoney($this->entity->amountTerminated());
     }
 
-    public function totalExpenses(){
-        return $this->toMoney($this->entity->totalExpenses());
+    public function amountExtended(){
+        return $this->toMoney($this->entity->amountExtended());
     }
 
-    public function totalContractsTerminations(){
-        return $this->toMoney($this->entity->totalContractsTerminations());
+    public function amountExpended(){
+        return $this->toMoney($this->entity->amountExpended());
     }
 
-    public function totalExtensionsFromEndAmounts(){
-        return $this->toMoney($this->entity->totalExtensionsFromEndAmounts());
+    public function amountSold(){
+        return $this->toMoney($this->entity->amountSold());
+    }
+
+    public function profitAmountTerminated(){
+        return $this->toMoney($this->entity->profitAmountTerminated());
+    }
+
+    public function totalIncome(){
+        return $this->toMoney($this->entity->totalIncome());
+    }
+
+    public function totalOutcome(){
+        return $this->toMoney($this->entity->totalOutcome());
     }
 
 }

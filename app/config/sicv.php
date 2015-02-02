@@ -11,7 +11,7 @@ return array(
         'GoldPriceTicker'
     ),
 
-    'max_expired_contracts' => 15,
+    'max_expired_contracts' => 1000,
 
     'sellouts' => [
         'move_gold_as_product' => false

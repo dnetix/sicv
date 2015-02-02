@@ -24,12 +24,19 @@
                             <h2>Ingresos</h2>
                             <div class="stat">
                                 <small>Pagado en Abonos</small>
-                                <h4>{{ $financial->present()->totalExtensions() }}</h4>
+                                <h4>{{ $financial->present()->amountExtended() }}</h4>
                             </div>
                             <div class="stat">
                                 <small>Cancelado de contratos</small>
-                                <h4>{{ $financial->present()->totalContractsTerminations() }}</h4>
-                                <p class="text-muted">{{ $financial->present()->totalExtensionsFromEndAmounts() }} de ganancia</p>
+                                <h4>{{ $financial->present()->amountTerminated() }}</h4>
+                                <p class="text-muted">{{ $financial->present()->profitAmountTerminated() }} de ganancia</p>
+                            </div>
+                            <div class="stat">
+                                <small>Ventas de productos</small>
+                                <h4>{{ $financial->present()->amountSold() }}</h4>
+                            </div>
+                            <div class="stat total">
+                                <h2>{{ $financial->present()->totalIncome() }}</h2>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -37,12 +44,16 @@
 
                             <div class="stat">
                                 <small>Prestado en Contratos</small>
-                                <h4>{{ $financial->present()->totalContractsAmount() }}</h4>
+                                <h4>{{ $financial->present()->amountContracted() }}</h4>
                             </div>
 
                             <div class="stat">
                                 <small>Gastos</small>
-                                <h4>{{ $financial->present()->totalExpenses() }}</h4>
+                                <h4><a href="{{ route('budget.expenses', ['startDate' => $financial->present()->startDate(), 'endDate' => $financial->present()->endDate()]) }}">{{ $financial->present()->amountExpended() }}</a></h4>
+                            </div>
+
+                            <div class="stat total">
+                                <h2>{{ $financial->present()->totalOutcome() }}</h2>
                             </div>
 
                         </div>

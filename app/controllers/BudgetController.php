@@ -3,6 +3,7 @@
 use SICV\Budgets\Actions\SaveNewExpenseCommand;
 use SICV\Budgets\Actions\StoreOrEditExpenseTypeCommand;
 use SICV\Budgets\BudgetRepository;
+use SICV\Reports\ExpensesStatistics;
 
 class BudgetController extends BaseController {
 
@@ -39,6 +40,9 @@ class BudgetController extends BaseController {
 
         $data['expenses'] = $expenses;
         $data['totalExpenses'] = $expenses->sum('amount');
+
+        //TODO Should be a better way
+        $data['expensesStatistics'] = new ExpensesStatistics($expenses);
 
         $expenseTypes = $this->budgetRepository->getExpenseTypes();
         //TODO Create a Util class to handle this kind of stuff, makes the array of arrays an array with the form I need

@@ -24,9 +24,9 @@ class EditClientInformationCommand extends Command {
         $this->id = $id;
         if(is_array($input)){
             foreach($input as $key => $value){
-                if(in_array($key, $this->fields) && !empty($value)) {
+                if(in_array($key, $this->fields)) {
                     $this->fieldsToEdit[] = $key;
-                    $this->$key = $value;
+                    $this->$key = (empty($value) ? null : $value);
                 }
             }
         }

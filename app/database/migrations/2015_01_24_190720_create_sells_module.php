@@ -18,23 +18,24 @@ class CreateSellsModule extends Migration {
 			$table->integer('sell_price')->nullable();
 			$table->integer('article_id')->unsigned();
 			$table->integer('contract_id')->nullable()->unsigned();
+			$table->integer('quantity')->index();
 
 			$table->foreign('article_id')->references('id')->on('articles');
 			$table->foreign('contract_id')->references('id')->on('contracts');
 		});
 
-
 		Schema::create('invoices', function(Blueprint $table){
 			$table->increments('id');
 			$table->integer('client_id')->unsigned();
 			$table->integer('user_id')->unsigned();
+			$table->integer('amount');
 			$table->timestamps();
 
 			$table->foreign('client_id')->references('id')->on('clients');
 			$table->foreign('user_id')->references('id')->on('users');
 		});
 
-		Schema::create('invoice_details', function(Blueprint $table){
+		Schema::create('invoice_product', function(Blueprint $table){
 			$table->increments('id');
 			$table->integer('invoice_id')->unsigned();
 			$table->integer('product_id')->unsigned();
@@ -46,7 +47,6 @@ class CreateSellsModule extends Migration {
 
 	}
 
-
 	/**
 	 * Reverse the migrations.
 	 *
@@ -56,7 +56,7 @@ class CreateSellsModule extends Migration {
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-		Schema::drop('invoice_details');
+		Schema::drop('invoice_product');
 		Schema::drop('invoices');
 		Schema::drop('products');
 

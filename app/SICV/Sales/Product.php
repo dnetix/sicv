@@ -10,15 +10,21 @@ use SICV\Articles\Article;
  * @property integer $buy_price
  * @property integer $sell_price
  * @property integer $article_id
+ * @property integer $contract_id
+ * @property integer $quantity
  *
  * @package SICV\Sales
  */
 class Product extends Eloquent {
 
     protected $table = 'products';
-    protected $fillable = ['buy_price', 'sell_price', 'article_id'];
+    protected $fillable = ['buy_price', 'sell_price', 'article_id', 'contract_id', 'quantity'];
 
     public $timestamps = false;
+
+    public function id(){
+        return $this->id;
+    }
 
     public function setBuyPrice($buyPrice){
         $this->buy_price = $buyPrice;
@@ -40,10 +46,23 @@ class Product extends Eloquent {
         return $this;
     }
 
+    public function setQuantity($quantity){
+        $this->quantity = $quantity;
+        return $this;
+    }
+
     /* ----------- Relationships --------------- */
+
+    public function scopeAvailable($query){
+        return $query->where('quantity', '>', 0);
+    }
 
     public function article(){
         return $this->belongsTo(Article::class);
+    }
+
+    public function invoices(){
+        return $this->belongsToMany(Invoice::class);
     }
 
 }

@@ -24,7 +24,7 @@
                     <p class="mt5 mb20">Logueate para entrar a tu cuenta.</p>
 
                     <div class="form-group">
-                        {{ Form::text('username', null, ['class' => 'form-control uname', 'placeholder' => 'Usuario', 'required' => 'required']) }}
+                        {{ Form::text('username', null, ['class' => 'form-control uname', 'placeholder' => 'Usuario', 'required' => 'required', 'autofocus' => 'autofocus']) }}
                     </div>
 
                     <div class="form-group">

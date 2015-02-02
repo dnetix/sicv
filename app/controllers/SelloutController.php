@@ -93,6 +93,7 @@ class SelloutController extends BaseController {
             // Make the relationship with the sellout
             $sellout->contracts()->attach($contract);
 
+            //TODO Change this to a new command or make it most explicit
             $command = new ToggleContractPreSelloutCommand($contract->id());
             $this->execute($command);
 
@@ -100,11 +101,13 @@ class SelloutController extends BaseController {
             foreach($articles as $article){
                 // Create the products
                 if(!$article->isGold() || $moveGoldAsProduct) {
+                    //TODO Do this in a repository
                     $product = (new Product())
                         ->setArticleId($article->id())
                         ->setBuyPrice($article->pivot->article_amount)
                         ->setSellPrice($this->normalizeAmount($sellPrices[$article->pivot->id]))
-                        ->setContractId($contract->id());
+                        ->setContractId($contract->id()
+                        ->setQuantity(1));
                     $product->save();
                 }else{
                     $goldWeight += $article->weight();

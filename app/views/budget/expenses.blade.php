@@ -47,6 +47,24 @@
                     {{ Form::close() }}
                 </div>
             </div>
+            <div class="panel panel-dark">
+                <div class="panel-heading">
+                    <div class="panel-title">Gastos por tipo</div>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $expensesStatistics->present()->totalByTypeAsTable() }}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="col-md-9">
             <div class="panel panel-danger">
