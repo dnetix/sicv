@@ -25,10 +25,14 @@ class ExpenseTypesTableSeeder extends Seeder
             [13, 'Activos Fijos'],
             [14, 'Activos Corrientes'],
             [15, 'Almacenamiento'],
+            [16, 'Sueldo Carlos'],
+            [17, 'Inversiones'],
         ];
 
-        foreach ($expenseTypes as $expenseType) {
-            ExpenseType::create(['name' => $expenseType[1]]);
+        if (!ExpenseType::find(17)) {
+            foreach ($expenseTypes as $expenseType) {
+                ExpenseType::create(['name' => $expenseType[1]]);
+            }
         }
     }
 }
