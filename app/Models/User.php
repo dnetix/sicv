@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
@@ -42,4 +44,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function id(): int
+    {
+        return $this->id;
+    }
+
+    public function setPassword($password): self
+    {
+        $this->password = Hash::make($password);
+        return $this;
+    }
 }
