@@ -1,40 +1,37 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Articles;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ArticleType extends Model
 {
-    use HasFactory;
-
     protected $table = 'article_types';
     public $timestamps = false;
 
     public const GOLD_ID = 3;
+
     protected $fillable = [
         'article_type',
         'article_type_id',
     ];
 
-    public function id(): int
+    public function id()
     {
         return $this->id;
     }
 
-    public function name(): string
+    public function name()
     {
         return $this->article_type;
     }
 
-    public function parentId(): int
+    public function parentId()
     {
         return $this->article_type_id;
     }
 
-    public function articles(): HasMany
+    public function articles()
     {
         return $this->hasMany(Article::class);
     }
@@ -42,5 +39,15 @@ class ArticleType extends Model
     public function parent()
     {
         return $this->belongsTo(self::class, 'article_type_id');
+    }
+
+    public function toString()
+    {
+        return $this->name();
+    }
+
+    public static function isGold($article_type_id)
+    {
+        return $article_type_id == self::GOLD_ID;
     }
 }

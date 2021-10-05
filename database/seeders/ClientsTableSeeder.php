@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Client;
+use App\Models\Clients\Client;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 

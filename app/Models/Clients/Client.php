@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Clients;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Contracts\Contract;
+use App\Models\Presenters\ClientPresenter;
+use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Client extends Model
 {
-    use HasFactory;
+    use PresentableTrait;
+
+    protected $presenter = ClientPresenter::class;
 
     protected $table = 'clients';
 
@@ -25,69 +28,69 @@ class Client extends Model
         'flagged',
     ];
 
-    public function id(): int
+    public function id()
     {
         return $this->id;
     }
 
-    public function name(): string
+    public function name()
     {
         return $this->name;
     }
 
-    public function idNumber(): string
+    public function idNumber()
     {
         return $this->id_number;
     }
 
-    public function idType(): string
+    public function idType()
     {
         return $this->id_type;
     }
 
-    public function idExpedition(): string
+    public function idExpedition()
     {
         return $this->id_expedition;
     }
 
-    public function address(): string
+    public function address()
     {
         return $this->address;
     }
 
-    public function cellNumber(): string
+    public function cellNumber()
     {
         return $this->cell_number;
     }
 
-    public function phoneNumber(): string
+    public function phoneNumber()
     {
         return $this->phone_number;
     }
 
-    public function email(): string
+    public function email()
     {
         return $this->email;
     }
 
-    public function city(): string
+    public function city()
     {
         return $this->city;
     }
 
-    public function isFlagged(): bool
+    public function isFlagged()
     {
         return $this->flagged == 1;
     }
 
     /* ----------- Relationships --------------- */
 
-    public function contracts(): HasMany
+    public function contracts()
     {
         return $this->hasMany(Contract::class)->with('articles');
     }
 
-    public function notes(): HasMany
+    public function notes()
     {
         return $this->hasMany(ClientNote::class);
     }

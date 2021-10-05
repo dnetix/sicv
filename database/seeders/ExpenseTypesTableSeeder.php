@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Budgets\ExpenseType;
 use Illuminate\Database\Seeder;
 
 class ExpenseTypesTableSeeder extends Seeder
@@ -27,7 +28,7 @@ class ExpenseTypesTableSeeder extends Seeder
         ];
 
         foreach ($expenseTypes as $expenseType) {
-            \SICV\Budgets\ExpenseType::create(['name' => $expenseType[1]]);
+            ExpenseType::create(['name' => $expenseType[1]]);
         }
     }
 }
