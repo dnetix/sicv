@@ -12,7 +12,7 @@ use App\Models\Contracts\Extension;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\Product;
 use App\Models\Users\User;
-use App\Models\Utils\Dates\DateHelper;
+use App\Helpers\Dates\DateHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
