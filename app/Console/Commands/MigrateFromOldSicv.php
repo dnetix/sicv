@@ -141,9 +141,9 @@ class MigrateFromOldSicv extends Command
         $users = $this->connection->table('usuario')->get();
         echo "\tPerforming migrations\n";
         foreach ($users as $user) {
-            if ($user->idusuario == 'admin') {
-                $this->adminId = User::where('username', 'admin')->first()->id();
-                $this->userAssociations[$user->idusuario] = $this->adminId;
+            if ($user->idusuario == 'admin' && $admin = User::where('username', 'admin')->first()) {
+                $this->adminId = $admin->id();
+                $this->userAssociations[$user->idusuario] = $admin->id();
                 continue;
             }
             $newUser = (new User(
