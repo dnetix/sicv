@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Repositories\ArticleRepository;
 use App\Repositories\ContractRepository;
 
 class RepositoryHelper
@@ -27,6 +28,11 @@ class RepositoryHelper
             self::$instance = new self();
         }
         return self::$instance;
+    }
+
+    public static function forArticles(): ArticleRepository
+    {
+        return self::instance()->checkAndGet(ArticleRepository::class);
     }
 
     public static function forContracts(): ContractRepository

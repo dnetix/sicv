@@ -1,14 +1,14 @@
 @extends('layouts.base')
 
 @section('content')
-    <form action="#" method="POST">
+    <form action="#" method="POST" x-data="{ amount: 0, displayAmount: '', percent: 10 }">
         <div class="flex w-5/6 m-auto">
             <div class="w-3/4 p-2">
 
                 <div class="shadow">
                     <div class="px-4 py-4 bg-gray-50">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">Nuevo contrato</h3>
-                        <p class="mt-1 text-sm text-gray-500">Use a permanent address where you can recieve mail.</p>
+                        <p class="mt-1 text-sm text-gray-500">Generar un nuevo contrato a cliente</p>
                     </div>
 
                     <div class="bg-white py-6 px-4 space-y-6">
@@ -54,10 +54,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <!-- Heroicon name: solid/chevron-right -->
-                                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                                                </svg>
+                                                <i class="fa fa-chevron-right text-gray-400"></i>
                                             </div>
                                         </div>
                                     </a>
@@ -68,44 +65,45 @@
 
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">Artículo</label>
-                                <textarea name="article" id="article" placeholder="Descripción del artículo" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                                <label for="description" class="block text-sm font-medium text-gray-700">Artículo</label>
+                                <textarea name="description" id="description" placeholder="Descripción del artículo" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                             </div>
 
                             <div class="col-span-3">
-                                <label for="country" class="block text-sm font-medium text-gray-700">Tipo
-                                    Artículo</label>
-                                <select id="country" name="country" autocomplete="country" class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
+                                <label for="article_type_id" class="block text-sm font-medium text-gray-700">
+                                    Tipo Artículo
+                                </label>
+                                <select id="article_type_id" name="article_type_id" required class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    <option value="">Selecciona</option>
+                                    @foreach($articleTypes as $articleType)
+                                        <option value="{{ $articleType->id() }}">{{ $articleType->name() }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="col-span-3">
-                                <label for="last-name" class="block text-sm font-medium text-gray-700">Peso</label>
-                                <input type="number" name="last-name" id="last-name" placeholder="Gramos" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <label for="weight" class="block text-sm font-medium text-gray-700">Peso</label>
+                                <input type="number" name="weight" id="weight" placeholder="Gramos" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
 
                             <div class="col-span-3">
-                                <label for="email-address" class="block text-sm font-medium text-gray-700">Valor</label>
-                                <input type="number" name="email-address" id="email-address" autocomplete="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <label for="amount" class="block text-sm font-medium text-gray-700">Valor</label>
+                                <input type="text" name="amount" id="amount" x-ref="moneyInput" x-on:focus="$refs.moneyInput.value = $refs.moneyInput.value.replace(',','');" x-on:blur="amount = $refs.moneyInput.value; $nextTick(() => {displayAmount = formatMoney(amount); $refs.moneyInput.value = displayAmount});" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
 
                             <div class="col-span-3">
-                                <label for="street-address" class="block text-sm font-medium text-gray-700">Prorroga</label>
-                                <input type="number" name="street-address" disabled id="street-address" autocomplete="street-address" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <label for="extension" class="block text-sm font-medium text-gray-700">Prorroga</label>
+                                <input type="text" name="extension" disabled id="extension" :value="formatMoney(amount * (percent / 100))" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
 
                             <div class="col-span-6 lg:col-span-2">
-                                <label for="city" class="block text-sm font-medium text-gray-700">Fecha Inicio</label>
-                                <input type="text" name="city" id="city" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <label for="contract-start" class="block text-sm font-medium text-gray-700">Fecha Inicio</label>
+                                <input type="text" name="contract-start" id="contract-start" disabled value="{{ \App\Helpers\Dates\DateHelper::create()->toSQLDate() }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
 
                             <div class="col-span-6 lg:col-span-2">
-                                <label for="state" class="block text-sm font-medium text-gray-700">Fecha
-                                    finalización</label>
-                                <input type="text" name="state" id="state" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <label for="contract-end" class="block text-sm font-medium text-gray-700">Fecha finalización</label>
+                                <input type="text" name="contract-end" id="contract-end" disabled value="{{ \App\Helpers\Dates\DateHelper::create('+4 months')->toSQLDate() }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
                         </div>
                     </div>
@@ -131,8 +129,8 @@
                         </div>
 
                         <div class="">
-                            <label for="state" class="block text-sm font-medium text-gray-700">Porcentaje compra</label>
-                            <input type="text" name="state" id="state" value="10" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <label for="percent" class="block text-sm font-medium text-gray-700">Porcentaje compra</label>
+                            <input type="text" name="percent" id="percent" x-model="percent" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
                     </div>
                 </div>
@@ -140,4 +138,10 @@
             </div>
         </div>
     </form>
+
+    <script>
+        function formatMoney(number) {
+            return new Intl.NumberFormat('en-US').format(number);
+        }
+    </script>
 @endsection
