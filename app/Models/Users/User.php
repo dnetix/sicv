@@ -22,11 +22,18 @@ class User extends Authenticatable
         'email',
         'role',
         'active',
+        'email_verified_at',
+        'remember_token',
     ];
 
     public function id()
     {
         return $this->id;
+    }
+
+    public function username(): string
+    {
+        return $this->username;
     }
 
     public function name()
