@@ -3,7 +3,7 @@
 namespace App\Models\Clients;
 
 use App\Models\Contracts\Contract;
-use App\Models\Presenters\ClientNotePresenter;
+use App\Presenters\ClientNotePresenter;
 use App\Models\Users\User;
 use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Model;

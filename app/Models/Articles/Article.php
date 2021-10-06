@@ -3,7 +3,7 @@
 namespace App\Models\Articles;
 
 use App\Models\Contracts\Contract;
-use App\Models\Presenters\ArticlePresenter;
+use App\Presenters\ArticlePresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Model;
 

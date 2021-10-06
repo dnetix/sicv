@@ -3,8 +3,8 @@
 namespace App\Models\Contracts\Actions;
 
 use App\Models\Contracts\Contract;
-use App\Models\Contracts\ContractRepository;
 use App\Models\Core\Commander\CommandHandler;
+use App\Repositories\ContractRepository;
 
 class CreateNewContractCommandHandler implements CommandHandler
 {

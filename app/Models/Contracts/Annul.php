@@ -2,7 +2,7 @@
 
 namespace App\Models\Contracts;
 
-use App\Models\Presenters\AnnulPresenter;
+use App\Presenters\AnnulPresenter;
 use App\Models\Users\User;
 use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Model;

@@ -2,7 +2,7 @@
 
 namespace App\Models\Contracts;
 
-use App\Models\Presenters\ExtensionPresenter;
+use App\Presenters\ExtensionPresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Model;
 

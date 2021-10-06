@@ -2,9 +2,9 @@
 
 namespace App\Models\Contracts\Actions;
 
-use App\Models\Contracts\ContractRepository;
 use App\Models\Contracts\PreSellout;
 use App\Models\Core\Commander\CommandHandler;
+use App\Repositories\ContractRepository;
 
 class ToggleContractPreSelloutCommandHandler implements CommandHandler
 {

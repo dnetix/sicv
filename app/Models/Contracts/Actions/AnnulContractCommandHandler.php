@@ -3,11 +3,11 @@
 namespace App\Models\Contracts\Actions;
 
 use App\Models\Contracts\Annul;
-use App\Models\Contracts\ContractRepository;
 use App\Models\Contracts\ContractStates;
 use App\Models\Core\Commander\CommandHandler;
 use App\Models\Users\Exceptions\UnauthorizedUserAction;
 use App\Models\Users\UserRepository;
+use App\Repositories\ContractRepository;
 
 class AnnulContractCommandHandler implements CommandHandler
 {

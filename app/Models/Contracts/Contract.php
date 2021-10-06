@@ -4,7 +4,7 @@ namespace App\Models\Contracts;
 
 use App\Models\Articles\Article;
 use App\Models\Clients\Client;
-use App\Models\Presenters\ContractPresenter;
+use App\Presenters\ContractPresenter;
 use App\Models\Sales\Product;
 use App\Models\Sellouts\Sellout;
 use App\Models\Users\User;
