@@ -1,7 +1,7 @@
 <div class="mx-auto pb-4">
     <div class="flex justify-between items-center border-b-2 border-gray-100 py-2 md:justify-start md:space-x-10">
         <div class="flex justify-start lg:w-0 lg:flex-1 pl-4">
-            <a href="{{ url('?view=user.dashboard') }}">
+            <a href="{{ route('dashboard') }}">
                 <span class="sr-only">Workflow</span>
                 <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="">
             </a>
@@ -13,7 +13,7 @@
             </button>
         </div>
         <nav class="hidden md:flex space-x-10">
-            <a href="{{ url('?view=contract.create') }}" class="text-base font-medium text-gray-500 hover:text-gray-900">
+            <a href="{{ route('contract.new') }}" class="text-base font-medium text-gray-500 hover:text-gray-900">
                 Nuevo contrato
             </a>
             <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
