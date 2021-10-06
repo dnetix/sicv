@@ -1,6 +1,8 @@
 module.exports = {
     purge: [
-        './resources/**/*.blade.php',
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
     ],
@@ -8,10 +10,14 @@ module.exports = {
     theme: {
         extend: {},
     },
+
     variants: {
-        extend: {},
+        extend: {
+            opacity: ['disabled'],
+        },
     },
+
     plugins: [
         require('@tailwindcss/forms'),
     ],
-}
+};

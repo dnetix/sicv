@@ -11,7 +11,9 @@
 </head>
 <body class="antialiased">
 
-@include('partials._navigation')
+@if(auth()->user())
+    @include('partials._navigation')
+@endif
 
 <div class="w-full max-w-8xl mx-auto">
     @yield('content')
