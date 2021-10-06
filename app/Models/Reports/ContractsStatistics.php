@@ -4,7 +4,7 @@ namespace App\Models\Reports;
 
 use App\Models\Articles\Article;
 use App\Models\Articles\ArticleType;
-use App\Models\Presenters\ContractsStatisticsPresenter;
+use App\Presenters\ContractsStatisticsPresenter;
 use App\Models\Utils\Hierachical\CategoriesTree;
 use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Collection;

@@ -5,7 +5,7 @@ namespace App\Models\Reports;
 use App\Models\Budgets\Expense;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\Extension;
-use App\Models\Presenters\FinancialReportPresenter;
+use App\Presenters\FinancialReportPresenter;
 use App\Models\Sales\Invoice;
 use App\Models\Utils\Dates\DateHelper;
 use App\Models\Utils\Presenters\PresentableTrait;

@@ -2,7 +2,7 @@
 
 namespace App\Models\Reports;
 
-use App\Models\Presenters\ExpensesStatisticsPresenter;
+use App\Presenters\ExpensesStatisticsPresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
 use Illuminate\Database\Eloquent\Collection;
 

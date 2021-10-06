@@ -4,7 +4,7 @@ namespace App\Models\Reports;
 
 use App\Models\Articles\ArticleRepository;
 use App\Models\Clients\ClientRepository;
-use App\Models\Contracts\ContractRepository;
+use App\Repositories\ContractRepository;
 
 class ReportRepository
 {

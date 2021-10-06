@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Presenters;
+namespace App\Presenters;
 
 use App\Models\Contracts\ContractStates;
 use App\Models\Utils\Dates\DateHelper;
@@ -81,10 +81,10 @@ class ContractPresenter extends Presenter
         return ContractStates::$FORHUMAN[$this->entity->state()];
     }
 
-    public function createdAt()
+    public function contractDate()
     {
         $dateHelper = DateHelper::create($this->entity->createdAt());
-        return $dateHelper->translateToHumanDate() . ' [' . $dateHelper->translateToTime() . ']';
+        return $dateHelper->translateToHumanDate() . ' ' . $dateHelper->translateToTime();
     }
 
     public function shortCreatedAt()

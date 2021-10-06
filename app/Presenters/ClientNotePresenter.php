@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Presenters;
+namespace App\Presenters;
 
 use App\Models\Clients\ClientNote;
 use App\Models\Utils\Dates\DateHelper;
