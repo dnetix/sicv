@@ -2,8 +2,8 @@
 
 namespace App\Presenters;
 
-use App\Models\Contracts\ContractStates;
 use App\Helpers\Dates\DateHelper;
+use App\Models\Contracts\ContractStates;
 use App\Models\Utils\Presenters\Presenter;
 
 class ContractPresenter extends Presenter

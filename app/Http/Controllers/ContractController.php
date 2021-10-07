@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\RepositoryHelper;
-use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {

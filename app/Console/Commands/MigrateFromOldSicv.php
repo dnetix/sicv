@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Dates\DateHelper;
 use App\Models\Articles\Article;
 use App\Models\Articles\ArticleType;
 use App\Models\Budgets\Expense;
@@ -12,7 +13,6 @@ use App\Models\Contracts\Extension;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\Product;
 use App\Models\Users\User;
-use App\Helpers\Dates\DateHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;

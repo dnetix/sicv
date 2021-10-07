@@ -2,8 +2,8 @@
 
 namespace App\Models\Contracts\Actions;
 
-use App\Models\Core\Commander\Command;
 use App\Helpers\Dates\DateHelper;
+use App\Models\Core\Commander\Command;
 
 class TerminateContractCommand extends Command
 {
