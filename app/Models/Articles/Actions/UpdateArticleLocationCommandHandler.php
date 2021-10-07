@@ -2,8 +2,8 @@
 
 namespace App\Models\Articles\Actions;
 
-use App\Models\Articles\ArticleRepository;
 use App\Models\Core\Commander\CommandHandler;
+use App\Repositories\ArticleRepository;
 
 class UpdateArticleLocationCommandHandler implements CommandHandler
 {

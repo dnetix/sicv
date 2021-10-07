@@ -2,9 +2,9 @@
 
 namespace App\Models\Contracts;
 
-use App\Presenters\AnnulPresenter;
 use App\Models\Users\User;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\AnnulPresenter;
 use Illuminate\Database\Eloquent\Model;
 
 class Annul extends Model

@@ -4,12 +4,12 @@ namespace App\Models\Contracts;
 
 use App\Models\Articles\Article;
 use App\Models\Clients\Client;
-use App\Presenters\ContractPresenter;
 use App\Models\Sales\Product;
 use App\Models\Sellouts\Sellout;
 use App\Models\Users\User;
-use App\Models\Utils\Dates\DateHelper;
+use App\Helpers\Dates\DateHelper;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\ContractPresenter;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -127,7 +127,7 @@ class Contract extends Model
 
     /**
      * Difference between the created_at and end_date (If this last one still not happen, so NOW).
-     * @return \App\Models\Utils\Dates\DateDifference
+     * @return \App\Helpers\Dates\DateDifference
      */
     public function elapsedDifference()
     {

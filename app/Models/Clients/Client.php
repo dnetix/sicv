@@ -3,8 +3,8 @@
 namespace App\Models\Clients;
 
 use App\Models\Contracts\Contract;
-use App\Presenters\ClientPresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\ClientPresenter;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model

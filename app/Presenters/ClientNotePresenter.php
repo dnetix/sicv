@@ -3,7 +3,7 @@
 namespace App\Presenters;
 
 use App\Models\Clients\ClientNote;
-use App\Models\Utils\Dates\DateHelper;
+use App\Helpers\Dates\DateHelper;
 use App\Models\Utils\Presenters\Presenter;
 
 class ClientNotePresenter extends Presenter

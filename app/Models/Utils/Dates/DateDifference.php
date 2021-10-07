@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Utils\Dates;
+namespace App\Helpers\Dates;
 
 use DateInterval;
 

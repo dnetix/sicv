@@ -2,9 +2,9 @@
 
 namespace App\Models\Budgets;
 
-use App\Presenters\ExpensePresenter;
 use App\Models\Users\User;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\ExpensePresenter;
 use Illuminate\Database\Eloquent\Model;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace App\Models\Budgets;
 
-use App\Models\Utils\Dates\DateHelper;
+use App\Helpers\Dates\DateHelper;
 
 class BudgetRepository
 {

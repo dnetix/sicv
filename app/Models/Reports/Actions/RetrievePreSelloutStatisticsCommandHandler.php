@@ -2,9 +2,9 @@
 
 namespace App\Models\Reports\Actions;
 
-use App\Models\Articles\ArticleRepository;
 use App\Models\Core\Commander\CommandHandler;
 use App\Models\Reports\ContractsStatistics;
+use App\Repositories\ArticleRepository;
 
 class RetrievePreSelloutStatisticsCommandHandler implements CommandHandler
 {

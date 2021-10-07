@@ -2,8 +2,8 @@
 
 namespace App\Models\Reports;
 
-use App\Models\Articles\ArticleRepository;
 use App\Models\Clients\ClientRepository;
+use App\Repositories\ArticleRepository;
 use App\Repositories\ContractRepository;
 
 class ReportRepository

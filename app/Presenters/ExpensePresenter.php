@@ -2,7 +2,7 @@
 
 namespace App\Presenters;
 
-use App\Models\Utils\Dates\DateHelper;
+use App\Helpers\Dates\DateHelper;
 use App\Models\Utils\Presenters\Presenter;
 
 class ExpensePresenter extends Presenter

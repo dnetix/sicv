@@ -3,8 +3,8 @@
 namespace App\Models\Articles;
 
 use App\Models\Contracts\Contract;
-use App\Presenters\ArticlePresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\ArticlePresenter;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model

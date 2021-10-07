@@ -2,8 +2,8 @@
 
 namespace App\Models\Reports;
 
-use App\Presenters\ExpensesStatisticsPresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\ExpensesStatisticsPresenter;
 use Illuminate\Database\Eloquent\Collection;
 
 class ExpensesStatistics

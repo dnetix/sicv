@@ -3,9 +3,9 @@
 namespace App\Models\Articles\Actions;
 
 use App\Models\Articles\Article;
-use App\Models\Articles\ArticleRepository;
 use App\Models\Core\Commander\CommandHandler;
 use App\Models\Core\Commander\Eventing\EventGenerator;
+use App\Repositories\ArticleRepository;
 
 class CreateOrRetrieveArticleCommandHandler implements CommandHandler
 {

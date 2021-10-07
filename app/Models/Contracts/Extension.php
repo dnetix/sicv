@@ -2,8 +2,8 @@
 
 namespace App\Models\Contracts;
 
-use App\Presenters\ExtensionPresenter;
 use App\Models\Utils\Presenters\PresentableTrait;
+use App\Presenters\ExtensionPresenter;
 use Illuminate\Database\Eloquent\Model;
 
 class Extension extends Model
