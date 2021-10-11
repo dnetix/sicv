@@ -10,7 +10,23 @@ class ClientControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_handles_an_empty_call()
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->authenticate();
+    }
+
+    public function test_does_not_respond_without_authentication(): void
+    {
+        $this->app['auth']->logout();
+
+        $response = $this->json('POST', route('api.client.search'), [
+            'terms' => 'diego',
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_handles_an_empty_call(): void
     {
         $response = $this->json('POST', route('api.client.search'), [
             'terms' => null,
@@ -18,9 +34,9 @@ class ClientControllerTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function test_it_returns_empty_on_not_found_search_clients()
+    public function test_it_returns_empty_on_not_found_search_clients(): void
     {
-        $response = $this->post(route('api.client.search'), [
+        $response = $this->json('POST', route('api.client.search'), [
             'terms' => 'notfound',
         ]);
         $response->assertStatus(200);
@@ -29,7 +45,7 @@ class ClientControllerTest extends TestCase
         $this->assertEmpty($response->json());
     }
 
-    public function test_it_returns_an_array_when_clients_found()
+    public function test_it_returns_an_array_when_clients_found(): void
     {
         Client::factory()->create([
             'id_number' => '1040035000',
@@ -46,7 +62,7 @@ class ClientControllerTest extends TestCase
             'name' => 'Diego Marin',
         ]);
 
-        $response = $this->post(route('api.client.search'), [
+        $response = $this->json('POST', route('api.client.search'), [
             'terms' => 'Diego',
         ]);
 
