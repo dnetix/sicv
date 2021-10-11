@@ -2,6 +2,8 @@
 
 namespace App\Models\Clients;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class ClientRepository
 {
     public function register(Client $client)
@@ -43,14 +45,15 @@ class ClientRepository
         return $client;
     }
 
-    public function searchClientByTerms($searchTerms)
+    public function searchClientByTerms(string $searchTerms, int $limit = 10): Collection
     {
-        return Client::where('id_number', 'LIKE', "$searchTerms%")->orWhere(function ($query) use ($searchTerms) {
-            $terms = explode(' ', $searchTerms);
-            foreach ($terms as $term) {
-                $query->where('name', 'LIKE', "%$term%");
-            }
-        })->get();
+        return Client::where('id_number', 'LIKE', "$searchTerms%")
+            ->orWhere(function ($query) use ($searchTerms) {
+                $terms = explode(' ', $searchTerms);
+                foreach ($terms as $term) {
+                    $query->where('name', 'LIKE', "%$term%");
+                }
+            })->limit($limit)->get();
     }
 
     public function saveClientNote(ClientNote &$clientNote)

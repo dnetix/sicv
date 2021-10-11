@@ -5,10 +5,12 @@ namespace App\Models\Clients;
 use App\Models\Contracts\Contract;
 use App\Models\Utils\Presenters\PresentableTrait;
 use App\Presenters\ClientPresenter;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    use HasFactory;
     use PresentableTrait;
 
     protected $presenter = ClientPresenter::class;

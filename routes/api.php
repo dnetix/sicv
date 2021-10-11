@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['midleware' => 'auth'], function () {
+    Route::post('/client/search', [\App\Http\Controllers\ClientController::class, 'search'])
+        ->name('api.client.search');
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
