@@ -9,6 +9,9 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        if (auth()->user()) {
+            return redirect()->route('dashboard');
+        }
         return view($request->get('view') ?? 'user.login');
     }
 
