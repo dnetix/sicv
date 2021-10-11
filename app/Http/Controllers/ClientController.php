@@ -15,8 +15,11 @@ class ClientController extends Controller
 
     public function search(Request $request)
     {
+        $request->validate([
+            'terms' => 'required|string',
+        ]);
+
         return RepositoryHelper::forClients()
-            ->searchClientByTerms($request->get('terms'))
-            ->keyBy('id');
+            ->searchClientByTerms($request->get('terms'));
     }
 }

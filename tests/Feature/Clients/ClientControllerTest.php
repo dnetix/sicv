@@ -10,12 +10,22 @@ class ClientControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_handles_an_empty_call()
+    {
+        $response = $this->json('POST', route('api.client.search'), [
+            'terms' => null,
+        ]);
+        $response->assertStatus(422);
+    }
+
     public function test_it_returns_empty_on_not_found_search_clients()
     {
         $response = $this->post(route('api.client.search'), [
             'terms' => 'notfound',
         ]);
         $response->assertStatus(200);
+        // Asserting that is an array instead of an object
+        $this->assertEquals('[', substr($response->content(), 0, 1));
         $this->assertEmpty($response->json());
     }
 
@@ -42,8 +52,7 @@ class ClientControllerTest extends TestCase
 
         $data = $response->json();
         $this->assertEquals(2, count($data));
-        foreach ($data as $id => $client) {
-            $this->assertEquals($id, $client['id']);
-        }
+        // Asserting that is an array instead of an object
+        $this->assertEquals('[', substr($response->content(), 0, 1));
     }
 }
