@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    <form action="#" method="POST" x-data="{ amount: 0, displayAmount: '', percent: 10 }">
+    <form action="#" method="POST" x-data="app()">
         <div class="flex w-5/6 m-auto">
             <div class="w-3/4 p-2">
 
@@ -14,51 +14,65 @@
                     <div class="bg-white py-6 px-4 space-y-6">
 
                         <div class="col-span-3">
-                            <label for="last-name" class="block text-sm font-medium text-gray-700">Cliente</label>
-                            <input type="text" name="last-name" id="last-name" placeholder="Buscar cliente" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <label for="terms" class="block text-sm font-medium text-gray-700">Cliente</label>
+                            <input type="text" name="terms" id="terms" x-model="terms" x-on:keyup.debounce="searchClient" placeholder="Buscar cliente" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
 
                         <div class="bg-white shadow overflow-hidden">
-                            <ul role="list" class="divide-y divide-gray-200">
-                                <li>
-                                    <a href="#" class="block hover:bg-gray-50">
-                                        <div class="flex items-center px-4 py-4">
-                                            <div class="min-w-0 flex-1 flex items-center">
-                                                <div class="flex-shrink-0">
-                                                    <img class="h-12 w-12 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                                </div>
-                                                <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                                                    <div>
-                                                        <p class="text-sm font-medium text-indigo-600 truncate">Ricardo
-                                                            Cooper</p>
-                                                        <p class="mt-2 flex items-center text-sm text-gray-500">
-                                                            <i class="fa fa-envelope mr-1.5 text-gray-400"></i>
-                                                            <span class="truncate">ricardo.cooper@example.com</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="hidden md:block">
-                                                        <div>
-                                                            <p class="text-sm text-gray-900">
-                                                                Applied on
-                                                                <time datetime="2020-01-07">January 7, 2020</time>
-                                                            </p>
-                                                            <p class="mt-2 flex items-center text-sm text-gray-500">
-                                                                <!-- Heroicon name: solid/check-circle -->
-                                                                <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                                                </svg>
-                                                                Completed phone screening
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <i class="fa fa-chevron-right text-gray-400"></i>
+
+                            <template x-if="selectedClient ? true : false">
+                                <div class="p-4 flex items-center bg-gray-50">
+                                    <div class="min-w-0 flex-1 flex items-center gap-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                                <i class="fa fa-user text-white"></i>
                                             </div>
                                         </div>
-                                    </a>
-                                </li>
+                                        <div class="flex-auto">
+                                            <p class="text-indigo-600" x-text="selectedClient.name">Nombre Cliente</p>
+                                            <p class="text-sm text-gray-600" x-text="`${selectedClient.id_type} ${selectedClient.id_number}`">CC 1040035000</p>
+                                            <p class="text-sm text-gray-600" x-text="selectedClient.id_expedition">Abejorral</p>
+                                        </div>
+                                        <div class="flex-auto">
+                                            <p class="text-sm">
+                                                <span class="w-5 inline-block text-center"><i class="text-yellow-500 fa fa-mobile-alt"></i></span>
+                                                <span x-text="`${selectedClient.cell_number ?? ''} ${selectedClient.phone_number ?? ''}`">3006108300</span>
+                                            </p>
+                                            <p class="text-sm">
+                                                <span class="w-5 inline-block text-center"><i class="text-yellow-500 fa fa-map-marker-alt"></i></span>
+                                                <span x-text="selectedClient.city">La Ceja</span>
+                                            </p>
+                                            <p class="text-sm">
+                                                <span class="w-5 inline-block text-center"><i class="text-yellow-500 fa fa-envelope"></i></span>
+                                                <span x-text="selectedClient.email ?? 'No aplica'">dnetix@gmail.com</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <ul role="list" class="divide-y divide-gray-200">
+
+                                <template x-for="(client, index) in clients">
+                                    <li>
+                                        <a href="javascript:;" x-on:click="selectClient(index)" class="block hover:bg-gray-100">
+                                            <div class="flex py-2 px-4 gap-4 items-center">
+                                                <div class="flex items-center gap-4 flex-auto">
+                                                    <div class="text-yellow-500 px-3">
+                                                        <i class="fa fa-user-alt"></i>
+                                                    </div>
+                                                    <span class="w-3/6 text-gray-800" x-text="client.name">Diego Arturo Calle</span>
+                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.id_type} ${client.id_number}`">CC 1040035072</span>
+                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.cell_number ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
+                                                </div>
+                                                <div class="text-gray-400">
+                                                    <i class="fa fa-chevron-right"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </template>
+
                             </ul>
                         </div>
 
@@ -97,17 +111,20 @@
                             </div>
 
                             <div class="col-span-6 lg:col-span-2">
-                                <label for="contract-start" class="block text-sm font-medium text-gray-700">Fecha Inicio</label>
+                                <label for="contract-start" class="block text-sm font-medium text-gray-700">Fecha
+                                    Inicio</label>
                                 <input type="text" name="contract-start" id="contract-start" disabled value="{{ \App\Helpers\Dates\DateHelper::create()->toSQLDate() }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
 
                             <div class="col-span-6 lg:col-span-2">
-                                <label for="contract-end" class="block text-sm font-medium text-gray-700">Fecha finalización</label>
-                                <input type="text" name="contract-end" id="contract-end" disabled value="{{ \App\Helpers\Dates\DateHelper::create('+4 months')->toSQLDate() }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <label for="contract-end" class="block text-sm font-medium text-gray-700">Fecha
+                                    finalización</label>
+                                <input type="text" name="contract-end" id="contract-end" disabled x-model="endDate" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
                         </div>
                     </div>
                     <div class="px-4 py-3 bg-gray-50 text-right">
+                        <input type="hidden" x-model="selectedClient?.id" name="client_id" required>
                         <button type="submit" class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Guardar contrato
                         </button>
@@ -125,11 +142,12 @@
                     <div class="px-4 pt-2 pb-5 space-y-6">
                         <div class="">
                             <label for="state" class="block text-sm font-medium text-gray-700">Meses</label>
-                            <input type="text" name="state" id="state" value="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <input type="text" name="state" id="state" x-model="months" x-on:change="calculateEndDate" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
 
                         <div class="">
-                            <label for="percent" class="block text-sm font-medium text-gray-700">Porcentaje compra</label>
+                            <label for="percent" class="block text-sm font-medium text-gray-700">Porcentaje
+                                compra</label>
                             <input type="text" name="percent" id="percent" x-model="percent" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
                     </div>
@@ -140,8 +158,46 @@
     </form>
 
     <script>
-        function formatMoney(number) {
-            return new Intl.NumberFormat('en-US').format(number);
+        function app() {
+            return {
+                amount: 0,
+                months: '4',
+                displayAmount: '',
+                percent: 10,
+                formatMoney(number) {
+                    return new Intl.NumberFormat('en-US').format(number);
+                },
+                terms: '',
+                selectedClient: {!! $client ? json_encode($client, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE) : 'null' !!},
+                clients: [],
+                endDate: '{{ \App\Helpers\Dates\DateHelper::create('+4 months')->toSQLDate() }}',
+                searchClient() {
+                    console.log(this.terms);
+                    if (this.terms.length > 2) {
+                        axios.post('{{ route('api.client.search') }}', {
+                            terms: this.terms
+                        }).then((response) => {
+                            this.clients = response.data;
+                        }).catch((e) => {
+                            console.log(e);
+                        })
+                    }
+                },
+                selectClient(index) {
+                    this.selectedClient = this.clients[index];
+                    this.clients = [];
+                    this.terms = '';
+                },
+                calculateEndDate() {
+                    if (isNaN(+this.months)) {
+                        this.months = 4;
+                    }
+                    let date = new Date();
+                    date.setMonth(date.getMonth() + +this.months);
+                    this.endDate = date.toISOString().substr(0, 10);
+                },
+                csrf: '{{ csrf_token() }}'
+            }
         }
     </script>
 @endsection
