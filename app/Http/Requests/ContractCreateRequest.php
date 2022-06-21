@@ -14,9 +14,36 @@ class ContractCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id' => 'required',
+            'client_id' => 'required|numeric',
             'months' => 'required|numeric|gt:0',
             'percentage' => 'required|numeric|gt:0',
+        ];
+    }
+
+    public function clientId(): int
+    {
+        return (int)$this->get('client_id');
+    }
+
+    public function months()
+    {
+        return $this->get('months');
+    }
+
+    public function percentage()
+    {
+        return $this->get('percentage');
+    }
+
+    public function note(): array
+    {
+        if (empty($this->get('note'))) {
+            return [];
+        }
+
+        return [
+            'note' => $this->get('note'),
+            'importance' => $this->get('importance'),
         ];
     }
 
