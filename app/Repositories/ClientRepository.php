@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Models\Clients;
+namespace App\Repositories;
 
+use App\Models\Clients\Client;
+use App\Models\Clients\ClientNote;
 use Illuminate\Database\Eloquent\Collection;
 
 class ClientRepository
 {
-    public function register(Client $client)
+    public function save(Client $client)
     {
         $client->save();
         return $client;
@@ -56,8 +58,8 @@ class ClientRepository
             })->limit($limit)->get();
     }
 
-    public function saveClientNote(ClientNote &$clientNote)
+    public function saveClientNote(ClientNote $clientNote)
     {
-        return $clientNote->save();
+        $clientNote->save();
     }
 }
