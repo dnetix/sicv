@@ -10,7 +10,6 @@ use App\Models\Sellouts\Sellout;
 use App\Models\Users\User;
 use App\Models\Utils\Presenters\PresentableTrait;
 use App\Presenters\ContractPresenter;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
@@ -278,14 +277,5 @@ class Contract extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
-    }
-
-    public static function loadFromRequest(array $data, Authenticatable $user): self
-    {
-        return new self(array_merge($data, [
-            'user_id' => $user->getAuthIdentifier(),
-            'state' => ContractStates::ACTIVE,
-            'created_at' => DateHelper::now()->toSQLTimestamp(),
-        ]));
     }
 }

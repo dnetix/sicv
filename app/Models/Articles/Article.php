@@ -68,8 +68,6 @@ class Article extends Model
         return $this->pivot->article_amount;
     }
 
-    /* ----------- Relationships --------------- */
-
     public function articleType()
     {
         return $this->belongsTo(ArticleType::class);

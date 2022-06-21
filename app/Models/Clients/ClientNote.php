@@ -12,9 +12,17 @@ class ClientNote extends Model
 {
     use PresentableTrait;
 
-    public const NI_HIGH = 'danger';
-    public const NI_MEDIUM = 'warning';
-    public const NI_LOW = 'info';
+    public const LEVEL_INFO = 'info';
+    public const LEVEL_WARNING = 'warning';
+    public const LEVEL_CRITICAL = 'critical';
+    public const LEVEL_ALERT = 'alert';
+
+    public static array $LEVELS = [
+        self:: LEVEL_INFO,
+        self:: LEVEL_WARNING,
+        self:: LEVEL_CRITICAL,
+        self:: LEVEL_ALERT,
+    ];
 
     protected $presenter = ClientNotePresenter::class;
 
