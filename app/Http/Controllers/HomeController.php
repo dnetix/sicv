@@ -12,7 +12,7 @@ class HomeController extends Controller
         if (auth()->user()) {
             return redirect()->route('dashboard');
         }
-        return view($request->get('view') ?? 'user.login');
+        return view($request->get('view') ?? 'auth.login');
     }
 
     public function dashboard()
