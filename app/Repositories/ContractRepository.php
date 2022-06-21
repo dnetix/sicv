@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Articles\Article;
 use App\Models\Clients\Client;
 use App\Models\Contracts\Annul;
 use App\Models\Contracts\Contract;
@@ -18,6 +19,10 @@ class ContractRepository
         return $contract;
     }
 
+    /**
+     * @param int $limit
+     * @return Contract[]
+     */
     public function getLastContracts(int $limit = 30): Collection
     {
         return Contract::orderBy('id', 'desc')
@@ -25,16 +30,9 @@ class ContractRepository
             ->limit($limit)->get();
     }
 
-    /**
-     * Associates a contract with the articles sended as parameter.
-     * @param Contract $contract
-     * @param array $articlesWitAmount
-     */
-    public function associateWithArticles(Contract $contract, array $articlesWitAmount)
+    public function associateWithArticle(Contract $contract, Article $article, float $amount)
     {
-        foreach ($articlesWitAmount as $articleWitAmount) {
-            $contract->articles()->attach($articleWitAmount['article'], ['article_amount' => $articleWitAmount['amount']]);
-        }
+        $contract->articles()->attach($article, ['article_amount' => $amount]);
     }
 
     public function getContractsOfDay($day = null)
@@ -104,5 +102,14 @@ class ContractRepository
     {
         $annul->save();
         return $annul;
+    }
+
+    /**
+     * @param Contract $contract
+     * @return Article[]
+     */
+    public function getContractArticles(Contract $contract)
+    {
+        return $contract->articles;
     }
 }

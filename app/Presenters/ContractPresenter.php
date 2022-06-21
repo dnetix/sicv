@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 use App\Helpers\Dates\DateHelper;
+use App\Helpers\RepositoryHelper;
 use App\Models\Contracts\ContractStates;
 use App\Models\Utils\Presenters\Presenter;
 
@@ -109,7 +110,7 @@ class ContractPresenter extends Presenter
 
     public function articlesNames()
     {
-        $articles = $this->entity->articles;
+        $articles = RepositoryHelper::forContracts()->getContractArticles($this->entity);
         foreach ($articles as $article) {
             $articleNames[] = !empty($article->weight()) ? $article->description() . ' [' . ($article->weight() + 0) . 'g]' : $article->description();
         }
