@@ -1,4 +1,4 @@
-<div class="mx-auto pb-4">
+<div class="mx-auto pb-4" id="navigation">
     <div class="flex justify-between items-center border-b-2 border-gray-100 py-2 md:justify-start md:space-x-10">
         <div class="flex justify-start lg:w-0 lg:flex-1 pl-4">
             <a href="{{ route('dashboard') }}">
