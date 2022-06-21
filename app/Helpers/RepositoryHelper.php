@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Models\Clients\ClientRepository;
 use App\Repositories\ArticleRepository;
+use App\Repositories\ClientRepository;
 use App\Repositories\ContractRepository;
 
 class RepositoryHelper

@@ -8,11 +8,7 @@ use Illuminate\Support\Collection;
 
 class ArticleRepository
 {
-    /**
-     * @param $id
-     * @return ArticleType
-     */
-    public function getArticleTypeById($id)
+    public function getArticleTypeById($id): ArticleType
     {
         return ArticleType::findOrFail($id);
     }
@@ -22,23 +18,20 @@ class ArticleRepository
         return ArticleType::all();
     }
 
-    public function saveArticleType(ArticleType &$articleType)
+    public function saveArticleType(ArticleType &$articleType): ArticleType
     {
         $articleType->save();
+        return $articleType;
     }
 
-    public function getArticleById($id)
+    public function getArticleById($id): Article
     {
         return Article::findOrFail($id);
     }
 
-    public function create(Article &$article)
+    public function storeArticle(Article $article): Article
     {
-        return $article->save();
-    }
-
-    public function update(Article $article)
-    {
-        return $article->save();
+        $article->save();
+        return $article;
     }
 }
