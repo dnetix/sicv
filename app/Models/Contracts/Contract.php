@@ -10,12 +10,9 @@ use App\Models\Sellouts\Sellout;
 use App\Models\Users\User;
 use App\Models\Utils\Presenters\PresentableTrait;
 use App\Presenters\ContractPresenter;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Contract.
- * @property string $state
- */
 class Contract extends Model
 {
     use PresentableTrait;
@@ -91,17 +88,13 @@ class Contract extends Model
         return $this->end_date;
     }
 
-    public function setEndDate($endDate)
+    public function setEndDate($endDate): self
     {
         $this->end_date = $endDate;
         return $this;
     }
 
-    /**
-     * Just for migration purposes.
-     * @param $id
-     */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
         return $this;
@@ -196,12 +189,12 @@ class Contract extends Model
         return $this->articles->count();
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return $this->state() == ContractStates::ACTIVE;
     }
 
-    public function toActive()
+    public function toActive(): self
     {
         $this->state = ContractStates::ACTIVE;
         return $this;
@@ -241,8 +234,6 @@ class Contract extends Model
             return true;
         }
     }
-
-    /* ----------- Relationships --------------- */
 
     public function client()
     {
@@ -287,5 +278,14 @@ class Contract extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public static function loadFromRequest(array $data, Authenticatable $user): self
+    {
+        return new self(array_merge($data, [
+            'user_id' => $user->getAuthIdentifier(),
+            'state' => ContractStates::ACTIVE,
+            'created_at' => DateHelper::now()->toSQLTimestamp(),
+        ]));
     }
 }

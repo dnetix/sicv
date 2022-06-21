@@ -4,20 +4,6 @@ namespace App\Helpers\Dates;
 
 use DateTime;
 
-/**
- * Class DateHelper.
- * @property      int $year
- * @property      int $month
- * @property      int $day
- * @property      int $hour
- * @property      int $minute
- * @property      int $second
- * @property      int $timestamp seconds since the Unix Epoch
- * @property-read int $micro
- * @property-read int $dayOfWeek 0 (for Sunday) through 6 (for Saturday)
- * @property-read int $dayOfYear 0 through 365
- * @property-read int $weekOfMonth 1 through 6
- */
 class DateHelper extends DateTime
 {
     /**
@@ -153,6 +139,11 @@ class DateHelper extends DateTime
     {
         $this->modify($numberOfMonthsWithSign . ' months');
         return $this;
+    }
+
+    public static function now(): self
+    {
+        return new self();
     }
 
     public function __get($name)

@@ -1,7 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
-    <form action="#" method="POST" x-data="app()">
+    <form action="{{ route('contract.store') }}" method="POST" x-data="app()" @submit="validate">
+        @csrf
         <div class="flex w-5/6 m-auto">
             <div class="w-3/4 p-2">
 
@@ -11,7 +12,7 @@
                         <p class="mt-1 text-sm text-gray-500">Generar un nuevo contrato a cliente</p>
                     </div>
 
-                    <div class="bg-white py-6 px-4 space-y-6">
+                    <div class="bg-white py-6 px-4 space-y-4">
 
                         <div class="col-span-3">
                             <label for="terms" class="block text-sm font-medium text-gray-700">Cliente</label>
@@ -30,8 +31,10 @@
                                         </div>
                                         <div class="flex-auto">
                                             <p class="text-indigo-600" x-text="selectedClient.name">Nombre Cliente</p>
-                                            <p class="text-sm text-gray-600" x-text="`${selectedClient.id_type} ${selectedClient.id_number}`">CC 1040035000</p>
-                                            <p class="text-sm text-gray-600" x-text="selectedClient.id_expedition">Abejorral</p>
+                                            <p class="text-sm text-gray-600" x-text="`${selectedClient.id_type} ${selectedClient.id_number}`">
+                                                CC 1040035000</p>
+                                            <p class="text-sm text-gray-600" x-text="selectedClient.id_expedition">
+                                                Abejorral</p>
                                         </div>
                                         <div class="flex-auto">
                                             <p class="text-sm">
@@ -52,7 +55,6 @@
                             </template>
 
                             <ul role="list" class="divide-y divide-gray-200">
-
                                 <template x-for="(client, index) in clients">
                                     <li>
                                         <a href="javascript:;" x-on:click="selectClient(index)" class="block hover:bg-gray-100">
@@ -72,54 +74,73 @@
                                         </a>
                                     </li>
                                 </template>
-
                             </ul>
                         </div>
 
+                        <template x-for="(article, index) in articles">
+                            <div class="grid grid-cols-12 gap-3">
+                                <div class="col-span-11">
+                                    <label for="description" class="block text-sm font-medium text-gray-700">Artículo</label>
+                                    <textarea x-model="article.description" name="description[]" id="description" placeholder="Descripción del artículo" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                                </div>
 
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6">
-                                <label for="description" class="block text-sm font-medium text-gray-700">Artículo</label>
-                                <textarea name="description" id="description" placeholder="Descripción del artículo" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                                <div x-show="index != 0" class="grid-cols-1 text-center">
+                                    <button @click="removeArticle(index)" type="button" class="mt-9 bg-red-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+
+                                <div class="col-span-6 pb-4">
+                                    <label class="block text-sm font-medium text-gray-700">
+                                        Tipo Artículo
+                                    </label>
+                                    <select x-model="article.article_type_id" name="article_type_id[]" required class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="">Selecciona</option>
+                                        <template x-for="articleType in articleTypes">
+                                            <option :value="articleType.id" x-text="articleType.article_type"></option>
+                                        </template>
+                                    </select>
+                                </div>
+
+                                <div class="col-span-3">
+                                    <label for="weight" class="block text-sm font-medium text-gray-700">Peso</label>
+                                    <input type="number" step="0.01" name="weight[]" x-model="article.weight" id="weight" placeholder="Gramos" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+
+                                <div class="col-span-3">
+                                    <label for="amount" class="block text-sm font-medium text-gray-700">Valor</label>
+                                    <input type="text" name="amount[]" x-model="article.amount" id="amount" @change="updateAmount(index)" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
                             </div>
+                        </template>
 
+                        <div class="text-right">
+                            <button @click="addArticle" type="button" class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-4">
                             <div class="col-span-3">
-                                <label for="article_type_id" class="block text-sm font-medium text-gray-700">
-                                    Tipo Artículo
-                                </label>
-                                <select id="article_type_id" name="article_type_id" required class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                                    <option value="">Selecciona</option>
-                                    @foreach($articleTypes as $articleType)
-                                        <option value="{{ $articleType->id() }}">{{ $articleType->name() }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-span-3">
-                                <label for="weight" class="block text-sm font-medium text-gray-700">Peso</label>
-                                <input type="number" name="weight" id="weight" placeholder="Gramos" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            </div>
-
-                            <div class="col-span-3">
-                                <label for="amount" class="block text-sm font-medium text-gray-700">Valor</label>
-                                <input type="text" name="amount" id="amount" x-ref="moneyInput" x-on:focus="$refs.moneyInput.value = $refs.moneyInput.value.replace(',','');" x-on:blur="amount = $refs.moneyInput.value; $nextTick(() => {displayAmount = formatMoney(amount); $refs.moneyInput.value = displayAmount});" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            </div>
-
-                            <div class="col-span-3">
-                                <label for="extension" class="block text-sm font-medium text-gray-700">Prorroga</label>
-                                <input type="text" name="extension" disabled id="extension" :value="formatMoney(amount * (percent / 100))" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            </div>
-
-                            <div class="col-span-6 lg:col-span-2">
                                 <label for="contract-start" class="block text-sm font-medium text-gray-700">Fecha
                                     Inicio</label>
                                 <input type="text" name="contract-start" id="contract-start" disabled value="{{ \App\Helpers\Dates\DateHelper::create()->toSQLDate() }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
 
-                            <div class="col-span-6 lg:col-span-2">
+                            <div class="col-span-3">
                                 <label for="contract-end" class="block text-sm font-medium text-gray-700">Fecha
                                     finalización</label>
                                 <input type="text" name="contract-end" id="contract-end" disabled x-model="endDate" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+
+                            <div class="col-span-3">
+                                <label for="total" class="block text-sm font-medium text-gray-700">Total</label>
+                                <input type="text" name="total" disabled id="total" :value="formatMoney(amount)" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+
+                            <div class="col-span-3">
+                                <label for="extension" class="block text-sm font-medium text-gray-700">Prorroga</label>
+                                <input type="text" name="extension" disabled id="extension" :value="formatMoney(amount * (percentage / 100))" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                             </div>
                         </div>
                     </div>
@@ -139,16 +160,16 @@
                     <div class="px-4 py-4">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">Tipo contrato</h3>
                     </div>
-                    <div class="px-4 pt-2 pb-5 space-y-6">
+                    <div class="px-4 pt-2 pb-5">
                         <div class="">
-                            <label for="state" class="block text-sm font-medium text-gray-700">Meses</label>
-                            <input type="text" name="state" id="state" x-model="months" x-on:change="calculateEndDate" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <label for="months" class="block text-sm font-medium text-gray-700">Meses</label>
+                            <input type="text" name="months" id="months" x-model="months" x-on:change="calculateEndDate" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
 
                         <div class="">
-                            <label for="percent" class="block text-sm font-medium text-gray-700">Porcentaje
+                            <label for="percentage" class="block text-sm font-medium text-gray-700">Porcentaje
                                 compra</label>
-                            <input type="text" name="percent" id="percent" x-model="percent" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                            <input type="text" name="percentage" id="percentage" x-model="percentage" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
                     </div>
                 </div>
@@ -160,15 +181,17 @@
     <script>
         function app() {
             return {
+                articles: [{}],
                 amount: 0,
                 months: '4',
                 displayAmount: '',
-                percent: 10,
+                percentage: 10,
+                articleTypes: {!! json_encode($articleTypes) !!},
                 formatMoney(number) {
                     return new Intl.NumberFormat('en-US').format(number);
                 },
                 terms: '',
-                selectedClient: {!! $client ? json_encode($client, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE) : 'null' !!},
+                selectedClient: {!! $client ? json_encode($client) : 'null' !!},
                 clients: [],
                 endDate: '{{ \App\Helpers\Dates\DateHelper::create('+4 months')->toSQLDate() }}',
                 searchClient() {
@@ -196,7 +219,31 @@
                     date.setMonth(date.getMonth() + +this.months);
                     this.endDate = date.toISOString().substr(0, 10);
                 },
-                csrf: '{{ csrf_token() }}'
+                addArticle() {
+                    this.articles.push({});
+                    this.updateAmount(0);
+                },
+                removeArticle(index) {
+                    this.articles.splice(index, 1);
+                    this.updateAmount(0);
+                },
+                updateAmount(index) {
+                    this.amount = 0;
+                    this.articles.map((item, index) => {
+                        let value = +item.amount?.replace(',','');
+                        if (value) {
+                            this.amount += value;
+                            item.amount = this.formatMoney(value);
+                        }
+                    });
+                },
+                validate() {
+                    if (!this.selectedClient?.id) {
+                        alert("Por favor selecciona un cliente");
+                        return false;
+                    }
+                    return true;
+                }
             }
         }
     </script>
