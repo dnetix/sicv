@@ -27,11 +27,11 @@ class CreateContractModule extends Migration
             $table->integer('client_id')->unsigned();
             $table->integer('months');
             $table->float('percentage');
-            $table->integer('amount');
-            $table->string('state', 10)->index();
+            $table->double('amount');
+            $table->enum('state', ['active', 'terminated', 'ended', 'annulled', 'legalprob']);
             $table->timestamps();
-            $table->timestamp('end_date')->nullable();
-            $table->integer('end_amount')->nullable();
+            $table->date('end_date')->nullable();
+            $table->double('end_amount')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('client_id')->references('id')->on('clients');
@@ -76,7 +76,7 @@ class CreateContractModule extends Migration
             $table->integer('client_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->integer('contract_id')->nullable()->unsigned();
-            $table->string('importance', 10);
+            $table->enum('importance', ['info', 'warning', 'critical', 'alert']);
 
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('user_id')->references('id')->on('users');
