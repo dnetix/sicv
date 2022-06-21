@@ -167,9 +167,27 @@
                         </div>
 
                         <div class="">
-                            <label for="percentage" class="block text-sm font-medium text-gray-700">Porcentaje
-                                compra</label>
+                            <label for="percentage" class="block text-sm font-medium text-gray-700">Porcentaje compra</label>
                             <input type="text" name="percentage" id="percentage" x-model="percentage" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full inline-block align-bottom rounded-lg text-left overflow-hidden bg-gray-50">
+                    <div class="px-4 py-4">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Nota contrato</h3>
+                    </div>
+                    <div class="px-4 pt-2 pb-5">
+                        <div class="">
+                            <label for="note" class="block text-sm font-medium text-gray-700">Nota</label>
+                            <textarea name="note" id="note" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                        </div>
+
+                        <div class="">
+                            <label for="importance" class="block text-sm font-medium text-gray-700">Tipo Nota</label>
+                            <select name="importance" id="importance" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="info">Información</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -195,7 +213,6 @@
                 clients: [],
                 endDate: '{{ \App\Helpers\Dates\DateHelper::create('+4 months')->toSQLDate() }}',
                 searchClient() {
-                    console.log(this.terms);
                     if (this.terms.length > 2) {
                         axios.post('{{ route('api.client.search') }}', {
                             terms: this.terms
