@@ -2,6 +2,9 @@
 
 namespace App\Models\Users;
 
+use App\Models\Clients\ClientNote;
+use App\Models\Contracts\Annul;
+use App\Models\Contracts\Contract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +18,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $hidden = ['password', 'remember_token'];
-    //TODO check for password mass assigment active just for migration purposes
+
     protected $fillable = [
         'username',
         'name',
@@ -55,8 +58,6 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
-
-    /* ----------- Relationships --------------- */
 
     public function contracts()
     {
