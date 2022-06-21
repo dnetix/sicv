@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Users\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,14 +14,15 @@ class UsersTableSeeder extends Seeder
         $adminUser = User::where('username', 'admin')->first();
 
         if (!$adminUser) {
-            User::create([
+            $user = new User([
                 'username' => 'admin',
-                'password' => Hash::make($this->command->secret('Password for admin user')),
                 'name' => 'Soporte Diego Calle',
                 'email' => 'dnetix@gmail.com',
                 'role' => '100',
                 'active' => true,
             ]);
+            $user->setPassword('password');
+            $user->save();
         } else {
             $this->command->info('Already seeded admin user');
         }
