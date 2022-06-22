@@ -1,7 +1,7 @@
 @props(['label'])
 
 <div>
-    <label for="{{ $attributes->get('id') }}" class="block text-sm font-medium text-gray-700">{{ $label }}
+    <label for="{{ $attributes->get('id') }}" class="block text-sm font-medium text-gray-700 mb-2">{{ $label }}
         <input
             {{ $attributes->merge([
                 'type' => 'text',
