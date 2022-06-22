@@ -8,8 +8,7 @@
 
                 <x-design.card title="Nuevo Contrato" subtitle="Generar un nuevo contrato a cliente" body-class="p-6">
                     <div class="mb-4">
-                        <x-input label="Cliente" name="terms" id="terms" x-on:keyup.debounce="searchClient"
-                                 x-model="terms" placeholder="Buscar cliente"></x-input>
+                        <x-input label="Cliente" name="terms" id="terms" x-on:keyup.debounce="searchClient" x-model="terms" placeholder="Buscar cliente"></x-input>
 
                         <template x-if="selectedClient ? true : false">
                             <div class="bg-gray-100 p-4 mb-4">
@@ -57,12 +56,9 @@
                                                     <div class="text-indigo-500 px-3">
                                                         <i class="fa fa-user-alt"></i>
                                                     </div>
-                                                    <span class="w-3/6 text-gray-800"
-                                                          x-text="client.name">Diego Arturo Calle</span>
-                                                    <span class="w-1/6 text-sm text-gray-700"
-                                                          x-text="`${client.id_type} ${client.id_number}`">CC 1040035072</span>
-                                                    <span class="w-1/6 text-sm text-gray-700"
-                                                          x-text="`${client.cell_number ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
+                                                    <span class="w-3/6 text-gray-800" x-text="client.name">Diego Arturo Calle</span>
+                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.id_type} ${client.id_number}`">CC 1040035072</span>
+                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.cell_number ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
                                                 </div>
                                                 <div class="text-gray-400">
                                                     <i class="fa fa-chevron-right"></i>
@@ -91,19 +87,15 @@
                     <template x-for="(article, index) in articles">
                         <div class="grid grid-cols-12 gap-3">
                             <div class="col-span-11">
-                                <x-textarea label="Articulo" id="description" name="description[]"
-                                            placeholder="Descripción del artículo"
-                                            x-model="article.description"></x-textarea>
+                                <x-textarea label="Articulo" id="description" name="description[]" placeholder="Descripción del artículo" x-model="article.description"></x-textarea>
                             </div>
 
-                            <div x-show="index != 0" class="grid-cols-1 text-center">
-                                <x-button color="red" x-on:click="removeArticle(index)"><i class="fa fa-times"></i>
-                                </x-button>
+                            <div x-show="index != 0" class="grid-cols-1 text-center flex justify-center items-center">
+                                <x-button color="red" x-on:click="removeArticle(index)"><i class="fa fa-times"></i></x-button>
                             </div>
 
                             <div class="col-span-6 pb-4">
-                                <x-select label="Tipo articulo" id="article_type" name="article_type_id[]"
-                                          x-model="article.article_type_id" required>
+                                <x-select label="Tipo articulo" id="article_type" name="article_type_id[]" x-model="article.article_type_id" required>
                                     <option value="">Selecciona</option>
                                     <template x-for="articleType in articleTypes">
                                         <option :value="articleType.id" x-text="articleType.article_type"></option>
@@ -112,13 +104,11 @@
                             </div>
 
                             <div class="col-span-3">
-                                <x-input label="Peso" id="weight" name="weight[]" x-model="article.weight"
-                                         placeholder="Gramos" step="0.01" autocomplete="off"></x-input>
+                                <x-input label="Peso" id="weight" name="weight[]" x-model="article.weight" placeholder="Gramos" step="0.01" autocomplete="off"></x-input>
                             </div>
 
                             <div class="col-span-3">
-                                <x-input label="Valor" id="amount" name="amount[]" x-model="article.amount"
-                                         x-on:change="updateAmount(index)" autocomplete="off"></x-input>
+                                <x-input label="Valor" id="amount" name="amount[]" x-model="article.amount" x-on:change="updateAmount(index)" autocomplete="off"></x-input>
                             </div>
                         </div>
                     </template>
@@ -129,24 +119,19 @@
 
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-3">
-                            <x-input label="Fecha inicio" id="contract-start" name="contract-start"
-                                     value="{{ \App\Helpers\Dates\DateHelper::create()->toSQLDate() }}"
-                                     disabled></x-input>
+                            <x-input label="Fecha inicio" id="contract-start" name="contract-start" value="{{ \App\Helpers\Dates\DateHelper::create()->toSQLDate() }}" disabled></x-input>
                         </div>
 
                         <div class="col-span-3">
-                            <x-input label="Fecha finalización" id="contract-end" name="contract-end" x-model="endDate"
-                                     disabled></x-input>
+                            <x-input label="Fecha finalización" id="contract-end" name="contract-end" x-model="endDate" disabled></x-input>
                         </div>
 
                         <div class="col-span-3">
-                            <x-input label="Total" id="total" name="total" label="Total"
-                                     x-bind:value="formatMoney(amount)" disabled></x-input>
+                            <x-input label="Total" id="total" name="total" label="Total" x-bind:value="formatMoney(amount)" disabled></x-input>
                         </div>
 
                         <div class="col-span-3">
-                            <x-input label="Prorroga" id="extension" name="extension"
-                                     x-bind:value="formatMoney(amount * (percentage / 100))" disabled></x-input>
+                            <x-input label="Prorroga" id="extension" name="extension" x-bind:value="formatMoney(amount * (percentage / 100))" disabled></x-input>
                         </div>
                     </div>
 
@@ -161,8 +146,7 @@
 
                 <x-design.card title="Tipo Contrato">
                     <div class="">
-                        <x-input label="Meses" id="months" name="months" x-model="months"
-                                 x-on:change="calculateEndDate"></x-input>
+                        <x-input label="Meses" id="months" name="months" x-model="months" x-on:change="calculateEndDate"></x-input>
                     </div>
 
                     <div class="">
@@ -172,9 +156,7 @@
 
                 <x-design.card title="Nota contrato">
                     <div class="">
-                        <label for="note" class="block text-sm font-medium text-gray-700">Nota</label>
-                        <textarea name="note" id="note"
-                                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                        <x-textarea label="Nota" id="note" name="note"></x-textarea>
                     </div>
 
                     <div class="">
