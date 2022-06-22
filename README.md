@@ -15,3 +15,4 @@ Programa de administración de compraventa
 - Create a new invoice related with contracts and articles
 - Handle notes by level, and on alert display them on the dashboard until rejected, handle colors for them
 - Add a QR Code to the contract that allow to the client to know information about the contract
+- Add Badges to client selected, allowing to get quick client information
