@@ -7,90 +7,92 @@
             <div class="w-3/4 p-2">
 
                 <x-design.card title="Nuevo Contrato" subtitle="Generar un nuevo contrato a cliente" body-class="p-6">
-                    <div class="col-span-3">
+                    <div class="mb-4">
                         <x-input label="Cliente" name="terms" id="terms" x-on:keyup.debounce="searchClient"
                                  x-model="terms" placeholder="Buscar cliente"></x-input>
-                    </div>
 
-                    <template x-if="selectedClient ? true : false">
-                        <div class="bg-gray-100 p-4 mb-4">
-                            <div class="flex">
-                                <div class="flex-auto w-1/3">
-                                    <div class="text-lg font-bold text-indigo-600">
-                                        <span>Diego Arturo Calle Mora</span>
+                        <template x-if="selectedClient ? true : false">
+                            <div class="bg-gray-100 p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-auto w-1/3">
+                                        <div class="text-lg font-bold text-indigo-600">
+                                            <span x-text="selectedClient.name">Diego Arturo Calle Mora</span>
+                                        </div>
+                                        <div class="text-sm text-gray-800 font-bold">
+                                            <span x-text="`${selectedClient.id_type} ${selectedClient.id_number}`">CC 1040025062</span>
+                                        </div>
+                                        <div class="text-xs text-gray-600">
+                                            <span x-text="selectedClient.id_expedition">La Ceja Antioquia</span>
+                                        </div>
                                     </div>
-                                    <div class="text-sm text-gray-800 font-bold">
-                                        <span>CC 1040025062</span>
+                                    <div class="flex-auto w-1/3">
+                                        <div class="flex items-center text-sm text-gray-600">
+                                            @svg('heroicon-o-device-mobile', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
+                                            <span x-text="`${selectedClient.cell_number ?? ''} ${selectedClient.phone_number ?? ''}`">3006108300</span>
+                                        </div>
+
+                                        <div class="flex items-center text-sm text-gray-600">
+                                            @svg('heroicon-o-location-marker', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
+                                            <span x-text="selectedClient.city ?? 'No tiene'">Carrera 74 # 53-162</span>
+                                        </div>
+
+                                        <div class="flex items-center text-sm text-gray-600">
+                                            @svg('heroicon-o-mail', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
+                                            <span x-text="selectedClient.email ?? 'No tiene'">dnetix@gmail.com</span>
+                                        </div>
                                     </div>
-                                    <div class="text-xs text-gray-600">
-                                        <span>La Ceja Antioquia</span>
-                                    </div>
+                                    <div class="flex-auto w-1/3">Badges</div>
                                 </div>
-                                <div class="flex-auto w-1/3">
-                                    <div class="flex items-center text-sm text-gray-600">
-                                        @svg('heroicon-o-device-mobile', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
-                                        <span>3006108300</span>
-                                    </div>
-
-                                    <div class="flex items-center text-sm text-gray-600">
-                                        @svg('heroicon-o-location-marker', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
-                                        <span>Carrera 74 # 53-162</span>
-                                    </div>
-
-                                    <div class="flex items-center text-sm text-gray-600">
-                                        @svg('heroicon-o-mail', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
-                                        <span>dnetix@gmail.com</span>
-                                    </div>
-                                </div>
-                                <div class="flex-auto w-1/3">Badges</div>
                             </div>
-                        </div>
-                    </template>
-
-                    <ul role="list" class="divide-y divide-gray-200">
-                        <template x-for="(client, index) in clients">
-                            <li>
-                                <a href="javascript:;" x-on:click="selectClient(index)"
-                                   class="block hover:bg-gray-100">
-                                    <div class="flex py-2 px-4 gap-4 items-center">
-                                        <div class="flex items-center gap-4 flex-auto">
-                                            <div class="text-yellow-500 px-3">
-                                                <i class="fa fa-user-alt"></i>
-                                            </div>
-                                            <span class="w-3/6 text-gray-800"
-                                                  x-text="client.name">Diego Arturo Calle</span>
-                                            <span class="w-1/6 text-sm text-gray-700"
-                                                  x-text="`${client.id_type} ${client.id_number}`">CC 1040035072</span>
-                                            <span class="w-1/6 text-sm text-gray-700"
-                                                  x-text="`${client.cell_number ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
-                                        </div>
-                                        <div class="text-gray-400">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
                         </template>
-                    </ul>
 
-                    <template x-if="!selectedClient && emptyResponse">
-                        <div class="p-4 text-center">
-                            <h3 class="text-sm font-medium text-gray-900">No hay clientes que coincidan con la
-                                búsqueda</h3>
-                            <div class="mt-3">
-                                <a href="{{ route('client.new') }}"
-                                   class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                                              clip-rule="evenodd"/>
-                                    </svg>
-                                    Nuevo Cliente
-                                </a>
+                        <template x-if="clients.length > 0">
+                            <ul role="list" class="divide-y divide-gray-200">
+                                <template x-for="(client, index) in clients">
+                                    <li>
+                                        <a href="javascript:;" x-on:click="selectClient(index)"
+                                           class="block hover:bg-gray-100">
+                                            <div class="flex py-2 px-4 gap-4 items-center">
+                                                <div class="flex items-center gap-4 flex-auto">
+                                                    <div class="text-yellow-500 px-3">
+                                                        <i class="fa fa-user-alt"></i>
+                                                    </div>
+                                                    <span class="w-3/6 text-gray-800"
+                                                          x-text="client.name">Diego Arturo Calle</span>
+                                                    <span class="w-1/6 text-sm text-gray-700"
+                                                          x-text="`${client.id_type} ${client.id_number}`">CC 1040035072</span>
+                                                    <span class="w-1/6 text-sm text-gray-700"
+                                                          x-text="`${client.cell_number ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
+                                                </div>
+                                                <div class="text-gray-400">
+                                                    <i class="fa fa-chevron-right"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+
+                        <template x-if="!selectedClient && emptyResponse">
+                            <div class="p-4 text-center">
+                                <h3 class="text-sm font-medium text-gray-900">No hay clientes que coincidan con la
+                                    búsqueda</h3>
+                                <div class="mt-3">
+                                    <a href="{{ route('client.new') }}"
+                                       class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                        Nuevo Cliente
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </template>
+                        </template>
+                    </div>
 
                     <template x-for="(article, index) in articles">
                         <div class="grid grid-cols-12 gap-3">
@@ -214,6 +216,7 @@
                 searchClient() {
                     if (this.terms.length > 2) {
                         this.emptyResponse = false;
+                        this.selectedClient = null;
 
                         axios.post('{{ route('api.client.search') }}', {
                             terms: this.terms
