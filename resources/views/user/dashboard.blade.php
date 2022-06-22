@@ -52,7 +52,7 @@
             <div class="w-full inline-block align-bottom bg-gray-100 rounded-lg text-left overflow-hidden">
                 <div class="px-4 pt-5">
                     <div class="flex items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-400">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-400">
                             <i class="fa fa-users text-black"></i>
                         </div>
                         <div class="text-left pl-4">

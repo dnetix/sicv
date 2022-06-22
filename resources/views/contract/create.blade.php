@@ -54,7 +54,7 @@
                                            class="block hover:bg-gray-100">
                                             <div class="flex py-2 px-4 gap-4 items-center">
                                                 <div class="flex items-center gap-4 flex-auto">
-                                                    <div class="text-yellow-500 px-3">
+                                                    <div class="text-indigo-500 px-3">
                                                         <i class="fa fa-user-alt"></i>
                                                     </div>
                                                     <span class="w-3/6 text-gray-800"
