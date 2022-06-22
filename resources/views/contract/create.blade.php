@@ -85,7 +85,7 @@
                     </div>
 
                     <template x-for="(article, index) in articles">
-                        <div class="grid grid-cols-12 gap-3">
+                        <div class="bg-gray-50 grid grid-cols-12 gap-3 mb-4 p-4">
                             <div class="col-span-11">
                                 <x-textarea label="Articulo" id="description" name="description[]" placeholder="Descripción del artículo" x-model="article.description"></x-textarea>
                             </div>
@@ -94,7 +94,7 @@
                                 <x-button color="red" x-on:click="removeArticle(index)"><i class="fa fa-times"></i></x-button>
                             </div>
 
-                            <div class="col-span-6 pb-4">
+                            <div class="col-span-6">
                                 <x-select label="Tipo articulo" id="article_type" name="article_type_id[]" x-model="article.article_type_id" required>
                                     <option value="">Selecciona</option>
                                     <template x-for="articleType in articleTypes">
@@ -112,10 +112,6 @@
                             </div>
                         </div>
                     </template>
-
-                    <div class="text-right">
-                        <x-button x-on:click="addArticle"><i class="fa fa-plus"></i></x-button>
-                    </div>
 
                     <div class="grid grid-cols-12 gap-4">
                         <div class="col-span-3">
@@ -137,7 +133,10 @@
 
                     <input type="hidden" x-model="selectedClient?.id" name="client_id" required>
 
-                    <x-button type="submit">Guardar Contrato</x-button>
+                    <div class="flex justify-end mt-4">
+                        <x-button color="gray" class="mx-2" x-on:click="addArticle">@svg('heroicon-o-plus', 'w-5 mr-1 -ml-1') Agregar articulo</x-button>
+                        <x-button class="mx-2" type="submit">@svg('heroicon-o-document-add', 'w-5 mr-1 -ml-1') Guardar Contrato</x-button>
+                    </div>
                 </x-design.card>
 
             </div>
