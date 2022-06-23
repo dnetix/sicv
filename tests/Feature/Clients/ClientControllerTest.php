@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Clients;
 
+use App\Helpers\RepositoryHelper;
 use App\Models\Clients\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -70,5 +71,27 @@ class ClientControllerTest extends TestCase
         $this->assertEquals(2, count($data));
         // Asserting that is an array instead of an object
         $this->assertEquals('[', substr($response->content(), 0, 1));
+    }
+
+    public function test_it_stores_a_client_correctly()
+    {
+        $response = $this->json('POST', route('client.store'), [
+            'name' => 'Diego Calle',
+            'email' => 'dnetix@yopmail.com',
+            'document_type' => 'CC',
+            'document' => '1040035000',
+            'expedition_city' => 'Medellin',
+            'mobile' => '3006108300',
+        ]);
+        $response->assertCreated();
+        $this->assertNotEmpty($response['id']);
+
+        $client = RepositoryHelper::forClients()->getClientByDocument('1040035000');
+
+        $this->assertEquals('Diego Calle', $client->name());
+        $this->assertEquals('dnetix@yopmail.com', $client->email());
+        $this->assertEquals('CC', $client->documentType());
+        $this->assertEquals('1040035000', $client->document());
+        $this->assertEquals('3006108300', $client->mobile());
     }
 }
