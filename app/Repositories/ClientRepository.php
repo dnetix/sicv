@@ -8,23 +8,18 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ClientRepository
 {
-    public function save(Client $client)
+    public function save(Client $client): Client
     {
         $client->save();
         return $client;
     }
 
-    public function getClientByIdNumber($idNumber)
+    public function getClientByDocument($document): Client
     {
-        return Client::whereIdNumber($idNumber)->firstOrFail();
+        return Client::whereDocument($document)->firstOrFail();
     }
 
-    /**
-     * @param $id
-     * @return \App\Models\Clients\Client
-     * @throws \Illuminate\Database\QueryException
-     */
-    public function getClientById($id)
+    public function getClientById($id): Client
     {
         return Client::findOrFail($id);
     }
