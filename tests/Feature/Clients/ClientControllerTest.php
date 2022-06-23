@@ -75,7 +75,7 @@ class ClientControllerTest extends TestCase
 
     public function test_it_stores_a_client_correctly()
     {
-        $response = $this->json('POST', route('client.store'), [
+        $response = $this->json('POST', route('api.client.store'), [
             'name' => 'Diego Calle',
             'email' => 'dnetix@yopmail.com',
             'document_type' => 'CC',
