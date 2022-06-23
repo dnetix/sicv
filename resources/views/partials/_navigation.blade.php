@@ -16,7 +16,7 @@
             <a href="{{ route('contract.new') }}" class="text-base font-medium text-gray-500 hover:text-gray-900">
                 Nuevo contrato
             </a>
-            <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
+            <a href="{{ route('client.new') }}" class="text-base font-medium text-gray-500 hover:text-gray-900">
                 Nuevo cliente
             </a>
             <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
