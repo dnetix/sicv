@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\RepositoryHelper;
-use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\ClientCreateRequest;
 use App\Models\Clients\Actions\CreateNewClientAction;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ class ClientController extends Controller
         ]);
     }
 
-    public function store(UserCreateRequest $request)
+    public function store(ClientCreateRequest $request)
     {
         return (new CreateNewClientAction($request->validated()))->execute();
     }

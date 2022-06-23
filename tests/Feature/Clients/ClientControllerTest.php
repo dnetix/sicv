@@ -82,6 +82,7 @@ class ClientControllerTest extends TestCase
             'document' => '1040035000',
             'expedition_city' => 'Medellin',
             'mobile' => '3006108300',
+            'phone_number' => null,
         ]);
         $response->assertCreated();
         $this->assertNotEmpty($response['id']);
