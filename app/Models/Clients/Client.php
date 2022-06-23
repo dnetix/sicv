@@ -80,12 +80,10 @@ class Client extends Model
         return $this->city;
     }
 
-    public function isFlagged()
+    public function isFlagged(): bool
     {
         return $this->flagged == 1;
     }
-
-    /* ----------- Relationships --------------- */
 
     public function contracts()
     {
