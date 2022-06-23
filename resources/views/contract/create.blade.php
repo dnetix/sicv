@@ -18,16 +18,16 @@
                                             <span x-text="selectedClient.name">Diego Arturo Calle Mora</span>
                                         </div>
                                         <div class="text-sm text-gray-800 font-bold">
-                                            <span x-text="`${selectedClient.id_type} ${selectedClient.id_number}`">CC 1040025062</span>
+                                            <span x-text="`${selectedClient.document_type} ${selectedClient.document}`">CC 1040025062</span>
                                         </div>
                                         <div class="text-xs text-gray-600">
-                                            <span x-text="selectedClient.id_expedition">La Ceja Antioquia</span>
+                                            <span x-text="selectedClient.expedition_city">La Ceja Antioquia</span>
                                         </div>
                                     </div>
                                     <div class="flex-auto w-1/3">
                                         <div class="flex items-center text-sm text-gray-600">
                                             @svg('heroicon-o-device-mobile', 'flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400')
-                                            <span x-text="`${selectedClient.cell_number ?? ''} ${selectedClient.phone_number ?? ''}`">3006108300</span>
+                                            <span x-text="`${selectedClient.mobile ?? ''} ${selectedClient.phone_number ?? ''}`">3006108300</span>
                                         </div>
 
                                         <div class="flex items-center text-sm text-gray-600">
@@ -57,8 +57,8 @@
                                                         <i class="fa fa-user-alt"></i>
                                                     </div>
                                                     <span class="w-3/6 text-gray-800" x-text="client.name">Diego Arturo Calle</span>
-                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.id_type} ${client.id_number}`">CC 1040035072</span>
-                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.cell_number ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
+                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.document_type} ${client.document}`">CC 1040035072</span>
+                                                    <span class="w-1/6 text-sm text-gray-700" x-text="`${client.mobile ?? ''} ${client.phone_number ?? ''}`">3006108300</span>
                                                 </div>
                                                 <div class="text-gray-400">
                                                     <i class="fa fa-chevron-right"></i>

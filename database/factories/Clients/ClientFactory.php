@@ -23,11 +23,11 @@ class ClientFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'id_number' => $this->faker->numberBetween(10000, 1000000000),
-            'id_type' => 'CC',
-            'id_expedition' => $this->faker->city(),
+            'document' => $this->faker->numberBetween(10000, 1000000000),
+            'document_type' => 'CC',
+            'expedition_city' => $this->faker->city(),
             'address' => $this->faker->streetAddress(),
-            'cell_number' => $this->faker->phoneNumber(),
+            'mobile' => $this->faker->phoneNumber(),
             'phone_number' => $this->faker->phoneNumber(),
             'email' => $this->faker->email(),
             'city' => 'Medellín',

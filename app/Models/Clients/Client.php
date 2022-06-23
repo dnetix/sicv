@@ -19,11 +19,11 @@ class Client extends Model
 
     protected $fillable = [
         'name',
-        'id_number',
-        'id_type',
-        'id_expedition',
+        'document',
+        'document_type',
+        'expedition_city',
         'address',
-        'cell_number',
+        'mobile',
         'phone_number',
         'email',
         'city',
@@ -40,19 +40,19 @@ class Client extends Model
         return $this->name;
     }
 
-    public function idNumber()
+    public function document()
     {
-        return $this->id_number;
+        return $this->document;
     }
 
-    public function idType()
+    public function documentType()
     {
-        return $this->id_type;
+        return $this->document_type;
     }
 
-    public function idExpedition()
+    public function expeditionCity()
     {
-        return $this->id_expedition;
+        return $this->expedition_city;
     }
 
     public function address()
@@ -60,9 +60,9 @@ class Client extends Model
         return $this->address;
     }
 
-    public function cellNumber()
+    public function mobile()
     {
-        return $this->cell_number;
+        return $this->mobile;
     }
 
     public function phoneNumber()

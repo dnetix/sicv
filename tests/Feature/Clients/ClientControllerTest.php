@@ -48,17 +48,17 @@ class ClientControllerTest extends TestCase
     public function test_it_returns_an_array_when_clients_found(): void
     {
         Client::factory()->create([
-            'id_number' => '1040035000',
+            'document' => '1040035000',
             'name' => 'Diego Calle',
         ]);
 
         Client::factory()->create([
-            'id_number' => '1040036000',
+            'document' => '1040036000',
             'name' => 'Another',
         ]);
 
         Client::factory()->create([
-            'id_number' => '1040036001',
+            'document' => '1040036001',
             'name' => 'Diego Marin',
         ]);
 

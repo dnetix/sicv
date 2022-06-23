@@ -172,12 +172,12 @@ class MigrateFromOldSicv extends Command
             $newClient = Client::create(
                 [
                     'name' => ucwords(mb_strtolower($client->nombre)),
-                    'id_type' => 'CC',
-                    'id_number' => $client->idcliente,
-                    'id_expedition' => ucwords(mb_strtolower($client->lugarexpedicion)),
+                    'document_type' => 'CC',
+                    'document' => $client->idcliente,
+                    'expedition_city' => ucwords(mb_strtolower($client->lugarexpedicion)),
                     'address' => $client->direccion,
                     'phone_number' => $client->telefono,
-                    'cell_number' => $client->celular,
+                    'mobile' => $client->celular,
                     'city' => $client->ciudad,
                 ]
             );
@@ -230,7 +230,7 @@ class MigrateFromOldSicv extends Command
 
     public function getNewClientId($old_client_id)
     {
-        return $this->clientAssociations[$old_client_id] ?? Client::where('id_number', $old_client_id)->first()->id();
+        return $this->clientAssociations[$old_client_id] ?? Client::where('document', $old_client_id)->first()->id();
     }
 
     public function getNewUserId($old_user_id)

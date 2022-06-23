@@ -49,7 +49,7 @@ class ClientRepository
 
     public function searchClientByTerms(string $searchTerms, int $limit = 10): Collection
     {
-        return Client::where('id_number', 'LIKE', "$searchTerms%")
+        return Client::where('document', 'LIKE', "$searchTerms%")
             ->orWhere(function ($query) use ($searchTerms) {
                 $terms = explode(' ', $searchTerms);
                 foreach ($terms as $term) {
