@@ -42,11 +42,6 @@ class Contract extends Model
         return $this->amount;
     }
 
-    public function payment()
-    {
-        return ceil($this->amount() * ($this->percentage / 100));
-    }
-
     public function userId()
     {
         return $this->user_id;
@@ -87,10 +82,9 @@ class Contract extends Model
         return $this->end_date;
     }
 
-    public function setEndDate($endDate): self
+    public function extension(): float
     {
-        $this->end_date = $endDate;
-        return $this;
+        return ceil($this->amount() * ($this->percentage / 100));
     }
 
     public function setId($id): self
@@ -99,22 +93,10 @@ class Contract extends Model
         return $this;
     }
 
-    /**
-     * Returns the number of months elapsed, because it's upfront always it's plus one.
-     * @return int
-     */
-    public function elapsedMonths()
+    public function setEndDate($endDate): self
     {
-        return $this->elapsedDifference()->inMonths() + 1;
-    }
-
-    /**
-     * Return the number of months of the contract and contains the extended months too.
-     * @return int|mixed
-     */
-    public function contractMonths()
-    {
-        return $this->months() + $this->extendedMonths();
+        $this->end_date = $endDate;
+        return $this;
     }
 
     /**
@@ -131,42 +113,26 @@ class Contract extends Model
     }
 
     /**
-     * Basically the duedExtensions + the amount of the contract.
+     * Returns the number of months elapsed, because it's upfront always it's plus one.
      * @return int
      */
-    public function amountToTerminate()
+    public function elapsedMonths()
     {
-        if ($this->isActive()) {
-            return $this->amount() + $this->duedExtensions();
-        }
-        return 0;
+        return $this->elapsedDifference()->inMonths() + 1;
+    }
+
+    public function extendedMonths()
+    {
+        return floor($this->payedExtensions() / $this->extension());
     }
 
     /**
-     * Returns the amount that the client ows in extensions.
-     * @return int
+     * Return the number of months of the contract and contains the extended months too.
+     * @return int|mixed
      */
-    public function duedExtensions()
+    public function contractMonths()
     {
-        if ($this->isActive()) {
-            return ($this->elapsedMonths() * $this->payment()) - $this->payedExtensions();
-        }
-        return 0;
-    }
-
-    public function calculatedMonths()
-    {
-        return ($this->months() + $this->extendedMonths()) - $this->elapsedMonths();
-    }
-
-    public function profit()
-    {
-        return ($this->payedExtensions() + $this->endAmount()) - $this->amount();
-    }
-
-    public function profitPercent()
-    {
-        return ($this->profit() / $this->amount()) * 100;
+        return $this->elapsedMonths() - $this->extendedMonths();
     }
 
     /**
@@ -178,9 +144,38 @@ class Contract extends Model
         return $this->extensions->sum('amount');
     }
 
-    public function extendedMonths()
+    /**
+     * Returns the amount that the client ows in extensions.
+     * @return int
+     */
+    public function duedExtensions()
     {
-        return floor($this->payedExtensions() / $this->payment());
+        if ($this->isActive()) {
+            return ($this->elapsedMonths() * $this->extension()) - $this->payedExtensions();
+        }
+        return 0;
+    }
+
+    /**
+     * Basically the duedExtensions + the amount of the contract.
+     * @return int
+     */
+    public function amountToTerminate()
+    {
+        if ($this->isActive()) {
+            return $this->amount() + $this->duedExtensions();
+        }
+        return 0;
+    }
+
+    public function profit()
+    {
+        return ($this->payedExtensions() + $this->endAmount()) - $this->amount();
+    }
+
+    public function profitPercent()
+    {
+        return ($this->profit() / $this->amount()) * 100;
     }
 
     public function articlesCount()
@@ -220,11 +215,6 @@ class Contract extends Model
         return $this->state() == ContractStates::ANNULLED;
     }
 
-    public function lastExtension()
-    {
-        return $this->extensions->last();
-    }
-
     public function isPreSellout()
     {
         if (is_null($this->preSellout)) {
@@ -253,6 +243,11 @@ class Contract extends Model
     public function extensions()
     {
         return $this->hasMany(Extension::class);
+    }
+
+    public function getClient(): Client
+    {
+        return $this->client;
     }
 
     /**
