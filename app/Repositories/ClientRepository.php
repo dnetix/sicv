@@ -53,8 +53,9 @@ class ClientRepository
             })->limit($limit)->get();
     }
 
-    public function saveClientNote(ClientNote $clientNote)
+    public function storeClientNote(ClientNote $clientNote): ClientNote
     {
         $clientNote->save();
+        return $clientNote;
     }
 }
