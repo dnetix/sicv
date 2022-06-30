@@ -4,6 +4,7 @@ return [
     'create_title' => 'Nuevo Cliente',
     'submit' => 'Guardar cliente',
 
+    'client' => 'Cliente',
     'name' => 'Nombre',
     'document_type' => 'Tipo documento',
     'document' => 'Número',
