@@ -58,9 +58,10 @@ class ContractRepository
         return Contract::with('articles', 'articles.articleType', 'extensions')->findOrFail($id);
     }
 
-    public function saveExtension(Extension &$extension)
+    public function storeExtension(Extension $extension): Extension
     {
-        return $extension->save();
+        $extension->save();
+        return $extension;
     }
 
     public function update($contract)
