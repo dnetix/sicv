@@ -11,16 +11,11 @@ class ClientPresenter extends Presenter
         return $this->entity->name() . ($this->entity->isFlagged() ? ' <span class="label label-danger">MARCADO</span>' : '');
     }
 
-    public function address()
+    public function mobile()
     {
-        return '<i class="fa fa-map-marker"></i> ' . $this->entity->address();
-    }
-
-    public function phones()
-    {
-        $phones[] = '<i class="fa fa-phone"></i> ' . $this->entity->phoneNumber();
-        if (!empty($this->entity->cellNumber())) {
-            $phones[] = '<i class="fa fa-mobile-phone"></i> ' . $this->entity->cellNumber();
+        $phones[] = $this->entity->phoneNumber();
+        if (!empty($this->entity->mobile())) {
+            $phones[] = $this->entity->mobile();
         }
         return implode(' ', $phones);
     }
