@@ -27,7 +27,7 @@
                                 @foreach($contracts as $contract)
                                     <tr>
                                         <td class="p-4 text-left">
-                                            <div class="text-gray-900">{{ $contract->id() }}</div>
+                                            <div class="text-gray-900"><a href="{{ route('contract.view', $contract->id()) }}">{{ $contract->id() }}</a></div>
                                             <div class="text-xs text-gray-500 whitespace-nowrap">{{ $contract->present()->createdAt() }}</div>
                                         </td>
                                         <td class="p-4">
