@@ -176,8 +176,8 @@ class MigrateFromOldSicv extends Command
                     'document' => $client->idcliente,
                     'expedition_city' => ucwords(mb_strtolower($client->lugarexpedicion)),
                     'address' => $client->direccion,
-                    'phone_number' => $client->telefono,
-                    'mobile' => $client->celular,
+                    'mobile' => $client->telefono,
+                    'phone_number' => $client->celular,
                     'city' => $client->ciudad,
                 ]
             );
