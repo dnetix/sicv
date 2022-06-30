@@ -89,12 +89,12 @@ class DateHelper extends DateTime
 
     public function translateToShortDate()
     {
-        return $this->format('d/m/Y');
+        return $this->format('Y-m-d');
     }
 
     public function translateToHumanDate()
     {
-        return self::$DAYS[$this->dayOfWeek] . ', ' . $this->day . ' de ' . self::$MONTHS[$this->month - 1] . ' de ' . $this->year;
+        return $this->format('Y-m-d H:i:s');
     }
 
     public function translateToLegalDate()
