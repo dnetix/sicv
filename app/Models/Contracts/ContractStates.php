@@ -15,17 +15,4 @@ class ContractStates
     public const ENDED = 'ended';
     public const ANNULLED = 'annulled';
     public const LEGALPROBLEM = 'legalprob';
-
-    public static $FORHUMAN = [
-        self::ACTIVE => 'Activo',
-        self::TERMINATED => 'Cancelado',
-        self::ENDED => 'Terminado',
-        self::ANNULLED => 'Anulado',
-        self::LEGALPROBLEM => 'Problema Legal',
-    ];
-
-    public static function forHuman($state)
-    {
-        return self::$FORHUMAN[$state];
-    }
 }
