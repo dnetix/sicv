@@ -5,7 +5,7 @@ namespace App\Models\Contracts\Actions;
 use App\Helpers\Dates\DateHelper;
 use App\Helpers\RepositoryHelper;
 use App\Models\Articles\Article;
-use App\Models\Clients\ClientNote;
+use App\Models\Clients\Actions\CreateNewClientNoteAction;
 use App\Models\Contracts\Contract;
 use App\Models\Contracts\ContractStates;
 
@@ -54,15 +54,7 @@ class CreateNewContractAction
         }
 
         if ($this->note) {
-            // TODO: Refactor to an action
-            $note = new ClientNote([
-                'note' => $this->note['note'],
-                'user_id' => $this->user_id,
-                'client_id' => $this->client_id,
-                'contract_id' => $contract->id(),
-                'importance' => $this->note['importance'],
-            ]);
-            RepositoryHelper::forClients()->saveClientNote($note);
+            (new CreateNewClientNoteAction($this->client_id, $this->user_id, $this->note['note'], $this->note['importance'], $contract->id()))->execute();
         }
 
         return $contract;
