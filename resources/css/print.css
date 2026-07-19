@@ -1,0 +1,27 @@
+/* Styles for printable documents (contract, seals, sale receipt). */
+
+@font-face {
+    font-family: 'Code 128';
+    src:
+        url('../fonts/code128-webfont.woff') format('woff'),
+        url('../fonts/code128-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.barcode {
+    font-family: 'Code 128', monospace;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+@media print {
+    .print\:hidden {
+        display: none !important;
+    }
+
+    @page {
+        margin: 12mm;
+    }
+}

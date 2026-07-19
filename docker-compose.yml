@@ -1,0 +1,42 @@
+services:
+    sicv-laravel:
+        image: serversideup/php:8.4-fpm-nginx-alpine
+        container_name: sicv-laravel
+        ports:
+            - "8002:8080"
+        environment:
+            # The bind mount makes file stats expensive on Windows; cache
+            # aggressively and revalidate at most once a minute.
+            PHP_OPCACHE_ENABLE: 1
+            PHP_OPCACHE_REVALIDATE_FREQ: 60
+            PHP_OPCACHE_MAX_ACCELERATED_FILES: 20000
+            PHP_OPCACHE_MEMORY_CONSUMPTION: 192
+        volumes:
+            - .:/var/www/html
+            # storage/ and bootstrap/cache must be writable by www-data, which
+            # the Windows bind mount (root:root, chown is a no-op) can never
+            # be — named volumes give them a real Linux filesystem. One-time
+            # setup after (re)creating the volumes:
+            #   docker exec -u root sicv-laravel chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+            - storage:/var/www/html/storage
+            - bootstrap-cache:/var/www/html/bootstrap/cache
+            # Legacy app assets, read-only: legacy:import copies the company
+            # logo from here.
+            - ../assets:/var/www/legacy-assets:ro
+            - ./docker/init-storage.sh:/etc/entrypoint.d/50-init-storage.sh:ro
+            - ./docker/php.ini:/usr/local/etc/php/conf.d/zz-sicv.ini:ro
+        networks:
+            - shared
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.sicv.rule=Host(`sicv.test`)
+            - traefik.http.routers.sicv.entrypoints=web
+            - traefik.http.services.sicv.loadbalancer.server.port=8080
+
+networks:
+    shared:
+        external: true
+
+volumes:
+    storage:
+    bootstrap-cache:

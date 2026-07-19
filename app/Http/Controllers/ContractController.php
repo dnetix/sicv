@@ -2,68 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\RepositoryHelper;
-use App\Http\Requests\ContractCreateRequest;
-use App\Http\Requests\CreateClientNoteRequest;
-use App\Http\Requests\CreateContractExtensionRequest;
-use App\Models\Clients\Actions\CreateNewClientNoteAction;
-use App\Models\Clients\Client;
-use App\Models\Contracts\Actions\CreateNewContractAction;
-use App\Models\Contracts\Actions\CreateNewExtensionAction;
-use App\Models\Contracts\Contract;
+use App\Enums\ContractStatus;
+use App\Http\Requests\StoreContractRequest;
+use App\Models\Client;
+use App\Models\CompanySetting;
+use App\Models\Contract;
+use App\Models\ItemType;
+use App\Support\Code128;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ContractController extends Controller
 {
-    public function create(Request $request, ?Client $client = null)
+    /**
+     * Default terms, unchanged from the legacy system.
+     */
+    public const int DEFAULT_TERM_MONTHS = 4;
+
+    public const float DEFAULT_MONTHLY_RATE = 10.0;
+
+    public function create(Request $request): View
     {
-        return view('contract.create', [
-            'client' => $client,
-            'articleTypes' => RepositoryHelper::forArticles()->getArticleTypes(),
+        return view('contracts.create', [
+            'client' => $request->filled('client')
+                ? Client::query()
+                    ->with('notes.user')
+                    ->withCount('contracts')
+                    ->find($request->integer('client'))
+                    ?->searchPayload()
+                : null,
+            'itemTypes' => ItemType::query()->orderBy('name')->get(),
+            'defaultTerm' => self::DEFAULT_TERM_MONTHS,
+            'defaultRate' => self::DEFAULT_MONTHLY_RATE,
         ]);
     }
 
-    public function view(Contract $contract)
+    public function store(StoreContractRequest $request): RedirectResponse
     {
-        return view('contract.view', [
+        $contract = Contract::query()->create([
+            ...$request->validated(),
+            'status' => ContractStatus::Active,
+            'started_at' => now(),
+            'user_id' => $request->user()->id,
+        ]);
+
+        return redirect()
+            ->route('contracts.print', $contract)
+            ->with('status', "Contrato No. {$contract->id} creado exitosamente.");
+    }
+
+    public function show(Contract $contract): View
+    {
+        $contract->load([
+            'client.notes.user', 'itemType', 'user',
+            'extensions' => fn ($query) => $query->orderBy('paid_at')->with('user'),
+            'void.user',
+        ]);
+
+        return view('contracts.show', [
             'contract' => $contract,
-            'client' => $contract->client,
-            'extensions' => $contract->extensions,
-            'notes' => RepositoryHelper::forClients()->getClientNotes($contract->client),
+            'saleInfo' => $contract->status === ContractStatus::Sold ? $contract->saleInfo() : null,
+            'barcode' => Code128::encode((string) $contract->id),
         ]);
     }
 
-    public function store(ContractCreateRequest $request)
+    /**
+     * Printable legal contract. Reprints of any status are allowed (the
+     * legacy app did the same); explicit copies carry a DUPLICADO watermark.
+     */
+    public function print(Contract $contract, Request $request): View
     {
-        $contract = (new CreateNewContractAction(
-            auth()->user()->getAuthIdentifier(),
-            $request->clientId(),
-            $request->months(),
-            $request->percentage(),
-            $request->articles(),
-            $request->note()
-        ))->execute();
+        $contract->load(['client', 'extensions']);
 
-        return redirect(route('contract.print', $contract->id()));
-    }
-
-    public function extension(CreateContractExtensionRequest $request, Contract $contract)
-    {
-        (new CreateNewExtensionAction($contract->id(), $request->amount(), auth()->id()))->execute();
-        return redirect(route('contract.view', ['contract' => $contract->id()]));
-    }
-
-    public function note(CreateClientNoteRequest $request, Contract $contract)
-    {
-        (new CreateNewClientNoteAction($contract->clientId(), auth()->id(), $request->note(), $request->importance(), $contract->id()))->execute();
-        return redirect(route('contract.view', ['contract' => $contract->id()]));
-    }
-
-    public function print(Contract $contract)
-    {
-        return view('contract.print', [
+        return view('contracts.print', [
             'contract' => $contract,
-            'articles' => RepositoryHelper::forContracts()->getContractArticles($contract),
+            'company' => CompanySetting::current(),
+            'barcode' => Code128::encode((string) $contract->id),
+            'isCopy' => $request->boolean('copy'),
         ]);
     }
 }

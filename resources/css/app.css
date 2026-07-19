@@ -1,3 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '@fontsource/public-sans/400.css';
+@import '@fontsource/public-sans/700.css';
+
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+ * Palette from the approved wireframes (claude.ai/design "Finance app low
+ * fidelity sketches"): warm paper surfaces, ink text, #FFDC00 accent.
+ */
+@theme {
+    --font-sans: 'Public Sans', Helvetica, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-paper: #edebe6; /* page background outside the shell */
+    --color-canvas: #f7f5f0; /* app content background */
+    --color-cream: #faf8f3; /* table header / footer bands */
+
+    --color-line: #cfc9bc; /* card and input borders */
+    --color-line-soft: #e5e1d6; /* internal separators */
+    --color-line-faint: #f0ede5; /* table row separators */
+
+    --color-ink: #2e2a22; /* primary text */
+    --color-ink-nav: #55503f; /* sidebar items */
+    --color-ink-soft: #8a8272; /* secondary text */
+    --color-ink-faint: #aca597; /* placeholders, hints */
+
+    --color-accent: #ffdc00; /* primary actions */
+    --color-accent-strong: #eecd00; /* primary hover */
+    --color-accent-deep: #7a6900; /* links, active nav */
+    --color-accent-deeper: #5c4f00; /* link hover */
+    --color-accent-tint: #fff6c2; /* active nav background */
+    --color-accent-pale: #fffbe6; /* highlighted card background */
+    --color-accent-line: #d9bb00; /* highlighted card border */
+
+    --color-danger-pale: #fbeeec; /* alert note background */
+    --color-danger-line: #b3564a; /* alert note border */
+    --color-danger-deep: #8c3a30; /* alert note text */
+
+    --color-night: #262117; /* login brand panel */
+    --color-night-soft: #b3a888; /* text on night */
+    --color-night-faint: #7d745c; /* faint text on night */
+}
+
+[x-cloak] {
+    display: none !important;
+}
