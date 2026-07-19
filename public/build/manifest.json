@@ -1,0 +1,100 @@
+{
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff": {
+    "file": "assets/public-sans-latin-400-normal-SBbinRkI.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff2": {
+    "file": "assets/public-sans-latin-400-normal-8Rpg0ruU.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff": {
+    "file": "assets/public-sans-latin-700-normal-Dm-oTPSL.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff2": {
+    "file": "assets/public-sans-latin-700-normal-BqJmxWdE.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-700-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff": {
+    "file": "assets/public-sans-latin-ext-400-normal-B02wwOdZ.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff2": {
+    "file": "assets/public-sans-latin-ext-400-normal-mk90oQqJ.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff": {
+    "file": "assets/public-sans-latin-ext-700-normal-jWHjnMgZ.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff2": {
+    "file": "assets/public-sans-latin-ext-700-normal-CgolUQuG.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-latin-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff": {
+    "file": "assets/public-sans-vietnamese-400-normal-BO1meqcx.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff2": {
+    "file": "assets/public-sans-vietnamese-400-normal-TxZB8OSn.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-400-normal.woff2"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff": {
+    "file": "assets/public-sans-vietnamese-700-normal-Dq5VrXjD.woff",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff"
+  },
+  "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff2": {
+    "file": "assets/public-sans-vietnamese-700-normal-D97ShjGS.woff2",
+    "src": "node_modules/@fontsource/public-sans/files/public-sans-vietnamese-700-normal.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-vmnuBeiM.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "assets": [
+      "assets/public-sans-vietnamese-400-normal-TxZB8OSn.woff2",
+      "assets/public-sans-vietnamese-400-normal-BO1meqcx.woff",
+      "assets/public-sans-latin-ext-400-normal-mk90oQqJ.woff2",
+      "assets/public-sans-latin-ext-400-normal-B02wwOdZ.woff",
+      "assets/public-sans-latin-400-normal-8Rpg0ruU.woff2",
+      "assets/public-sans-latin-400-normal-SBbinRkI.woff",
+      "assets/public-sans-vietnamese-700-normal-D97ShjGS.woff2",
+      "assets/public-sans-vietnamese-700-normal-Dq5VrXjD.woff",
+      "assets/public-sans-latin-ext-700-normal-CgolUQuG.woff2",
+      "assets/public-sans-latin-ext-700-normal-jWHjnMgZ.woff",
+      "assets/public-sans-latin-700-normal-BqJmxWdE.woff2",
+      "assets/public-sans-latin-700-normal-Dm-oTPSL.woff"
+    ]
+  },
+  "resources/css/print.css": {
+    "file": "assets/print-CPM8sbpe.css",
+    "name": "print",
+    "names": [
+      "print.css"
+    ],
+    "src": "resources/css/print.css",
+    "isEntry": true,
+    "assets": [
+      "assets/code128-webfont-JPLGuBwc.woff",
+      "assets/code128-webfont-CPE3Vi04.ttf"
+    ]
+  },
+  "resources/fonts/code128-webfont.ttf": {
+    "file": "assets/code128-webfont-CPE3Vi04.ttf",
+    "src": "resources/fonts/code128-webfont.ttf"
+  },
+  "resources/fonts/code128-webfont.woff": {
+    "file": "assets/code128-webfont-JPLGuBwc.woff",
+    "src": "resources/fonts/code128-webfont.woff"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-EXjMKi3O.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
